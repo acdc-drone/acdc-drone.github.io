@@ -330,6 +330,90 @@
 </section>
 <!-- End paper abstract -->
 
+<!-- Methods Section -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container">
+      <h2 class="title is-3" style="margin-top: 0.3em; text-align: center;">Methods</h2>
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="content has-text-centered">
+            <img src="static/images/figures-main-agent-website.png" alt="ACDC Methods Overview" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+          </div>
+        </div>
+      </div>
+      
+      <div class="columns is-centered">
+        <div class="column is-four-fifths">
+          <div class="content">
+            <p class="has-text-centered" style="font-size: 1.1em; line-height: 1.6; margin-top: 2rem;">
+              Given a natural-language prompt, an exploratory video, and a photorealistic 3D reconstruction, 
+              <strong>ACDC</strong> follows a three-stage approach:
+            </p>
+            
+            <div class="columns is-centered" style="margin-top: 1.5rem;">
+              <div class="column is-12">
+                <div class="box" style="background-color: #f8f9fa; border-left: 4px solid #3273dc;">
+                  <div class="content">
+                    <ol style="margin-left: 1rem;">
+                      <li style="margin-bottom: 0.8rem;">
+                        <div class="method-step" onclick="toggleVisualization('waypoint')" style="cursor: pointer; padding: 0.5rem; border-radius: 4px; transition: background-color 0.3s; display: flex; align-items: center;">
+                          <span class="icon is-small" style="margin-right: 0.5rem;">
+                            <i class="fas fa-chevron-down"></i>
+                          </span>
+                          <div>
+                            <strong>Waypoint Retrieval:</strong> Retrieves and orders initial waypoints via vision–language similarity 
+                          </div>
+                        </div>
+                        <div id="waypoint-viz" class="visualization-content" style="display: none; margin-top: 1rem; padding: 1rem; background-color: #ffffff; border-radius: 8px; border: 1px solid #e1e5e9;">
+                          <div class="has-text-centered">
+                            <img src="figures-main-select&sort.drawio.png" alt="Waypoint Retrieval Process" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                          </div>
+                        </div>
+                      </li>
+                      <li style="margin-bottom: 0.8rem;">
+                        <div class="method-step" onclick="toggleVisualization('pose')" style="cursor: pointer; padding: 0.5rem; border-radius: 4px; transition: background-color 0.3s; display: flex; align-items: center;">
+                          <span class="icon is-small" style="margin-right: 0.5rem;">
+                            <i class="fas fa-chevron-down"></i>
+                          </span>
+                          <div>
+                            <strong>Pose Refinement:</strong> Refines each pose with preference-based Bayesian optimization 
+                          </div>
+                        </div>
+                        <div id="pose-viz" class="visualization-content" style="display: none; margin-top: 1rem; padding: 1rem; background-color: #ffffff; border-radius: 8px; border: 1px solid #e1e5e9;">
+                          <div class="has-text-centered">
+                            <img src="figures-main-refinement.drawio.png" alt="Pose Refinement Process" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="method-step" onclick="toggleVisualization('trajectory')" style="cursor: pointer; padding: 0.5rem; border-radius: 4px; transition: background-color 0.3s; display: flex; align-items: center;">
+                          <span class="icon is-small" style="margin-right: 0.5rem;">
+                            <i class="fas fa-chevron-down"></i>
+                          </span>
+                          <div>
+                            <strong>Trajectory Generation:</strong> Generates a smooth, collision-free, dynamically feasible quadrotor trajectory for execution
+                          </div>
+                        </div>
+                        <div id="trajectory-viz" class="visualization-content" style="display: none; margin-top: 1rem; padding: 1rem; background-color: #ffffff; border-radius: 8px; border: 1px solid #e1e5e9;">
+                          <div class="content">
+                            <p style="font-size: 1em; line-height: 1.6; text-align: justify;">
+                              This section turns refined waypoints and a voxel traversability map into a time-parameterized, collision-free quadrotor trajectory in three steps. (1) <strong>Path extraction</strong>: run A* on the free-voxel graph to connect the waypoint positions in order, producing a collision-free polyline that visits each waypoint. (2) <strong>Corridor building</strong>: for each polyline segment, define a local orthonormal frame, measure the segment length, and inflate a rectangular box around it using a distance transform with a safety margin; the sequence of boxes forms a rectangular tunnel corridor, so any curve inside it is collision-free. (3) <strong>Time-optimal planning</strong>: treat each box as an oriented gate and use TOGT to find a continuous, piecewise-polynomial position trajectory that stays inside the corridor, visits all waypoints, and obeys dynamic limits. Since TOGT leaves yaw unconstrained, record the times when the position passes each waypoint and fit a C^2 cubic spline through the unwrapped waypoint yaws at those times to produce smooth pans.                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Methods Section -->
 
 <!-- Image carousel -->
 <!-- <section class="hero is-small">
@@ -574,6 +658,100 @@
 <!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
 
     <!-- End of Statcounter Code -->
+
+    <!-- Interactive Methods Styles -->
+    <style>
+      .method-step:hover {
+        background-color: #f0f8ff !important;
+      }
+      
+      .flowchart {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .flowchart-step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .flowchart-box {
+        background: linear-gradient(135deg, #3273dc, #4a9eff);
+        color: white;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 500;
+        text-align: center;
+        min-width: 150px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s ease;
+      }
+      
+      .flowchart-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      }
+      
+      .flowchart-arrow {
+        font-size: 1.5rem;
+        color: #3273dc;
+        font-weight: bold;
+        margin: 0.25rem 0;
+      }
+      
+      .visualization-content {
+        animation: slideDown 0.3s ease-out;
+      }
+      
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      
+      .method-step .icon i {
+        transition: transform 0.3s ease;
+      }
+      
+      .method-step.expanded .icon i {
+        transform: rotate(180deg);
+      }
+    </style>
+
+    <!-- Interactive Methods JavaScript -->
+    <script>
+      function toggleVisualization(type) {
+        const vizElement = document.getElementById(type + '-viz');
+        const stepElement = event.currentTarget;
+        
+        if (vizElement.style.display === 'none' || vizElement.style.display === '') {
+          // Close any other open visualizations
+          document.querySelectorAll('.visualization-content').forEach(el => {
+            if (el !== vizElement) {
+              el.style.display = 'none';
+              el.previousElementSibling.classList.remove('expanded');
+            }
+          });
+          
+          // Open this visualization
+          vizElement.style.display = 'block';
+          stepElement.classList.add('expanded');
+        } else {
+          // Close this visualization
+          vizElement.style.display = 'none';
+          stepElement.classList.remove('expanded');
+        }
+      }
+    </script>
 
   </body>
   </html>
