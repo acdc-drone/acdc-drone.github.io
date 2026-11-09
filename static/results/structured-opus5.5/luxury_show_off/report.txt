@@ -1,0 +1,101 @@
+# luxury_show_off — final report
+
+- **Prompt** (`luxury.txt`): “Can you create a drone tour of this house to show off to people.”
+- **Inputs**: mesh `210.glb` (refinement renders: original `artifacts/.../scene_meshes/210.glb`; final video: `scene_patch/scenes/210.glb`), bag `rosbag2_2025_09_07-15_03_41_0.mcap`
+- **Final trajectory CSV**: `final/luxury_show_off_optimized_path.csv` (4482 rows, same columns `t,x,y,z,q_x,q_y,q_z,q_w`, frame and 24 fps sampling as the saved `*_optimized_path.csv`)
+- **Final video**: `final/luxury_show_off_flythrough.mp4` — 960×540, 24/1 fps, 4482 frames, 80° FOV
+- **Seed vs refined views**: `final/seed_vs_refined.jpg`
+- **Saved ACDC video for comparison**: `artifacts/results_xhigh_25k_c8_togt/luxury/show_off/luxury_show_off_flythrough.mp4` (4870 frames)
+
+## Shot list (stage 1 output, in tour order) and stage-2 outcome
+
+| # | title | source frame | challenger wins / ties (of 100) | last accepted iter | moved from seed | yaw change |
+|---|---|---|---|---|---|---|
+| 1 | Terrace along the glass facade | `01_02_frame_000090.jpg` | 24 / 0 | 100 | 1.24 m | -26.5° |
+| 2 | Outdoor lounge daybed | `02_06_frame_000425.jpg` | 22 / 1 | 89 | 1.84 m | +13.3° |
+| 3 | Open glass doors into the living room | `03_28_frame_001020.jpg` | 26 / 0 | 100 | 1.17 m | -17.6° |
+| 4 | Grand living room | `04_33_frame_001070.jpg` | 26 / 0 | 93 | 1.39 m | -11.6° |
+| 5 | Sofa and artworks | `05_41_frame_001270.jpg` | 24 / 0 | 100 | 1.92 m | -6.5° |
+| 6 | Kitchen island | `06_73_frame_003155.jpg` | 38 / 0 | 100 | 1.70 m | -1.2° |
+| 7 | Gold kitchen | `07_51_frame_001715.jpg` | 25 / 0 | 95 | 0.67 m | -6.6° |
+| 8 | Backlit onyx wall | `08_59_frame_001955.jpg` | 22 / 0 | 100 | 1.51 m | +63.5° |
+| 9 | Gallery hallway | `09_66_frame_002570.jpg` | 17 / 0 | 96 | 0.58 m | +14.8° |
+| 10 | Guest bedroom | `10_85_frame_003670.jpg` | 26 / 0 | 100 | 0.35 m | +29.6° |
+| 11 | Stone bathroom | `11_89_frame_004045.jpg` | 19 / 0 | 100 | 0.35 m | +1.2° |
+| 12 | Primary bathroom | `12_100_frame_004990.jpg` | 25 / 1 | 100 | 0.25 m | -7.3° |
+| 13 | Primary bedroom to the garden | `13_103_frame_005040.jpg` | 31 / 0 | 97 | 0.56 m | -6.1° |
+| 14 | Primary bedroom | `14_111_frame_005390.jpg` | 20 / 1 | 98 | 0.63 m | +49.2° |
+
+<details><summary>Full shot descriptions (the text the VLM judged every comparison against)</summary>
+
+1. **Terrace along the glass facade** — A beautifully taken picture. Impressive and luxurious. On the wooden plank terrace looking along the villa: the floor-to-ceiling black-framed glass doors at rightmiddle, the white roof overhang at righttop, the green lawn and trees at leftmiddle, and the long wooden deck leading the eye to centermiddle.
+2. **Outdoor lounge daybed** — A beautifully taken picture. Impressive and luxurious. The large grey-cushioned outdoor daybed with orange-brown wooden frame at centerbottom on the wooden terrace, wooden lounge armchairs at rightmiddle, the lawn and trees at leftmiddle and the roof overhang at centertop.
+3. **Open glass doors into the living room** — A beautifully taken picture. Impressive and luxurious. From the terrace looking through the wide open glass doors at centermiddle into the bright living room with its white sofa and teal cushions, the wooden deck at centerbottom and the white roof edge at centertop.
+4. **Grand living room** — A beautifully taken picture. Impressive and luxurious. A long view of the open-plan living room: the long white sectional sofa with teal and orange cushions at rightmiddle, the teal velvet chaise at centerbottom, the wall-mounted TV over the white media console at leftmiddle, recessed lights and light cove along the ceiling at centertop, and the pale stone floor.
+5. **Sofa and artworks** — A beautifully taken picture. Impressive and luxurious. Facing the white sectional sofa with teal, orange and dark cushions at centermiddle, the large white plaster abstract artworks on the wall above at centertop, the low coffee table with vases at centerbottom and the striped wooden armchair at leftbottom.
+6. **Kitchen island** — A beautifully taken picture. Impressive and luxurious. The long kitchen island with its red-brown wood top and row of tall wooden bar stools at leftmiddle, the pale gold lacquered cabinets at lefttop, the living room sofa and teal chaise at rightmiddle and the hallway opening at centermiddle.
+7. **Gold kitchen** — A beautifully taken picture. Impressive and luxurious. Looking along the kitchen: long runs of pale gold lacquered cabinets at leftmiddle and rightmiddle, the red-brown wood counter at rightbottom, built-in ovens in the tall units at lefttop and the pale floor leading to centermiddle.
+8. **Backlit onyx wall** — A beautifully taken picture. Impressive and luxurious. The glowing backlit onyx stone wall with gold veining at rightmiddle, the wood-veneered column at centermiddle, and the bright living room with the garden visible at leftmiddle.
+9. **Gallery hallway** — A beautifully taken picture. Impressive and luxurious. Looking straight down the long minimalist hallway: tall wood-veneer doors with black frames at rightmiddle, black-and-white framed photographs on the leftmiddle wall, spotlights along the ceiling at centertop and the door at the end at centermiddle.
+10. **Guest bedroom** — A beautifully taken picture. Impressive and luxurious. The guest bedroom: the beds with tall upholstered grey headboard at centermiddle, light wood floor at centerbottom, the wooden desk and chair at rightmiddle and the large window with dark curtains and greenery at righttop.
+11. **Stone bathroom** — A beautifully taken picture. Impressive and luxurious. The dark grey stone bathroom: the stone counter with black rectangular vessel sink at centermiddle above a white cabinet at centerbottom, the glass shower at rightmiddle and recessed ceiling lights at centertop.
+12. **Primary bathroom** — A beautifully taken picture. Impressive and luxurious. The primary bathroom in glossy black stone: the bathtub at leftbottom, the long dark vanity with round mirror and lamp at centermiddle, striped window blinds at lefttop and a light floor at centerbottom.
+13. **Primary bedroom to the garden** — A beautifully taken picture. Impressive and luxurious. From inside the primary bedroom looking out: the sliding glass doors at centermiddle opening onto the wooden deck and the green planted garden wall, the white bed at leftbottom and the sheer curtains at lefttop.
+14. **Primary bedroom** — A beautifully taken picture. Impressive and luxurious. The primary bedroom: the large low white bed at centerbottom, the wooden headboard wall unit at centermiddle, white sheer curtains at rightmiddle and the wall of glass doors opening onto the wooden deck and lush green garden at righttop.
+
+</details>
+
+## How each stage went
+
+**Stage 1 — semantic shot planning and seed retrieval.**
+- Environment description: `stage1/luxury/environment_description.txt` (I wrote it from the 64 time-ordered frames that `OpenAIToolkit._video_frames` samples, viewed as 4 contact sheets; `stage1/luxury/env_frames/`). Shared by both runs of the scene (same video, same prompt).
+- Waypoint descriptions: `runs/luxury_show_off/stage1/waypoints.json` — 15 descriptions written to `Utils.WAYPOINT_SCHEMA` (9-grid placement, ‘A beautifully taken picture.’ prefix).
+- Retrieval: SigLIP2 text embeddings (`stage1/text_embeddings.npy`) vs the precomputed RADIO/SigLIP2 frame embeddings of the bag, frame stride 5, top-8 per description, de-duplicated → candidates exported from the MCAP with poses by the bundle's `export_selected_frames_from_mcap` (`stage1/retrieval.json`, `stage1/selected_frames/`).
+- Select & sort: I viewed all exported candidates (`stage1/selection_sheets/`) and answered in the `select_frames` JSON schema (`stage1/selection_response.json`); 14 shots kept, omitted description ids [6]. Seeds = recorded position + yaw of each selected frame; recorded pitch/roll discarded (`stage1/seeds.json`).
+
+**Stage 2 — visual preference refinement.**
+- 1400 pairwise comparisons in total (B = 100 per shot, M = 64 candidates, ρ_trans = 1 m, ρ_rot = 30°, GP kernel l_rot = 15°, l_trans = 0.5 m, σ_f = 1, jitter 1e-6, Laplace/Bradley–Terry posterior and dueling Thompson sampling from `pose_main.py`).
+- Challenger accepted 345 times, ties ({3}, no pair added — code behaviour) 3 times. Mean displacement from seed 1.01 m (max 1.92 m); mean |yaw change| 18.2°.
+- Every comparison is recorded: the exact sheet image I judged (`sheets/luxury/round_*.jpg`), the answers I gave (`answers/luxury/rNNN.json`), and per shot `runs/luxury_show_off/stage2/wp_XX/state.json` (all poses, pairs, Thompson-sampling info, displayed left/right order, decision, incumbent after each step). Refined poses: `stage2/all_best_results.json` (degrees).
+
+**Stage 3 — physical trajectory generation** (bundle `run_paper_scenes.py --resume --skip-video --poses-json ... --pose-angle-unit degrees`, i.e. the unchanged A* → tunnel → TOGT → validation path).
+- A* path 478 points; TOGT duration 186.7 s, path length 106.7 m; bundle validation passed; no re-optimisation needed.
+- Camera orientation: the runner’s RotationSpline through the refined yaw-only orientations at the actual gate arrival times (for pure-yaw rotations this is a C² cubic interpolation of the unwrapped yaw, as in the paper).
+- Video: `tools/render_final.py` → `scene_patch/renderer/render_patched_flythrough.py` (unchanged) with `render_settings.json`, patched mesh, same unsharp mask and libx264 CRF 18 encode as `make_video.py`.
+
+## Deviations from ACDC’s design (and why)
+
+- **VLM**: every VLM call (environment description, waypoint generation, frame select/sort, 100 comparisons per shot) was made by me (Claude Opus 5.5) from the same inputs, instead of `gpt-6-astra`. Images were shown to me as labelled contact sheets (64 env frames at 480×270; candidates at 480×270; each comparison pair at 400×225 per image, six pairs per sheet) rather than one API request per call at 960 px; the decision format is the code’s (1/2/3). Left/right order of incumbent vs challenger was randomised per pair and mapped back to the code’s `compare_images(best, cand)` contract.
+- **Number of shots**: 15 descriptions → 14 shots, against 41 shots in the saved ACDC run. I wrote the descriptions after estimating the cost of 100 comparisons per shot, so I cannot rule out that this pushed me towards fewer shots than `gpt-6-astra` produced under the same “more waypoints is better” prompt.
+- **Refinement search space follows the paper, not `pose_main.py`’s sampler**: yaw-only perturbation (Δθ ~ U[−30°, 30°]) plus translation u ~ U(S²), r ~ U[0, 1 m], height clamped to [0.3, 2.5] m (my choice; the paper gives no z-range), roll = pitch = 0. The code’s `_sample_orientation_near` rotates about a random 3-D axis (introducing roll/pitch) and `refine_poses.py` uses 32 candidates; the paper specifies yaw-only, M = 64. The GP, Laplace update, Thompson draw and the tie rule are the code’s functions (kernel evaluated vectorised from iteration 99 of cottage onward, numerically identical to 1e-16).
+- **Refinement renderer**: a persistent Blender process with exactly the capture settings of `render_blender_flythrough.py` (960×540, 8 spp, 80° FOV, flat 0.05 grey world, original mesh), on GPU instead of CPU, so the mesh is loaded once instead of per image. Restaurant used the original mesh under my 1.5 GB cap; luxury ran through the shared heavy queue.
+- **Text encoder**: the RADIO SigLIP2 adaptor’s text tower (`google/siglip2-so400m-patch16-naflex` `text_model`, the 1152-d space of the saved frame embeddings) loaded on its own in fp16 (streamed per tensor; only the needed token-embedding rows on GPU) because the full RADIO checkpoint does not fit the 2 GB cap. Tokenisation copied verbatim from `siglip2_adaptor.py`. The weights were deleted afterwards for the disk limit (re-fetch with `tools/fetch_siglip2_text.py`).
+- **Candidates per description**: 8 (paper and the saved c8 runs) rather than the code default of 3.
+- **Disk limit (FEEDBACK 03:25)**: after each scene finished, the full-resolution per-candidate refinement renders were deleted except the seed and the final incumbent; every judged pair is still kept as the sheet image I actually saw, and all poses are in `state.json`, so any render can be regenerated. Exported candidate frames were re-encoded PNG→JPEG q92.
+- **Final video render** streamed in 300-frame chunks (PNG chunks deleted after encoding) instead of writing all frames first; same renderer and settings.
+
+## Checks (reported, not fixed)
+
+| trajectory | bundle `validate_trajectory` | daju limits (speed ≤ 1.0 m/s, tilt ≤ 30°, thrust 0.1–7.2 N/motor, ω_xy ≤ 10.23, ω_z ≤ 3.00 rad/s) | clearance ≥ 0.3 m to occupied voxels | roll = 0 | |pitch| ≤ 25° |
+|---|---|---|---|---|---|
+| **this final** | PASS (occupied samples 0, gate err 0.0076 m) | **FAIL**: speed max 1.045 m/s (3.9 s above 1.0); tilt max 3.8°; thrust/motor 2.04–2.17 N; ω_xy 0.06, ω_z 0.37 rad/s | **FAIL**: min 0.031 m; 44% of flight time < 0.3 m | PASS (max |roll| 0°) | PASS (max |pitch| 0.00°) |
+| saved ACDC | PASS (occupied samples 0, gate err 0.0099 m) | **FAIL**: speed max 1.082 m/s (2.6 s above 1.0); tilt max 3.7°; thrust/motor 2.02–2.17 N; ω_xy 0.05, ω_z 2.37 rad/s | **FAIL**: min 0.040 m; 41% of flight time < 0.3 m | **FAIL** (max |roll| 7.75°) | PASS (max |pitch| 21.04°) |
+
+Notes: clearance is the distance from the trajectory centreline (sampled every 5 ms) to the surface of the nearest occupied 0.2 m voxel of the same occupancy grid the planner used. ACDC’s tunnel margins are 0.01 m and its validator only checks that the centreline is not inside an occupied voxel, so ≥ 0.3 m is not something the design aims for. TOGT treats the 1 m/s limit as a soft penalty (the bundle itself records `velocity_limit_is_soft_penalty: true`). Camera roll/pitch are those of the exported CSV quaternions; body tilt/thrust/rates are derived from the TOGT polynomial with the drolib flatness convention.
+
+## Comparison with the saved ACDC output
+
+| | this final | saved ACDC (`results_xhigh_25k_c8_togt`) |
+|---|---|---|
+| shots | 14 (refined, B = 100) | 41 (recorded poses, no pose refinement — paper’s evidence audit) |
+| duration / path length | 186.7 s / 106.7 m | 202.9 s / 105.2 m |
+| video frames | 4482 | 4870 |
+| camera roll/pitch | 0 / 0 (yaw-only shots, paper) | recorded handheld roll/pitch kept by the RotationSpline |
+| renderer | patched mesh + improved renderer (256 spp, gradient background) | original mesh, 8 spp, flat grey background |
+
+## Main flaws I saw
+
+- Opens on the terrace, where the exterior is unscanned: torn roof and garden geometry and gradient sky are visible, especially in the first ~15 s.
+- The gallery-hallway section spends several seconds on near-blank wood-veneer wall close-ups.
+- The longest run (186.7 s), longer than its 14 shots need, because the A* route runs out and back along the terrace and through the hallway.
+

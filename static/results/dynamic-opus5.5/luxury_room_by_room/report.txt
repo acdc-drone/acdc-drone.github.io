@@ -1,0 +1,46 @@
+# luxury_room_by_room — final report
+
+**Prompt:** "Begin in the grand foyer. Pan left into the Formal Dining Room, pan right into the Piano Room, then re-center and move forward past the staircase into the two-story Great Room. From the Great Room, turn left into the open Kitchen and Breakfast Nook. From the Great Room again, turn right into the Primary Bedroom Suite, continue through the bath into the walk-in closet, then return to the grand foyer."
+**Final:** `luxury_room_by_room_flythrough.mp4` from `iter04` (published 2026-10-30T18:27), trajectory `luxury_room_by_room_optimized_path.csv` (same columns and frame as the baseline's `*_optimized_path.csv`). Earlier finals are in `../final_history/`.
+**Baseline:** `artifacts/results_xhigh_25k_c8_togt/luxury/room_by_room/luxury_room_by_room_flythrough.mp4`
+**Video:** 960x540, 24/1 fps, 2312 frames (decoded and counted). 80° FOV, rendered with the patched mesh and the scene_patch render settings.
+
+## How I read the prompt (and what this house allows)
+The prompt describes a floor plan (grand foyer, formal dining room, piano room, staircase, two-storey great room, kitchen and breakfast nook, primary suite with bath and walk-in closet) that does not match this scan. The scanned house is single-storey (ceiling ≈2.5–2.7 m) with no staircase or piano room. With 0.3 m clearance, only the great room, the kitchen and the terraces can be reached. I kept the prompt's **sequence and camera grammar** and mapped each step to the closest real space:
+1. **"Grand foyer":** start at the great room's east entrance, next to the passage from the lobby. Hold, **pan left** to the dining area by the west glazing, **pan right** to the lounge/TV wall, then **re-centre**.
+2. **"Move forward into the Great Room":** a slow glide to the centre of the great room, with views of the sofa and art wall and the TV wall.
+3. **"Turn left into the open Kitchen and Breakfast Nook":** turn and fly into the kitchen, with a hold on the island and table.
+4. **"From the Great Room again, turn right into the Primary Bedroom Suite → bath → walk-in closet":** **not reachable**, because the bedroom-wing doorways have 0–0.25 m clearance. The camera returns to the great room and stops at the foyer to look down the bedroom corridor. A terrace-based view of the bedrooms through their glass walls was tried (iter01) and rejected: reflections, a person scanned into the glass, torn geometry.
+5. **"Return to the grand foyer":** end on the starting view.
+
+## Compared with the baseline
+The baseline (90 s) reaches more rooms, but only by exceeding the limits: up to 1.06 m/s, roll up to 7°, yaw rates up to 266°/s, closer than 0.3 m in 32% of frames. The near-field critic flags 38% of its frames as blocked within 0.8 m. Ours follows the prompt's order and moves (pan left, pan right, re-centre, forward, turn into kitchen, return), stays within every limit, and has no blocked frames.
+
+## Remaining flaws
+- The bedroom suite, bath and closet are only indicated by a look down the corridor, not toured.
+- There is no real foyer, dining room or piano room; these are mapped to areas of the great room.
+- The foyer pans are modest (±25–35°), because the room geometry offers no strongly distinct left and right rooms.
+
+
+## Feasibility (measured)
+- Bundle `validate_trajectory`: **passed** (20215 samples, 0 occupied, 0 outside the grid, max continuity gap 3.7e-15).
+- Speed max 0.40 m/s (hard limit 1.0). Acceleration max 0.52 m/s², tilt max 3.0° (limit 30°).
+- Per-motor thrust 2.10–2.10 N (limits 0.1–7.2). ω_xy max 0.80 rad/s (limit 10.2). Yaw rate max 25.0°/s (limit 172°/s).
+- Camera roll 0 everywhere; pitch 2.4° to 8.8° (limit ±25°).
+- Clearance: min distance to occupied voxel cubes **0.407 m** (union of the bundle grid and the patched-mesh voxels). Against the bundle grid alone: 0.407 m. Required ≥ 0.3 m.
+- Overall: **FEASIBLE**.
+
+## Measured comparison with the baseline (same metric code for both)
+| | ours | baseline |
+|---|---|---|
+| duration / path length | 96.3 s / 21.1 m | 90.4 s / 51.3 m |
+| max speed | 0.4 m/s | 1.056 m/s |
+| max \|roll\| | 0.0° | 6.9° |
+| pitch range | 2.4° to 8.8° | 2.8° to 19.3° |
+| frames with \|pitch\| > 25° | 0% | 0% |
+| max yaw rate | 25.0°/s | 265.8°/s |
+| 95th-percentile camera rotation speed | 23.8°/s | 45.0°/s |
+| min clearance (voxel cubes) | 0.407 m | 0.091 m |
+| frames closer than 0.3 m | 0% | 32% |
+
+Near-field critic (fraction of frames where >25% of the view is blocked within 0.8 m): ours: mean near-frac 0.008, frames >25% near 0.0%; baseline: mean near-frac 0.204, frames >25% near 38.4%

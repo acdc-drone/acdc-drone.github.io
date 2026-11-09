@@ -1,0 +1,13 @@
+# cottage_cozy final report
+
+**Prompt interpretation.** A complete house tour with a cozy emphasis on the living and dining spaces.
+
+**Comparison with baseline.** The final follows the baseline's visit order where the clearance rule permits. Duration is 114.7 s versus 119.3 s. The final's measured top speed is 0.798 m/s versus 1.101 m/s; minimum 0.01 s sampled distance to occupied voxel centers is 0.315 m versus 0.170 m. Camera roll is 0° (baseline peak 60.5°); pitch stays within ±24.0° (baseline peak 56.0°). Peak camera yaw rate is 2.28 versus 4.16 rad/s. The final uses the patched mesh and renderer background at the baseline 960×540, 24 fps, 80° FOV. Its 512 px texture copy fits the resource cap but loses some fine detail compared with the original 2048 px textures.
+
+**Checks.** The bundle's `validate_trajectory` passed with 35 explicit safe-route shot gates. Independent 0.01 s sampling found 0.315 m minimum voxel-center clearance; a speed-based bound between samples is 0.311 m. Maximum body tilt was 6.9°, the upper bound on body XY rate was 1.07 rad/s, peak camera yaw rate was 2.28 rad/s, and the estimated motor-thrust envelope was 0.99–3.21 N. The 2755-frame video was fully decoded after chunk concatenation. Visual review before full rendering used the [preview contact sheet](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/tmp/cottage_cozy_iter06_preview.jpg). Sim-to-real behavior was not tested.
+
+**Remaining flaws.** The safe route stays in the main connected open area; the bedroom and baths are not convincingly covered. At 0.1 m planning resolution, the original shot locations lie in three separate clearance-safe components. The largest displacement from a sampled baseline route anchor to this clearance-safe route was 4.47 m.
+
+Baseline video: /home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/cottage/cozy/cottage_cozy_flythrough.mp4
+
+I inspected a [12-frame contact sheet from the completed video](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/reports/final_contacts/cottage_cozy.jpg). It shows coherent living, entry, dining, and kitchen views; a few close wall views remain. The baseline covers more of the house, so this final loses some prompt coverage while meeting the clearance rule.

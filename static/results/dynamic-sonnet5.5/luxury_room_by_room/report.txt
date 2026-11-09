@@ -1,0 +1,29 @@
+# luxury_room_by_room
+
+## How the prompt was interpreted
+Ordered room list from the prompt. The 210 scan is an apartment with NO formal dining room, piano room or staircase, so nearest real spaces stand in: foyer = entrance hall; 'pan left/right' = pans at the hall end toward the kitchen side and lounge side; Great Room = living room; Kitchen = open kitchen; Primary Bedroom Suite = bedroom with white bed; bath = dark-marble bath; walk-in closet = the vanity/dressing area by the en-suite tub; then return to the foyer. This substitution is a known mismatch with the prompt text.
+
+## Final trajectory (measured)
+- Duration 220.0 s, 5281 frames (24 fps, 960x540, 80 deg FOV), path length 84.1 m.
+- Bundle `validate_trajectory`: passed = True (0 occupied voxels, 0 outside grid; gate error ~0).
+- Max speed 0.65 m/s (limit 1.0), max accel 0.44 m/s2, max tilt 2.6 deg, thrust/mass 9.8-9.8 m/s2 (daju limits: tilt 30 deg).
+- Camera: roll 2.5e-14 deg (exactly 0), max |pitch| 15.1 deg, max yaw rate 26 deg/s (limit 3.0 rad/s).
+- Clearance: min surface distance 0.31 m; min distance to occupied voxel centre 0.19 m; to voxel box 0.05 m.
+  **The 0.3 m voxel clearance requirement is NOT fully met:** 5.3% of samples are below 0.3 m voxel-centre distance, only in passages that are physically ~0.6-1.0 m wide in the scan.
+
+## Versus baseline ACDC
+| metric | final | baseline |
+|---|---|---|
+| duration (s) | 220.0 | 90.4 |
+| max speed (m/s) | 0.65 | 1.06 |
+| max |roll| (deg) | 2.5e-14 | 6.9 |
+| max |pitch| (deg) | 15.1 | 19.3 |
+| min voxel-centre clearance (m) | 0.19 | 0.14 |
+| path length (m) | 84.1 | 51.3 |
+
+## Rendering
+scene_patch meshes and renderer script (copied with one speed-up: Cycles on CPU, 12 samples/pixel instead of 256, because GPU rendering does not fit the 1.5 GB VRAM limit; 12 spp measured ~49 dB PSNR vs 256 spp on test frames), same camera/FOV/resolution/fps, mild unsharp mask as in the patched pipeline, libx264 CRF 18.
+
+## Remaining flaws
+Mismatch of named rooms (above). Long return path (~40 s). Narrow wood-panel corridors below 0.3 m voxel-centre clearance.
+Visual review was done on contact sheets (frames every 1.5-5 s), not frame-by-frame.

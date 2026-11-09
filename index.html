@@ -1,757 +1,89 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Primary Meta Tags -->
-  <!-- TODO: Replace with your paper title and author names -->
-  <meta name="title" content="ACDC">
-  <!-- TODO: Write a compelling 150-160 character description of your research -->
-  <meta name="description" content="Agentic Aerial Cinematography: From Dialogue Cues to Cinematic Trajectories">
-  <!-- TODO: Add 5-10 relevant keywords for your research area -->
-  <meta name="keywords" content="AI-Enabled Robotics, Aerial Systems: Perception and Autonomy, Semantic Scene Understanding">
-  <!-- TODO: List all authors -->
-  <meta name="author" content="Anonymous">
-  <meta name="robots" content="index, follow">
-  <meta name="language" content="English">
-  
-  <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="article">
-  <!-- TODO: Replace with your institution or lab name -->
-  <meta property="og:site_name" content="INSTITUTION_OR_LAB_NAME">
-  <!-- TODO: Same as paper title above -->
-  <meta property="og:title" content="Agentic Aerial Cinematography: From Dialogue Cues to Cinematic Trajectories">
-  <!-- TODO: Same as description above -->
-  <meta property="og:description" content="Autonomous Drone Ciematography Agent">
-  <!-- TODO: Replace with your actual website URL -->
-  <meta property="og:url" content="https://acdc-drone.github.io">
-  <!-- TODO: Create a 1200x630px preview image and update path -->
-  <meta property="og:image" content="https://acdc-drone.github.io/static/images/social_preview.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
-  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
-  <meta property="article:author" content="FIRST_AUTHOR_NAME">
-  <meta property="article:section" content="Research">
-  <meta property="article:tag" content="KEYWORD1">
-  <meta property="article:tag" content="KEYWORD2">
-
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image">
-  <!-- TODO: Replace with your lab/institution Twitter handle -->
-  <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
-  <!-- TODO: Replace with first author's Twitter handle -->
-  <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE">
-  <!-- TODO: Same as paper title above -->
-  <meta name="twitter:title" content="PAPER_TITLE">
-  <!-- TODO: Same as description above -->
-  <meta name="twitter:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
-  <!-- TODO: Same as social preview image above -->
-  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
-  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview">
-
-  <!-- Academic/Research Specific -->
-  <meta name="citation_title" content="PAPER_TITLE">
-  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
-  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
-  <meta name="citation_publication_date" content="2024">
-  <meta name="citation_conference_title" content="CONFERENCE_NAME">
-  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
-  
-  <!-- Additional SEO -->
-  <meta name="theme-color" content="#2563eb">
-  <meta name="msapplication-TileColor" content="#2563eb">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  
-  <!-- Preconnect for performance -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://ajax.googleapis.com">
-  <link rel="preconnect" href="https://documentcloud.adobe.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
-
-
-  <!-- TODO: Replace with your paper title and authors -->
-  <title>Agentic Aerial Cinematography: From Dialogue Cues to Cinematic Trajectories</title>
-  
-  <!-- Favicon and App Icons -->
-  <link rel="icon" type="image/x-icon" href="static/images/Frame 1 (1) (1).ico">
-  <link rel="apple-touch-icon" href="static/images/Frame 1 (1) (1).ico">
-  
-  <!-- Critical CSS - Load synchronously -->
-  <link rel="stylesheet" href="static/css/bulma.min.css">
-  <link rel="stylesheet" href="static/css/index.css">
-  
-  <!-- Non-critical CSS - Load asynchronously -->
-  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  
-  <!-- Fallback for browsers that don't support preload -->
-  <noscript>
-    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  </noscript>
-  
-  <!-- Fonts - Optimized loading -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Defer non-critical JavaScript -->
-  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
-  <script defer src="static/js/fontawesome.all.min.js"></script>
-  <script defer src="static/js/bulma-carousel.min.js"></script>
-  <script defer src="static/js/bulma-slider.min.js"></script>
-  <script defer src="static/js/index.js"></script>
-  
-  <!-- Structured Data for Academic Papers -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ScholarlyArticle",
-    "headline": "Agentic Aerial Cinematography: From Dialogue Cues to Cinematic Trajectories",
-    "description": "Autonomous Drone Ciematography Agent",
-    "author": [
-      {
-        "@type": "Person",
-        "name": "Anonymous",
-        "affiliation": {
-          "@type": "Organization",
-          "name": "Anonymous"
-        }
-      }
-    ],
-    "datePublished": "2024-01-01",
-    "publisher": {
-      "@type": "Organization",
-      "name": "CONFERENCE_OR_JOURNAL_NAME"
-    },
-    "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
-    "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
-    "keywords": ["KEYWORD1", "KEYWORD2", "KEYWORD3", "machine learning", "computer vision"],
-    "abstract": "FULL_ABSTRACT_TEXT_HERE",
-    "citation": "BIBTEX_CITATION_HERE",
-    "isAccessibleForFree": true,
-    "license": "https://creativecommons.org/licenses/by/4.0/",
-    "mainEntity": {
-      "@type": "WebPage",
-      "@id": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"
-    },
-    "about": [
-      {
-        "@type": "Thing",
-        "name": "RESEARCH_AREA_1"
-      },
-      {
-        "@type": "Thing", 
-        "name": "RESEARCH_AREA_2"
-      }
-    ]
-  }
-  </script>
-  
-  <!-- Website/Organization Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "INSTITUTION_OR_LAB_NAME",
-    "url": "https://YOUR_INSTITUTION_WEBSITE.com",
-    "logo": "https://YOUR_DOMAIN.com/static/images/favicon.ico",
-    "sameAs": [
-      "https://twitter.com/YOUR_TWITTER_HANDLE",
-      "https://github.com/YOUR_GITHUB_USERNAME"
-    ]
-  }
-  </script>
-</head>
-<body>
-
-
-  <!-- Scroll to Top Button -->
-  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
-    <i class="fas fa-chevron-up"></i>
-  </button>
-
-  <!-- More Works Dropdown -->
-  <!-- <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
-      <i class="fas fa-flask"></i>
-      More Works
-      <i class="fas fa-chevron-down dropdown-arrow"></i>
-    </button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header">
-        <h4>More Works from Our Lab</h4>
-        <button class="close-btn" onclick="toggleMoreWorks()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="works-list">
-        <a href="https://arxiv.org/abs/PAPER1" class="work-item" target="_blank">
-          <div class="work-info">
-            <h5>Paper Title 1</h5>
-            <p>Brief description of the work and its main contribution.</p>
-            <span class="work-venue">Conference/Journal 2024</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <a href="https://arxiv.org/abs/PAPER_ID_2" class="work-item" target="_blank">
-          <div class="work-info">
-            <h5>Paper Title 2</h5>
-            <p>Brief description of the work and its main contribution.</p>
-            <span class="work-venue">Conference/Journal 2023</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <a href="https://arxiv.org/abs/PAPER_ID_3" class="work-item" target="_blank">
-          <div class="work-info">
-            <h5>Paper Title 3</h5>
-            <p>Brief description of the work and its main contribution.</p>
-            <span class="work-venue">Conference/Journal 2023</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-      </div>
-    </div>
-  </div> -->
-
-  <main id="main-content">
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title">Agentic Aerial Cinematography: From Dialogue Cues to Cinematic Trajectories</h1>
-<!--               <div class="is-size-5 publication-authors">
-              <span class="author-block">
-                <a href="https://acdc-drone.github.io/" target="_blank">Anonymous</a><sup>*</sup>,</span>
-                <span class="author-block">
-                  <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Second Author</a><sup>*</sup>,</span>
-                  <span class="author-block">
-                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Third Author</a>
-                  </span>
-                  </div> -->
-
-                  <div class="is-size-5 publication-authors">
-                    <span class="author-block">Submitted to ICRA 2026</span>
-<!--                     <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span> -->
-                  </div>
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                         <!-- TODO: Update with your arXiv paper ID -->
-
-
-                    <!-- <span class="link-block">
-                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
-                      class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                        <i class="fas fa-file-pdf"></i>
-                      </span>
-                      <span>Supplementary</span>
-                    </a>
-                  </span>  -->
-
-                  <!-- TODO: Replace with your GitHub repository URL -->
-                   <!-- https://github.com/acdc-drone -->
-                  <span class="link-block">
-                    <a href="" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark"
-                    style="pointer-events: none; opacity: 0.6; cursor: not-allowed;"
-                    tabindex="-1"
-                    aria-disabled="true">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
-                    <span>Code (Coming Soon)</span>
-                  </a>
-                </span>
-
-                <!-- TODO: Update with your arXiv paper ID -->
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<!-- Teaser video-->
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- TODO: Replace with your teaser video -->
-      <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
-        <!-- TODO: Add your video file path here -->
-        <source src="static/videos/ddc_final-GitHub.mp4" type="video/mp4">
-        <script>
-          // Disable autoplay for the teaser video
-          document.addEventListener("DOMContentLoaded", function() {
-            var teaser = document.getElementById("tree");
-            if (teaser) {
-              teaser.autoplay = false;
-              teaser.removeAttribute("autoplay");
-            }
-          });
-        </script>
-      </video>
-      <!-- TODO: Replace with your video description -->
-      <h2 class="subtitle has-text-centered" style="margin-top: 0.5em;">
-        ACDC uses large language models and vision foundation models to convert free-form natural language prompts directly into executable indoor UAV video tours  to enable fully autonomous drone cinematography. 
-      </h2>
-    </div>
-  </div>
-</section>
-<!-- End teaser video -->
-
-<!-- Paper abstract -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <!-- <div class="column is-three-quarters"> -->
-        <!-- <div class="column is-four-fifths"> -->
-        <div class="column is-one-thirds">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            We present Agentic Aerial Cinematography: From Dialogue Cues to Cinematic Trajectories (ACDC), an autonomous drone cinematography system driven by natural language communication between human directors and drones. The main limitation of previous drone cinematography workflows is that they require manual selection of waypoints and view angles based on predefined human intent, which is labor-intensive and yields inconsistent performance. In this paper, we propose employing large language models (LLMs) and vision foundation models (VFMs) to convert free-form natural language prompts directly into executable indoor UAV video tours. Specifically, our method comprises a vision-language retrieval pipeline for initial waypoint selection, a preference-based Bayesian optimization framework that refines poses using aesthetic feedback, and a motion planner that generates safe quadrotor trajectories. We validate ACDC through both simulation and hardware-in-the-loop experiments, demonstrating that it robustly produces professional-quality footage across diverse indoor scenes without requiring expertise in robotics or cinematography. These results highlight the potential of embodied AI agents to close the loop from open-vocabulary dialogue to real-world autonomous aerial cinematography.
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End paper abstract -->
-
-<!-- Methods Section -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3" style="margin-top: 0.3em; text-align: center;">Methods</h2>
-      <div class="columns is-centered">
-        <div class="column is-four-fifths">
-          <div class="content has-text-centered">
-            <img src="static/images/figures-main-agent-website.png" alt="ACDC Methods Overview" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
-          </div>
-        </div>
-      </div>
-      
-      <div class="columns is-centered">
-        <div class="column is-four-fifths">
-          <div class="content">
-            <p class="has-text-centered" style="font-size: 1.1em; line-height: 1.6; margin-top: 2rem;">
-              Given a natural-language prompt, an exploratory video, and a photorealistic 3D reconstruction, 
-              <strong>ACDC</strong> follows a three-stage approach:
-            </p>
-            
-            <div class="columns is-centered" style="margin-top: 1.5rem;">
-              <div class="column is-12">
-                <div class="box" style="background-color: #f8f9fa; border-left: 4px solid #3273dc;">
-                  <div class="content">
-                    <ol style="margin-left: 1rem;">
-                      <li style="margin-bottom: 0.8rem;">
-                        <div class="method-step" onclick="toggleVisualization('waypoint')" style="cursor: pointer; padding: 0.5rem; border-radius: 4px; transition: background-color 0.3s; display: flex; align-items: center;">
-                          <span class="icon is-small" style="margin-right: 0.5rem;">
-                            <i class="fas fa-chevron-down"></i>
-                          </span>
-                          <div>
-                            <strong>Waypoint Retrieval:</strong> Retrieves and orders initial waypoints via vision–language similarity 
-                          </div>
-                        </div>
-                        <div id="waypoint-viz" class="visualization-content" style="display: none; margin-top: 1rem; padding: 1rem; background-color: #ffffff; border-radius: 8px; border: 1px solid #e1e5e9;">
-                          <div class="has-text-centered">
-                            <img src="static/images/figures-main-select&sort.png" alt="Waypoint Retrieval Process" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                          </div>
-                        </div>
-                      </li>
-                      <li style="margin-bottom: 0.8rem;">
-                        <div class="method-step" onclick="toggleVisualization('pose')" style="cursor: pointer; padding: 0.5rem; border-radius: 4px; transition: background-color 0.3s; display: flex; align-items: center;">
-                          <span class="icon is-small" style="margin-right: 0.5rem;">
-                            <i class="fas fa-chevron-down"></i>
-                          </span>
-                          <div>
-                            <strong>Pose Refinement:</strong> Refines each pose with preference-based Bayesian optimization 
-                          </div>
-                        </div>
-                        <div id="pose-viz" class="visualization-content" style="display: none; margin-top: 1rem; padding: 1rem; background-color: #ffffff; border-radius: 8px; border: 1px solid #e1e5e9;">
-                          <div class="has-text-centered">
-                            <img src="static/images/figures-main-refinement.png" alt="Pose Refinement Process" style="max-width: 100%; height: auto; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div class="method-step" onclick="toggleVisualization('trajectory')" style="cursor: pointer; padding: 0.5rem; border-radius: 4px; transition: background-color 0.3s; display: flex; align-items: center;">
-                          <span class="icon is-small" style="margin-right: 0.5rem;">
-                            <i class="fas fa-chevron-down"></i>
-                          </span>
-                          <div>
-                            <strong>Trajectory Generation:</strong> Generates a smooth, collision-free, dynamically feasible quadrotor trajectory for execution
-                          </div>
-                        </div>
-                        <div id="trajectory-viz" class="visualization-content" style="display: none; margin-top: 1rem; padding: 1rem; background-color: #ffffff; border-radius: 8px; border: 1px solid #e1e5e9;">
-                          <div class="content">
-                            <p style="font-size: 1em; line-height: 1.6; text-align: justify;">
-                              This section turns refined waypoints and a voxel traversability map into a time-parameterized, collision-free quadrotor trajectory in three steps. (1) <strong>Path extraction</strong>: run A* on the free-voxel graph to connect the waypoint positions in order, producing a collision-free polyline that visits each waypoint. (2) <strong>Corridor building</strong>: for each polyline segment, define a local orthonormal frame, measure the segment length, and inflate a rectangular box around it using a distance transform with a safety margin; the sequence of boxes forms a rectangular tunnel corridor, so any curve inside it is collision-free. (3) <strong>Time-optimal planning</strong>: treat each box as an oriented gate and use TOGT to find a continuous, piecewise-polynomial position trajectory that stays inside the corridor, visits all waypoints, and obeys dynamic limits. Since TOGT leaves yaw unconstrained, record the times when the position passes each waypoint and fit a C^2 cubic spline through the unwrapped waypoint yaws at those times to produce smooth pans.                            </p>
-                          </div>
-                        </div>
-                      </li>
-                    </ol>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Methods Section -->
-
-<!-- Image carousel -->
-<!-- <section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-       <div class="item">
-        <img src="static/images/carousel1.jpg" alt="First research result visualization" loading="lazy"/>
-        <h2 class="subtitle has-text-centered">
-          First image description.
-        </h2>
-      </div>
-      <div class="item">
-        <img src="static/images/carousel2.jpg" alt="Second research result visualization" loading="lazy"/>
-        <h2 class="subtitle has-text-centered">
-          Second image description.
-        </h2>
-      </div>
-      <div class="item">
-        <img src="static/images/carousel3.jpg" alt="Third research result visualization" loading="lazy"/>
-        <h2 class="subtitle has-text-centered">
-         Third image description.
-       </h2>
-     </div>
-     <div class="item">
-      <img src="static/images/carousel4.jpg" alt="Fourth research result visualization" loading="lazy"/>
-      <h2 class="subtitle has-text-centered">
-        Fourth image description.
-      </h2>
-    </div>
-  </div>
+<!doctype html>
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ACDC — From dialogue cues to cinematic trajectories</title>
+<meta name="description" content="One cinematic intent. Two ways to plan the flight. Explore real ACDC results across defined and agent-directed workflows, four models, and six tasks.">
+<meta name="theme-color" content="#f4f6f3"><link rel="canonical" href="https://acdc-drone.github.io/">
+<link rel="icon" href="static/images/acdc-mark.svg" type="image/svg+xml">
+<meta property="og:title" content="ACDC · One intent. Two ways to direct the flight.">
+<meta property="og:description" content="Compare defined and agent-directed drone cinematography with 48 real rendered tours.">
+<meta property="og:image" content="https://acdc-drone.github.io/static/results/dynamic-astra6/restaurant_food_inspector/poster.jpg">
+<meta name="citation_title" content="Agentic Aerial Cinematography: From Dialogue Cues to Cinematic Trajectories">
+<meta name="citation_pdf_url" content="https://acdc-drone.github.io/static/pdfs/acdc-paper.pdf">
+<link rel="stylesheet" href="static/css/index.css"><script defer src="static/data/results.js"></script><script defer src="static/js/index.js"></script>
+</head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header><div class="nav wrap"><a class="brand" href="#top"><img src="static/images/acdc-mark.svg" width="26" height="26" alt="">ACDC</a><nav aria-label="Main navigation"><a href="#workflows">Two workflows</a><a href="#compare">Compare tours</a><a href="#results">Results</a></nav><a class="paper-link" href="static/pdfs/acdc-paper.pdf">Paper ↗</a></div></header>
+<main id="main">
+<section class="hero wrap" id="top">
+<p class="eyebrow">Agentic aerial cinematography</p>
+<h1>One intent.<br>Two ways to <span>direct the flight.</span></h1>
+<p class="hero-copy">ACDC connects what to film, where to look, and how to fly.</p>
+<div class="actions"><a class="button dark" href="#compare">Explore the comparison ↓</a><a class="text-link" href="#workflows">What changes between workflows? ↗</a></div>
+<div class="hero-pair">
+<figure><div class="image-label"><i class="dot defined"></i> Defined workflow <span>GPT-6 Astra · 5 s</span></div><img src="static/results/structured-astra6/restaurant_food_inspector/poster.jpg" width="960" height="540" fetchpriority="high" alt="Actual defined-workflow restaurant inspection render at 5 seconds."></figure>
+<figure><div class="image-label"><i class="dot agent"></i> Agent-directed <span>GPT-6 Astra · 25 s</span></div><img src="static/results/dynamic-astra6/restaurant_food_inspector/poster.jpg" width="960" height="540" fetchpriority="high" alt="Actual agent-directed restaurant inspection render at 25 seconds, showing food-preparation equipment."></figure>
 </div>
-</div>
-</section> -->
-<!-- End image carousel -->
-
-<!-- Youtube video -->
-<!-- <section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Video Presentation</h2>
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <div class="publication-video">
-            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
-<!-- End youtube video -->
- <!-- TODO: Replace with your YouTube video ID -->
-
-
-<!-- Results Section -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3" style="margin-top: 0.3em; text-align: center;">Results</h2>
-      
-      <!-- Tag Navigation -->
-      <div class="tags-container" style="text-align: center; margin: 2rem 0;">
-        <div class="tags has-addons is-centered">
-          <span class="tag is-medium result-tag is-active" data-tag="all" onclick="showResults('all')">All Results</span>
-          <span class="tag is-medium result-tag" data-tag="restaurant" onclick="showResults('restaurant')">Restaurant</span>
-          <span class="tag is-medium result-tag" data-tag="cottage" onclick="showResults('cottage')">Cottage</span>
-          <span class="tag is-medium result-tag" data-tag="luxury" onclick="showResults('luxury')">Luxury</span>
-        </div>
-      </div>
-
-      <!-- All Results Content -->
-      <div id="results-all" class="results-content">
-        <div class="columns is-multiline">
-          <div class="column is-one-third">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/210_fulltour.mp4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Can you give an incoming Airbnb guest a detailed walkthrough of this house.</p>
-            </div>
-          </div>
-          <div class="column is-one-third">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/210_modern.mp4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Create a drone tour that highlights the modern design of the cottage, emphasize the contemporary atmosphere.</p>
-            </div>
-          </div>
-          <div class="column is-one-third">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/classic_cozy.mp4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Can you create a complete tour of this house, emphasizing a cozy and comfortable vibe.</p>
-            </div>
-          </div>
-          <div class="column is-one-third">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/classic_instruct.mp4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Start from the entrance do these sequentially.
-                1 : go forward to shoot the dining table
-                2 : go to living room, circle around
-                3 : go to bedroom and its washroom
-                4 : go to kitchen and tour breakfast nook
-                5 : go to the second washroom.</p>
-            </div>
-          </div>
-          <div class="column is-one-third">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/restaurant_eat.MP4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Create a drone tour for our customers to show the comfortable and welcoming atmosphere of our restaurant's eating environment.</p>
-            </div>
-          </div>
-          <div class="column is-one-third">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/restaurant_kitchen.MP4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Create a virtual drone tour for a food safety inspector, showing that our restaurant maintains a highly sanitary food processing environment.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Vague Prompt Content -->
-      <div id="results-restaurant" class="results-content" style="display: none;">
-        <div class="columns is-multiline">
-          <div class="column is-one-half">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/restaurant_eat.MP4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Create a drone tour for our customers to show the comfortable and welcoming atmosphere of our restaurant's eating environment?</p>
-            </div>
-          </div>
-          <div class="column is-one-half">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/restaurant_kitchen.MP4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Create a virtual drone tour for a food safety inspector, showing that our restaurant maintains a highly sanitary food processing environment.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- In-between Prompt Content -->
-      <div id="results-cottage" class="results-content" style="display: none;">
-        <div class="columns is-multiline">
-          <div class="column is-one-half">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/classic_cozy.mp4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Can you create a complete tour of this house, emphasizing a cozy and comfortable vibe.</p>
-            </div>
-          </div>
-          <div class="column is-one-half">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/classic_instruct.mp4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Start from the entrance do these sequentially.
-                1 : go forward to shoot the dining table
-                2 : go to living room, circle around
-                3 : go to bedroom and its washroom
-                4 : go to kitchen and tour breakfast nook
-                5 : go to the second washroom.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Luxury Prompt Content -->
-      <div id="results-luxury" class="results-content" style="display: none;">
-        <div class="columns is-multiline">
-          <div class="column is-one-half">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/210_fulltour.mp4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Can you give an incoming Airbnb guest a detailed walkthrough of this house.</p>
-            </div>
-          </div>
-          <div class="column is-one-half">
-            <div class="video-container">
-              <video poster="" controls muted loop height="100%" preload="metadata">
-                <source src="static/videos/results/210_modern.mp4" type="video/mp4">
-              </video>
-              <p class="video-caption has-text-centered">Create a drone tour that highlights the modern design of the cottage, emphasize the contemporary atmosphere.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="hero-caption"><p><span class="small-label">The same request</span>“Create a virtual drone tour for a food safety inspector…”</p><p>Selected frames from real runs; different timestamps.</p></div>
 </section>
-<!-- End Results Section -->
+<section class="section pale" id="workflows"><div class="wrap">
+<div class="section-head"><p class="eyebrow">01 / The idea</p><h2>Give intent a path<br>into the physical world.</h2><p class="intro">A language model can decide what matters in a scene. ACDC gives that decision an execution harness: posed exploration frames, rendered feedback, and motion planning grounded in geometry.</p></div>
+<figure class="task-figure" id="paper-figure-1">
+<a href="static/images/paper/01-intent-to-tour.webp" target="_blank" rel="noopener" aria-label="Open Figure 1 from the paper at full resolution"><img src="static/images/paper/01-intent-to-tour.webp" width="2400" height="928" loading="lazy" alt="Figure 1: a request for a welcoming restaurant tour becomes an ordered set of camera viewpoints and a red flight path through the mapped restaurant. Twelve of the 18 selected views are numbered around the scene."></a>
+<figcaption><a href="static/pdfs/figure-1-intent-to-tour.pdf" target="_blank" rel="noopener">View figure PDF ↗</a></figcaption>
+</figure>
+<div class="input-line"><span>Natural-language request</span><b>+</b><span>Posed exploration video</span><b>+</b><span>Mapped 3D scene</span></div>
+<div class="workflow-grid">
+<article class="workflow"><div class="workflow-title"><i class="dot defined"></i><p class="small-label">Defined workflow</p></div><h3>The sequence is prescribed.</h3><p>The model works through three fixed stages.</p><ol><li><b>01</b><div><strong>Select & order shots</strong><span>Turn intent into descriptions; retrieve posed frames.</span></div></li><li><b>02</b><div><strong>Refine each viewpoint</strong><span>Compare rendered alternatives with preference-based Bayesian optimization.</span></div></li><li><b>03</b><div><strong>Plan the flight</strong><span>A*, corridors, and TOGT connect the views; interpolate camera yaw.</span></div></li></ol></article>
+<article class="workflow"><div class="workflow-title"><i class="dot agent"></i><p class="small-label">Agent-directed workflow</p></div><h3>The agent chooses the next step.</h3><p>After inspecting the result, the agent can revise the route, camera direction, timing, and tools.</p><div class="loop"><span>Plan & choose tools</span><span class="loop-arrow">↓</span><span>Render & check</span><span class="loop-arrow">↓</span><span>Accept or revise <b>↻</b></span></div></article>
+</div>
+</div></section>
+<section class="section wrap" id="compare">
+<div class="section-head"><p class="eyebrow">02 / Explore real runs</p><h2>Same model. Same request.<br><span class="muted">Watch what changes.</span></h2></div>
+<noscript><p class="notice">Enable JavaScript to switch among all 48 runs. The default Astra inspection pair remains playable below.</p></noscript>
+<div class="scene-picker"><p class="small-label">1 · Scene</p><div class="scene-choices" role="group" aria-label="Choose a scene">
+<button type="button" data-scene="Cottage" aria-pressed="false"><img src="static/results/dynamic-astra6/cottage_cozy/poster.jpg" width="960" height="540" loading="lazy" alt=""><span>Cottage</span></button>
+<button type="button" data-scene="Restaurant" aria-pressed="true"><img src="static/results/dynamic-astra6/restaurant_customer_tour/poster.jpg" width="960" height="540" loading="lazy" alt=""><span>Restaurant</span></button>
+<button type="button" data-scene="Luxury" aria-pressed="false"><img src="static/results/dynamic-astra6/luxury_show_off/poster.jpg" width="960" height="540" loading="lazy" alt=""><span>Luxury</span></button>
+</div></div>
+<div class="model-picker"><p class="small-label">2 · Model</p><div class="model-choices prompt-choices" role="group" aria-label="Choose a model">
+<button type="button" data-model="astra6" aria-pressed="true">GPT-6 Astra</button>
+<button type="button" data-model="sol6" aria-pressed="false">GPT-6 Sol</button>
+<button type="button" data-model="opus5.5" aria-pressed="false">Claude Opus 5.5</button>
+<button type="button" data-model="sonnet5.5" aria-pressed="false">Claude Sonnet 5.5</button>
+</div><input id="model" type="hidden" value="astra6"></div>
+<div class="prompt-picker"><p class="small-label">3 · Prompt</p><div id="prompt-choices" class="prompt-choices" role="group" aria-label="Choose a prompt for the selected scene"></div><input id="task" type="hidden" value="restaurant_food_inspector"></div>
+<p id="selection-summary" class="sr-only" role="status" aria-live="polite">Restaurant · Food inspection · GPT-6 Astra</p>
+<p class="small-label exact-prompt-label">Prompt</p>
+<blockquote class="request" id="request">“Create a virtual drone tour for a food safety inspector, showing that our restaurant maintains a highly sanitary food processing environment.”</blockquote>
 
-<!-- Paper poster -->
-<!-- <section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title">Poster</h2>
-      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
-          </iframe>
-      </div>
-    </div>
-  </section> -->
-<!--End paper poster -->
+<div class="video-pair">
+<article><div class="video-title"><h3><i class="dot defined"></i>Defined workflow</h3></div><video id="structured-video" controls playsinline preload="none" poster="static/results/structured-astra6/restaurant_food_inspector/poster.jpg" src="static/results/structured-astra6/restaurant_food_inspector/tour.mp4" aria-label="Defined workflow rendered tour"></video></article>
+<article><div class="video-title"><h3><i class="dot agent"></i>Agent-directed</h3></div><video id="dynamic-video" controls playsinline preload="none" poster="static/results/dynamic-astra6/restaurant_food_inspector/poster.jpg" src="static/results/dynamic-astra6/restaurant_food_inspector/tour.mp4" aria-label="Agent-directed workflow rendered tour"></video></article>
+</div>
+<div class="transport"><button id="play-pair" class="button dark" type="button">Play both</button><button id="restart" class="button light" type="button">Restart</button><label for="progress">Tour progress</label><input id="progress" type="range" min="0" max="1000" value="0" aria-label="Seek both videos to the same percentage of their individual duration"><output id="progress-value" for="progress">0%</output></div>
+<p class="quiet playback-note">Original playback speed. Scrubbing aligns tour progress, not matching views.</p><p id="player-status" class="quiet" role="status" aria-live="polite"></p>
+<div class="table-wrap run-statistics"><table><caption>Selected run statistics</caption><thead><tr><th scope="col">Metric</th><th scope="col"><i class="dot defined"></i>Defined workflow</th><th scope="col"><i class="dot agent"></i>Agent-directed</th></tr></thead><tbody id="run-statistics"><tr><th scope="row">Duration</th><td>62.0 s</td><td>123.8 s</td></tr><tr><th scope="row">Peak sampled speed</th><td>0.999 m/s</td><td>0.860 m/s</td></tr><tr><th scope="row">Speed-limit episodes</th><td>0</td><td>0</td></tr></tbody></table></div>
+<div class="analysis-panel"><div class="chart-title"><h3>How the camera moves</h3><div class="chart-toggle" role="group" aria-label="Chart type"><button data-chart="speed" aria-pressed="true">Speed</button><button data-chart="path" aria-pressed="false">Flight path</button></div></div><svg id="trace-chart" viewBox="0 0 1000 250" role="img" aria-label="Speed traces for the selected defined and agent-directed trajectories"></svg><p id="chart-caption" class="quiet">Speed calculated from actual trajectory CSVs. Dashed line: 1 m/s limit.</p></div>
+<details class="run-details"><summary>Run context & limitations <span>+</span></summary><div class="context-grid"><div><h4>Defined workflow</h4><p id="structured-outcome"></p><p id="structured-caveat"></p></div><div><h4>Agent-directed</h4><p id="dynamic-outcome"></p><p id="dynamic-caveat"></p></div></div><p class="quiet">Rendered scans contain holes, clutter, and incomplete surfaces. A food-inspection tour demonstrates content selection; it cannot establish sanitation. Clearance checks differ between implementations and should not be treated as a common safety benchmark.</p></details>
+</section>
+<section class="section pale" id="results"><div class="wrap">
+<div class="section-head"><p class="eyebrow">03 / Measured across the runs</p><h2>Freedom to revise.<br>Results you can inspect.</h2><p class="intro">Speed-limit episodes count excursions above 1 m/s.</p></div>
+<div class="result-grid"><div class="headline-metric"><span class="small-label"><i class="dot defined"></i> Defined workflow</span><strong>2.46</strong><p>speed-limit episodes per tour</p></div><div class="headline-metric"><span class="small-label"><i class="dot agent"></i> Agent-directed</span><strong>0.00</strong><p>speed-limit episodes per tour</p></div><div class="metric-explainer"><strong>24 runs per workflow</strong><p>Four models × six tasks. Computed from the final trajectories.</p><p>Below the speed limit does not mean a tour is collision-free, complete, or aesthetically preferred.</p></div></div>
+<div class="table-wrap"><table><caption>Mean speed-limit episodes per tour · six tasks per model</caption><thead><tr><th scope="col">Model</th><th scope="col">Defined workflow</th><th scope="col">Agent-directed</th></tr></thead><tbody id="results-table"><tr><th scope="row">GPT-6 Astra</th><td>2.17</td><td>0.00</td></tr><tr><th scope="row">GPT-6 Sol</th><td>1.67</td><td>0.00</td></tr><tr><th scope="row">Claude Opus 5.5</th><td>2.17</td><td>0.00</td></tr><tr><th scope="row">Claude Sonnet 5.5</th><td>3.83</td><td>0.00</td></tr></tbody></table></div>
+<details class="run-details"><summary>Measurement method & experimental limits <span>+</span></summary><div class="prose"><p>An episode is a contiguous sequence of sampled speeds strictly above 1 m/s. Speed is the norm of the finite-difference world-position derivative at the saved timestamps, without smoothing, gap merging, or a minimum episode length. These sampled diagnostics are not continuous-time certification.</p><p>The defined runs differ in fidelity: Opus reports 100 refinement comparisons per shot, Astra 20, Sol 3, and Sonnet 20–21. Some runs replace retrieval or reduce render quality. Agent-directed implementations also differ in planner, renderer, and clearance definition. This is a comparison of the supplied final runs, not a controlled, equal-budget ablation or a universal model ranking.</p><p>The videos are web-optimized encodes of the supplied finals, preserving resolution, frame rate, framing, and timing. Plots use the original CSVs, with extrema-preserving downsampling for display. Poster aggregates whose underlying evaluation files are absent are not used here.</p></div></details>
 
-
-
-
-
-  <footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-
-          <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-
-        </div>
-      </div>
-    </div>
-  </div>
-</footer>
-
-<!-- Statcounter tracking code -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-    <!-- End of Statcounter Code -->
-
-    <!-- Interactive Methods Styles -->
-    <style>
-      .method-step:hover {
-        background-color: #f0f8ff !important;
-      }
-      
-      .flowchart {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      
-      .flowchart-step {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.5rem;
-      }
-      
-      .flowchart-box {
-        background: linear-gradient(135deg, #3273dc, #4a9eff);
-        color: white;
-        padding: 0.75rem 1.5rem;
-        border-radius: 8px;
-        font-weight: 500;
-        text-align: center;
-        min-width: 150px;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        transition: transform 0.2s ease;
-      }
-      
-      .flowchart-box:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
-      }
-      
-      .flowchart-arrow {
-        font-size: 1.5rem;
-        color: #3273dc;
-        font-weight: bold;
-        margin: 0.25rem 0;
-      }
-      
-      .visualization-content {
-        animation: slideDown 0.3s ease-out;
-      }
-      
-      @keyframes slideDown {
-        from {
-          opacity: 0;
-          transform: translateY(-10px);
-        }
-        to {
-          opacity: 1;
-          transform: translateY(0);
-        }
-      }
-      
-      .method-step .icon i {
-        transition: transform 0.3s ease;
-      }
-      
-      .method-step.expanded .icon i {
-        transform: rotate(180deg);
-      }
-    </style>
-
-    <!-- Interactive Methods JavaScript -->
-    <script>
-      function toggleVisualization(type) {
-        const vizElement = document.getElementById(type + '-viz');
-        const stepElement = event.currentTarget;
-        
-        if (vizElement.style.display === 'none' || vizElement.style.display === '') {
-          // Close any other open visualizations
-          document.querySelectorAll('.visualization-content').forEach(el => {
-            if (el !== vizElement) {
-              el.style.display = 'none';
-              el.previousElementSibling.classList.remove('expanded');
-            }
-          });
-          
-          // Open this visualization
-          vizElement.style.display = 'block';
-          stepElement.classList.add('expanded');
-        } else {
-          // Close this visualization
-          vizElement.style.display = 'none';
-          stepElement.classList.remove('expanded');
-        }
-      }
-    </script>
-
-  </body>
-  </html>
+</div></section>
+<section class="section wrap" id="paper-evidence"><div class="section-head"><p class="eyebrow">04 / Visual preference refinement</p><h2>Refine a view<br>through feedback.</h2></div><div class="refinement-feature"><img src="static/images/paper/07-preference-refinement.webp" width="2400" height="2227" loading="lazy" alt="Paper figure showing seven viewpoint-refinement traces and rendered before-and-after views."><div><p>Seven perturbed initializations approach the reference view in image-embedding space over 100 comparisons. The judge does not see the reference image.</p><p class="quiet">This separate component experiment measures local recovery in embedding space, rather than human-rated cinematic quality.</p></div></div></section>
+<section class="section publication pale" id="resources"><div class="wrap"><p class="eyebrow">CoRL 2026 Workshop on Agentic Robotics</p><h2>Agentic Aerial Cinematography</h2><p class="subtitle">From Dialogue Cues to Cinematic Trajectories</p><p class="authors">Yifan Lin<sup>†*</sup> &nbsp; Sophie Z. Liu<sup>*</sup> &nbsp; Ran Qi<sup>*</sup> &nbsp; George Z. Xue<sup>*</sup><br>Xinping Song &nbsp; Chao Qin &nbsp; Hugh H.-T. Liu</p><p>University of Toronto</p><p class="quiet">† Project lead · * Equal contribution (alphabetical order)</p><div class="actions"><a class="button dark" href="static/pdfs/acdc-paper.pdf">Read the paper ↗</a></div><p class="quiet">Research code forthcoming.</p><details class="citation"><summary>Cite this work <span>+</span></summary><button id="copy-citation" class="button light" type="button">Copy BibTeX</button><pre><code id="bibtex-code">@misc{lin2026acdc,
+  title = {Agentic Aerial Cinematography:
+    From Dialogue Cues to Cinematic Trajectories},
+  author = {Lin, Yifan and Liu, Sophie Z. and Qi, Ran and
+    Xue, George Z. and Song, Xinping and Qin, Chao and
+    Liu, Hugh H.-T.},
+  year = {2026},
+  note = {CoRL 2026 Workshop on Agentic Robotics},
+  url = {https://acdc-drone.github.io/}
+}</code></pre><p id="copy-status" role="status" aria-live="polite"></p></details></div></section>
+</main><footer class="wrap"><a class="brand" href="#top">ACDC ↑</a><p>University of Toronto<br>Adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a> and <a href="https://nerfies.github.io/">Nerfies</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p></footer>
+</body></html>

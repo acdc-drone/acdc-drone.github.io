@@ -1,0 +1,29 @@
+# restaurant_customer_tour
+
+## How the prompt was interpreted
+'Show customers the comfortable, welcoming atmosphere of the eating environment.' Customer-facing spaces only: entrance view, golf-memorabilia booth area, main hall (warm wood tables, pennants, TVs), fish tank, bar with stools, window tables, ending with a long view down the bar room. Kitchen, restrooms and office are deliberately skipped.
+
+## Final trajectory (measured)
+- Duration 68.3 s, 1642 frames (24 fps, 960x540, 80 deg FOV), path length 25.3 m.
+- Bundle `validate_trajectory`: passed = True (0 occupied voxels, 0 outside grid; gate error ~0).
+- Max speed 0.65 m/s (limit 1.0), max accel 0.35 m/s2, max tilt 2.1 deg, thrust/mass 9.8-9.8 m/s2 (daju limits: tilt 30 deg).
+- Camera: roll 1.3e-14 deg (exactly 0), max |pitch| 12.1 deg, max yaw rate 25 deg/s (limit 3.0 rad/s).
+- Clearance: min surface distance 0.41 m; min distance to occupied voxel centre 0.31 m; to voxel box 0.17 m.
+  **The 0.3 m voxel clearance requirement is NOT fully met:** 0.0% of samples are below 0.3 m voxel-centre distance, only in passages that are physically ~0.6-1.0 m wide in the scan.
+
+## Versus baseline ACDC
+| metric | final | baseline |
+|---|---|---|
+| duration (s) | 68.3 | 51.4 |
+| max speed (m/s) | 0.65 | 1.08 |
+| max |roll| (deg) | 1.3e-14 | 7.3 |
+| max |pitch| (deg) | 12.1 | 18.0 |
+| min voxel-centre clearance (m) | 0.31 | 0.22 |
+| path length (m) | 25.3 | 30.7 |
+
+## Rendering
+scene_patch meshes and renderer script (copied with one speed-up: Cycles on CPU, 12 samples/pixel instead of 256, because GPU rendering does not fit the 1.5 GB VRAM limit; 12 spp measured ~49 dB PSNR vs 256 spp on test frames), same camera/FOV/resolution/fps, mild unsharp mask as in the patched pipeline, libx264 CRF 18.
+
+## Remaining flaws
+Several window views show the scanned exterior with some artefacts; chair legs are noisy in the scan. Camera height 1.4 m is above seated eye level.
+Visual review was done on contact sheets (frames every 1.5-5 s), not frame-by-frame.

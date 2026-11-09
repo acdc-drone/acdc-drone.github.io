@@ -1,0 +1,44 @@
+# restaurant_customer_tour
+
+Video completed and fully decoded for verification.
+
+[Trajectory CSV](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/restaurant_customer_tour/final/restaurant_customer_tour_optimized_path.csv) · [Video](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/restaurant_customer_tour/final/restaurant_customer_tour_flythrough.mp4) · [Saved ACDC video](/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/restaurant/customer_tour/restaurant_customer_tour_flythrough.mp4)
+
+Stage 1: the assistant inspected 64 time-uniform exploration frames, wrote a fresh environment description and 7 shots, and selected matching source frames. Missing pretrained text-encoder weights prevented cosine-similarity retrieval; visual selection among those 64 frames is a substantial deviation. The bundle common.py exported exact recorded poses from the MCAP. No saved ACDC shots or seeds were reused.
+
+Stage 2: all 7 viewpoints received 20 comparisons, rather than the paper’s 100, to meet the morning deadline. The copied GP kernel, Laplace fit and dueling Thompson implementation used 64 candidates, a 1 m translation radius and 30° yaw radius. Yaw-only sampling and zero roll/pitch follow the paper where portable defaults differ. The assistant inspected every pair and recorded the code’s [[1]], [[2]] or [[3]] response. A wrapper fixes the original missing history key and supports restart. Refinement comparisons 1–19 used a 1024-pixel texture cap after memory failures; comparison 20 was rendered again at full texture resolution on both sides. Those earlier decisions were retained.
+
+Stage 3: fresh A*, safe-corridor gates and a freshly built TOGT used the original daju parameters and cached occupancy inputs. Yaw is a natural cubic spline of unwrapped headings at optimized gate times. No trajectory was edited or replanned in response to failed checks.
+
+Final rendering uses the patched scene and renderer, full textures, 960×540 at 24 fps, 80° horizontal FOV, H.264 CRF18 and the supplied mild sharpening. CPU rendering used 6 samples per pixel, versus the patched default of 256, because measured full-sample throughput could not meet 10:00. Jobs use the shared 3.2 GB queue and two CPU threads. The customer-tour scene was losslessly unpacked into glTF with original image bytes to avoid packed-image duplication after a capped-memory failure.
+
+## Checks
+
+| Check | Result | Measurement |
+|---|---|---|
+| Bundle validate_trajectory | PASS | 0 occupied samples; 0 outside-grid samples |
+| Quadrotor limits, including speed ≤1 m/s | FAIL | Maximum speed 1.097641 m/s; position bounds PASS; angular limits PASS; rotor thrust PASS |
+| Clearance ≥0.3 m | FAIL | Minimum distance to occupied voxel cubes 0.076727 m |
+| Camera roll 0, pitch within ±25° | PASS | Both identically zero by construction |
+
+[checks.json](checks.json) records individual limits. Position, speed and clearance were sampled from the polynomial at 5 ms; body limits use native TOGT full-state CSV samples. Passing sampled checks is not continuous-time certification. The bundle validator’s static RotationSpline label does not describe the actual yaw-spline export.
+
+## Shots
+
+1. **Welcome** — A beautifully taken picture. The wooden entrance aisle leads through the center into the dining room, with sports photographs on the walls and public seating visible ahead.
+2. **Side dining room** — A beautifully taken picture. Wood tables and black chairs fill the lower center beneath walls of framed sports photographs, with green wainscoting and a bright window at left.
+3. **Main dining overview** — A beautifully taken picture. An open wooden aisle runs centrally between neatly arranged tables and black chairs, with pennants overhead and televisions beyond.
+4. **Window seating** — A beautifully taken picture. A polished wooden table with black chairs sits in the lower center beside the long window blinds; sports decor and a television occupy the upper background.
+5. **Dining toward bar** — A beautifully taken picture. Rows of wooden tables lead toward the bar through the center, framed by sports pennants and warm wood surfaces.
+6. **Bar welcome** — A beautifully taken picture. The broad polished wooden bar occupies the center and lower right, black stools line its edge and bottle shelves and televisions fill the background.
+7. **Public-room farewell** — A beautifully taken picture. The main public seating and long bar share the middle of the image, with bright front windows beyond and an open wooden aisle in the foreground.
+
+## Comparison and flaws
+
+Speed reaches 1.098 m/s; minimum voxel clearance is 0.077 m. Sampled views show broken chair/table geometry and some tight wall/bar framing.
+
+Fresh trajectory duration 45.63 s versus saved 51.39 s. Fresh camera roll/pitch are identically zero; saved CSV maximum absolute roll/pitch are 7.3°/18.0°. I inspected 12 uniformly spaced frames from each video at normalized tour progress (not a full motion review). Both show the entrance, sports-photo dining area, main tables and bar. The fresh tour keeps a level horizon, has broader bar-shelf views near the end and ends facing along the public room; the saved tour ends on a tighter television/beer-sign corner. Fresh samples still show incomplete chair and table meshes and prominent foreground walls at the entrance. Different trajectory durations and the patched rendering mean this is not a controlled image-quality comparison. Contact sheets and sampled-frame timestamps are retained in comparison_frames/ and comparison.json.
+
+## Trace
+
+[Stage 1](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/restaurant_customer_tour/stage1/) contains descriptions and seeds. [Stage 2](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/restaurant_customer_tour/stage2/) retains every paired image, decision and checkpoint. [Planner outputs](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/planning/restaurant/customer_tour/) contain A*, corridor, TOGT and validator outputs. [DEVIATIONS.md](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/DEVIATIONS.md) records adaptations, failures and resource incidents. No VLM/LLM API calls were made.

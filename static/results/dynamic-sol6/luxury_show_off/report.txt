@@ -1,0 +1,13 @@
+# luxury_show_off final report
+
+**Prompt interpretation.** A property showcase moving from the terrace into the open living and kitchen spaces.
+
+**Comparison with baseline.** The final follows the baseline's visit order where the clearance rule permits. Duration is 99.4 s versus 202.9 s. The final's measured top speed is 0.798 m/s versus 1.082 m/s; minimum 0.01 s sampled distance to occupied voxel centers is 0.318 m versus 0.165 m. Camera roll is 0° (baseline peak 7.7°); pitch stays within ±16.2° (baseline peak 21.0°). Peak camera yaw rate is 1.71 versus 2.37 rad/s. The final uses the patched mesh and renderer background at the baseline 960×540, 24 fps, 80° FOV. Its 512 px texture copy fits the resource cap but loses some fine detail compared with the original 2048 px textures.
+
+**Checks.** The bundle's `validate_trajectory` passed with 15 explicit safe-route shot gates. Independent 0.01 s sampling found 0.318 m minimum voxel-center clearance; a speed-based bound between samples is 0.314 m. Maximum body tilt was 6.9°, the upper bound on body XY rate was 0.74 rad/s, peak camera yaw rate was 1.71 rad/s, and the estimated motor-thrust envelope was 1.87–2.33 N. The 2387-frame video was fully decoded after chunk concatenation. Visual review before full rendering used the [preview contact sheet](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/tmp/luxury_show_off_iter12_preview.jpg). Sim-to-real behavior was not tested.
+
+**Remaining flaws.** The shorter showcase omits the far exterior walk and some private rooms; early terrace views still expose unscanned patches. The interior sofa ending is clearer. The largest displacement from a sampled baseline route anchor to this clearance-safe route was 1.41 m.
+
+Baseline video: /home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/luxury/show_off/luxury_show_off_flythrough.mp4
+
+I inspected a [12-frame contact sheet from the completed interior-focused video](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/reports/final_contacts/luxury_show_off_eevee512.jpg). The opening terrace still shows scan gaps, but the second half presents the living and kitchen spaces and ends on a clear sofa shot. The [earlier complete 237-second cut](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/runs/luxury_show_off/final_v1/luxury_show_off_flythrough.mp4) remains available.

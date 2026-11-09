@@ -1,0 +1,13 @@
+# luxury_room_by_room final report
+
+**Prompt interpretation.** The requested foyer/dining/piano/great-room/kitchen/suite sequence, as far as the scan permits.
+
+**Comparison with baseline.** The final follows the baseline's visit order where the clearance rule permits. Duration is 114.6 s versus 90.4 s. The final's measured top speed is 0.798 m/s versus 1.057 m/s; minimum 0.01 s sampled distance to occupied voxel centers is 0.319 m versus 0.204 m. Camera roll is 0° (baseline peak 6.9°); pitch stays within ±18.2° (baseline peak 19.3°). Peak camera yaw rate is 1.96 versus 4.64 rad/s. The final uses the patched mesh and renderer background at the baseline 960×540, 24 fps, 80° FOV. Its 512 px texture copy fits the resource cap but loses some fine detail compared with the original 2048 px textures.
+
+**Checks.** The bundle's `validate_trajectory` passed with 32 explicit safe-route shot gates. Independent 0.01 s sampling found 0.319 m minimum voxel-center clearance; a speed-based bound between samples is 0.315 m. Maximum body tilt was 7.0°, the upper bound on body XY rate was 0.88 rad/s, peak camera yaw rate was 1.96 rad/s, and the estimated motor-thrust envelope was 1.76–2.44 N. The 2753-frame video was fully decoded after chunk concatenation. Visual review before full rendering used the [preview contact sheet](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/tmp/luxury_room_by_room_iter06_preview.jpg). Sim-to-real behavior was not tested.
+
+**Remaining flaws.** The available scan does not clearly identify a grand foyer, formal dining room, piano room, staircase, or two-story great room; the requested room order cannot be verified visually. Some doorway scans are partial. The largest displacement from a sampled baseline route anchor to this clearance-safe route was 0.21 m.
+
+Baseline video: /home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/luxury/room_by_room/luxury_room_by_room_flythrough.mp4
+
+I inspected a [12-frame contact sheet from the completed video](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/reports/final_contacts/luxury_room_by_room.jpg). The open living area, kitchen, hall, and bedroom are visible. Several hallway views are cramped, and the scan does not show the named formal rooms.

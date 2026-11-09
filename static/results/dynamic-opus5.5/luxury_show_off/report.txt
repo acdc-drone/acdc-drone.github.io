@@ -1,0 +1,43 @@
+# luxury_show_off — final report
+
+**Prompt:** "Can you create a drone tour of this house to show off to people."
+**Final:** `luxury_show_off_flythrough.mp4` from `iter05` (published 2026-10-30T18:27), trajectory `luxury_show_off_optimized_path.csv` (same columns and frame as the baseline's `*_optimized_path.csv`). Earlier finals are in `../final_history/`.
+**Baseline:** `artifacts/results_xhigh_25k_c8_togt/luxury/show_off/luxury_show_off_flythrough.mp4`
+**Video:** 960x540, 24/1 fps, 1876 frames (decoded and counted). 80° FOV, rendered with the patched mesh and the scene_patch render settings.
+
+## How I read the prompt
+A "show it off" real-estate glide through the most impressive space: the long, bright great room. The video opens with an establishing shot from its west end, looking down the whole room. It then drifts past the TV wall and lounge chairs, turns onto the long sofa and the large artworks, and swings toward the kitchen. It slows over the kitchen island and pans back across the entire room. A second leg then glides west along the north windows, seeing the sofa and art wall from the other side. It ends on a wide view from the north-west looking east across the whole room toward the kitchen. The pace is slow (≈0.25–0.33 m/s), at about 1.6–1.75 m, with a level horizon and eased pans.
+
+Reachability: only the great room, the kitchen and the outdoor terraces can be reached with 0.3 m clearance. Every bedroom, bathroom and the north hallway sits behind doorways with 0–0.25 m clearance. The terraces were tried (iter01) and dropped: looking outward shows the edge of the scan with floating fragments, and the doorway area has torn geometry.
+
+## Compared with the baseline
+The baseline (203 s) tours the terraces and bedrooms, but at up to 1.08 m/s, with rolls up to 8° and yaw rates up to 136°/s. It comes closer than 0.3 m in 41% of frames, and the near-field critic flags 43% of its frames as mostly blocked within 0.8 m. Ours is much shorter but clean: no frame is blocked up close, the horizon is level, and every move is slow and smooth.
+
+## Remaining flaws
+- About 78 s, much shorter than the baseline's 203 s, and limited to the great room and kitchen, because the rest of the house is unreachable at 0.3 m clearance.
+- The pan back from the kitchen passes close to a wall corner for about 2 s.
+- The view out through the west glazing shows the unscanned exterior: soft gradient background and some fragments.
+
+
+## Feasibility (measured)
+- Bundle `validate_trajectory`: **passed** (16402 samples, 0 occupied, 0 outside the grid, max continuity gap 3.6e-15).
+- Speed max 0.33 m/s (hard limit 1.0). Acceleration max 0.16 m/s², tilt max 0.9° (limit 30°).
+- Per-motor thrust 2.10–2.10 N (limits 0.1–7.2). ω_xy max 0.03 rad/s (limit 10.2). Yaw rate max 20.0°/s (limit 172°/s).
+- Camera roll 0 everywhere; pitch 2.1° to 10.1° (limit ±25°).
+- Clearance: min distance to occupied voxel cubes **0.450 m** (union of the bundle grid and the patched-mesh voxels). Against the bundle grid alone: 0.450 m. Required ≥ 0.3 m.
+- Overall: **FEASIBLE**.
+
+## Measured comparison with the baseline (same metric code for both)
+| | ours | baseline |
+|---|---|---|
+| duration / path length | 78.1 s / 17.6 m | 202.9 s / 105.2 m |
+| max speed | 0.33 m/s | 1.082 m/s |
+| max \|roll\| | 0.0° | 7.7° |
+| pitch range | 2.1° to 10.1° | 2.0° to 21.0° |
+| frames with \|pitch\| > 25° | 0% | 0% |
+| max yaw rate | 20.0°/s | 135.8°/s |
+| 95th-percentile camera rotation speed | 19.7°/s | 52.1°/s |
+| min clearance (voxel cubes) | 0.45 m | 0.04 m |
+| frames closer than 0.3 m | 0% | 41% |
+
+Near-field critic (fraction of frames where >25% of the view is blocked within 0.8 m): ours: mean near-frac 0.000, frames >25% near 0.0%; baseline: mean near-frac 0.269, frames >25% near 42.9%

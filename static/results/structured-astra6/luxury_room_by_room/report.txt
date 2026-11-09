@@ -1,0 +1,46 @@
+# luxury_room_by_room
+
+Video completed and fully decoded for verification.
+
+[Trajectory CSV](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/luxury_room_by_room/final/luxury_room_by_room_optimized_path.csv) · [Video](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/luxury_room_by_room/final/luxury_room_by_room_flythrough.mp4) · [Saved ACDC video](/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/luxury/room_by_room/luxury_room_by_room_flythrough.mp4)
+
+Stage 1: the assistant inspected 64 time-uniform exploration frames, wrote a fresh environment description and 9 shots, and selected matching source frames. Missing pretrained text-encoder weights prevented cosine-similarity retrieval; visual selection among those 64 frames is a substantial deviation. The bundle common.py exported exact recorded poses from the MCAP. No saved ACDC shots or seeds were reused.
+
+Stage 2: all 9 viewpoints received 20 comparisons, rather than the paper’s 100, to meet the morning deadline. The copied GP kernel, Laplace fit and dueling Thompson implementation used 64 candidates, a 1 m translation radius and 30° yaw radius. Yaw-only sampling and zero roll/pitch follow the paper where portable defaults differ. The assistant inspected every pair and recorded the code’s [[1]], [[2]] or [[3]] response. A wrapper fixes the original missing history key and supports restart. Refinement comparisons 1–19 used a 1024-pixel texture cap after memory failures; comparison 20 was rendered again at full texture resolution on both sides. Those earlier decisions were retained.
+
+Stage 3: fresh A*, safe-corridor gates and a freshly built TOGT used the original daju parameters and cached occupancy inputs. Yaw is a natural cubic spline of unwrapped headings at optimized gate times. No trajectory was edited or replanned in response to failed checks.
+
+Final rendering uses the patched scene and renderer, full textures, 960×540 at 24 fps, 80° horizontal FOV, H.264 CRF18 and the supplied mild sharpening. CPU rendering used 6 samples per pixel, versus the patched default of 256, because measured full-sample throughput could not meet 10:00. Jobs use the shared 3.2 GB queue and two CPU threads. 
+
+## Checks
+
+| Check | Result | Measurement |
+|---|---|---|
+| Bundle validate_trajectory | PASS | 0 occupied samples; 0 outside-grid samples |
+| Quadrotor limits, including speed ≤1 m/s | FAIL | Maximum speed 1.058292 m/s; position bounds PASS; angular limits PASS; rotor thrust PASS |
+| Clearance ≥0.3 m | FAIL | Minimum distance to occupied voxel cubes 0.013055 m |
+| Camera roll 0, pitch within ±25° | PASS | Both identically zero by construction |
+
+[checks.json](checks.json) records individual limits. Position, speed and clearance were sampled from the polynomial at 5 ms; body limits use native TOGT full-state CSV samples. Passing sampled checks is not continuous-time certification. The bundle validator’s static RotationSpline label does not describe the actual yaw-spline export.
+
+## Shots
+
+1. **Living-space arrival** — A beautifully taken picture. The bright open living room occupies the center beyond the glass doorway, with a wood media wall, white seating and pale floor.
+2. **Main living room** — A beautifully taken picture. White and turquoise sofas occupy the middle and right around the central sitting area, with the stone fireplace at left.
+3. **Open kitchen** — A beautifully taken picture. Yellow cabinetry and wood counters line the left and right of a clear central aisle, with stainless ovens integrated below the counter.
+4. **Breakfast counter** — A beautifully taken picture. The long wood counter and stools sit at left, with turquoise seating and white living space at right, showing their direct connection.
+5. **Return through living room** — A beautifully taken picture. The open living space and garden-facing glazing fill the middle, with turquoise seating and a pale floor path connecting them.
+6. **Bedroom corridor** — A beautifully taken picture. The narrow corridor extends centrally between wood doorways toward a bedroom, with pale flooring and wall art visible.
+7. **Bedroom suite** — A beautifully taken picture. The white bed and pillows sit centered with a wood desk at right and glass garden doors behind.
+8. **Suite bath** — A beautifully taken picture. The dark stone vanity with black basin and a large mirror is centered, with shower surfaces at right.
+9. **Return hallway** — A beautifully taken picture. The pale corridor leads centrally back toward the brighter shared living area, framed by wood doorways and monochrome wall pictures.
+
+## Comparison and flaws
+
+Speed reaches 1.058 m/s; minimum clearance is 0.013 m. The requested foyer/piano/staircase/closet itinerary is absent; several bedroom/bath transition samples are dominated by walls.
+
+Fresh trajectory duration 85.46 s versus saved 90.44 s. Fresh camera roll/pitch are identically zero; saved CSV maximum absolute roll/pitch are 6.9°/19.3°. I inspected 12 uniformly spaced frames from each video at normalized tour progress (not a full motion review). Both show the open living room, yellow kitchen, hall and bedroom/bath spaces. Fresh samples 6–8 are substantially blocked by nearby walls/doorways; the saved late samples give clearer bathroom and bedroom views. The fresh final view is a hallway, while the saved final view is a bedroom. The grand foyer, formal dining room, piano room, staircase, two-story Great Room and walk-in closet were not identified in the 64 exploration samples. The generated shot list omits those requested spaces, so the literal requested itinerary is not fulfilled; no missing rooms were invented. Both videos still reveal incomplete geometry around the exterior glazing. Contact sheets and timestamps are retained; different paths and renderers limit direct image-quality comparison.
+
+## Trace
+
+[Stage 1](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/luxury_room_by_room/stage1/) contains descriptions and seeds. [Stage 2](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/luxury_room_by_room/stage2/) retains every paired image, decision and checkpoint. [Planner outputs](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/planning/luxury/room_by_room/) contain A*, corridor, TOGT and validator outputs. [DEVIATIONS.md](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/DEVIATIONS.md) records adaptations, failures and resource incidents. No VLM/LLM API calls were made.

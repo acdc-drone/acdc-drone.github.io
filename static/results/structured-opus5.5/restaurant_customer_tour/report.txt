@@ -1,0 +1,96 @@
+# restaurant_customer_tour — final report
+
+- **Prompt** (`restaurant_eat.txt`): “Create a drone tour for our customers to show the comfortable and welcoming atmosphere of our restaurant’s eating environment.”
+- **Inputs**: mesh `cafeteria.glb` (refinement renders: original `artifacts/.../scene_meshes/cafeteria.glb`; final video: `scene_patch/scenes/cafeteria.glb`), bag `rosbag2_2025_09_07-22_18_36_0.mcap`
+- **Final trajectory CSV**: `final/restaurant_customer_tour_optimized_path.csv` (1358 rows, same columns `t,x,y,z,q_x,q_y,q_z,q_w`, frame and 24 fps sampling as the saved `*_optimized_path.csv`)
+- **Final video**: `final/restaurant_customer_tour_flythrough.mp4` — 960×540, 24/1 fps, 1358 frames, 80° FOV
+- **Seed vs refined views**: `final/seed_vs_refined.jpg`
+- **Saved ACDC video for comparison**: `artifacts/results_xhigh_25k_c8_togt/restaurant/customer_tour/restaurant_customer_tour_flythrough.mp4` (1235 frames)
+
+## Shot list (stage 1 output, in tour order) and stage-2 outcome
+
+| # | title | source frame | challenger wins / ties (of 100) | last accepted iter | moved from seed | yaw change |
+|---|---|---|---|---|---|---|
+| 1 | Welcome at the entrance | `01_10_frame_000290.png` | 18 / 0 | 100 | 0.21 m | -21.0° |
+| 2 | Golf mural dining room | `02_15_frame_000460.png` | 22 / 0 | 100 | 0.61 m | -105.9° |
+| 3 | Golf photo room | `03_22_frame_000565.png` | 18 / 0 | 100 | 0.84 m | +11.0° |
+| 4 | Booths by the windows | `04_01_frame_000190.png` | 19 / 1 | 91 | 1.17 m | +1.4° |
+| 5 | Tables set for guests | `05_31_frame_000975.png` | 32 / 0 | 100 | 0.98 m | +18.6° |
+| 6 | Dining room with pennants and TVs | `06_42_frame_001090.png` | 28 / 0 | 99 | 0.87 m | -78.0° |
+| 7 | Main dining room overview | `07_47_frame_001270.png` | 17 / 0 | 100 | 0.71 m | -4.8° |
+| 8 | Dining room with aquarium | `08_52_frame_002225.png` | 23 / 0 | 97 | 0.51 m | +4.5° |
+| 9 | Bar overview | `09_53_frame_004730.png` | 20 / 0 | 99 | 0.29 m | +16.6° |
+| 10 | High-top tables | `10_55_frame_004805.png` | 16 / 0 | 98 | 0.57 m | +7.6° |
+| 11 | Bar counter and TVs | `11_62_frame_005065.png` | 19 / 0 | 94 | 0.87 m | -6.8° |
+| 12 | Bar room farewell | `12_78_frame_005725.png` | 25 / 0 | 100 | 0.60 m | -8.4° |
+
+<details><summary>Full shot descriptions (the text the VLM judged every comparison against)</summary>
+
+1. **Welcome at the entrance** — A beautifully taken picture. Comfortable and welcoming. From the entrance passage looking into the restaurant: the wooden host counter with Sportsman's Grille shirts and the Santa figure at rightmiddle, the wall of framed photos at leftmiddle, and the warm dining room with wooden tables and black chairs opening up at centermiddle under the dark ceiling.
+2. **Golf mural dining room** — A beautifully taken picture. Comfortable and welcoming. The golf room seen toward the large golf-course mural at rightmiddle, wooden tables and black chairs at centerbottom, the window with wooden blinds at centermiddle and framed photos along the top of the wall at lefttop.
+3. **Golf photo room** — A beautifully taken picture. Comfortable and welcoming. Inside the golf-themed dining room: the wall covered with dozens of framed golfer photos at rightmiddle, the long wooden table with black chairs at centerbottom, the white picket rail with golf memorabilia at leftmiddle, and the green lower wall.
+4. **Booths by the windows** — A beautifully taken picture. Comfortable and welcoming. The cozy black high-back booths with wooden tables at centermiddle, the long window wall with warm wooden blinds behind them at righttop, the green football banner at centertop, and dark wood plank floor at centerbottom.
+5. **Tables set for guests** — A beautifully taken picture. Comfortable and welcoming. A close, level view of a wooden table set with silverware and condiments at centerbottom, black chairs around it, more tables receding to the windows at centermiddle, and pennants and a TV at centertop.
+6. **Dining room with pennants and TVs** — A beautifully taken picture. Comfortable and welcoming. Looking along the dining room: wooden tables set with napkins and black chairs at centerbottom, the row of colourful college pennants along the ceiling at centertop, wall-mounted TVs at righttop, framed sports photos on tan walls at leftmiddle.
+7. **Main dining room overview** — A beautifully taken picture. Comfortable and welcoming. A wide view of the main dining room: rows of wooden tables with black ladder-back chairs from centerbottom to centermiddle, black high-back booths along the window wall with wooden blinds at rightmiddle, the green football-field banner along the top of the wall at righttop, and ceiling fans at centertop.
+8. **Dining room with aquarium** — A beautifully taken picture. Comfortable and welcoming. The dining room seen from its side: long rows of wooden tables and black chairs at centermiddle, the small aquarium on a red stand at rightmiddle, booths and windows with blinds at righttop, and pennants along the ceiling at centertop.
+9. **Bar overview** — A beautifully taken picture. Comfortable and welcoming. The long bar: the dark granite bar top with black bar stools running from leftbottom to centermiddle, back-bar shelves of bottles and football helmets at lefttop, TVs above the bar, and wooden high-top tables with stools at rightmiddle.
+10. **High-top tables** — A beautifully taken picture. Comfortable and welcoming. The row of tall wooden high-top tables with black stools at centermiddle, the bar with stools at rightmiddle, team pennants along the top of the wall at centertop, and windows at the far end.
+11. **Bar counter and TVs** — A beautifully taken picture. Comfortable and welcoming. Facing the bar counter: the glossy dark granite bar top and black stools across centerbottom, the illuminated back bar with bottles and glassware at centermiddle, two TVs at centertop, and the Miller Lite sign at rightmiddle.
+12. **Bar room farewell** — A beautifully taken picture. Comfortable and welcoming. A long view down the bar room from its end: a wooden high-top table at centerbottom, the bar with stools and TVs running along the rightmiddle, pennants at righttop, and bright windows at the far end at centermiddle.
+
+</details>
+
+## How each stage went
+
+**Stage 1 — semantic shot planning and seed retrieval.**
+- Environment description: `stage1/restaurant/environment_description.txt` (I wrote it from the 64 time-ordered frames that `OpenAIToolkit._video_frames` samples, viewed as 4 contact sheets; `stage1/restaurant/env_frames/`). Shared by both runs of the scene (same video, same prompt).
+- Waypoint descriptions: `runs/restaurant_customer_tour/stage1/waypoints.json` — 12 descriptions written to `Utils.WAYPOINT_SCHEMA` (9-grid placement, ‘A beautifully taken picture.’ prefix).
+- Retrieval: SigLIP2 text embeddings (`stage1/text_embeddings.npy`) vs the precomputed RADIO/SigLIP2 frame embeddings of the bag, frame stride 5, top-8 per description, de-duplicated → candidates exported from the MCAP with poses by the bundle's `export_selected_frames_from_mcap` (`stage1/retrieval.json`, `stage1/selected_frames/`).
+- Select & sort: I viewed all exported candidates (`stage1/selection_sheets/`) and answered in the `select_frames` JSON schema (`stage1/selection_response.json`); 12 shots kept, none omitted. Seeds = recorded position + yaw of each selected frame; recorded pitch/roll discarded (`stage1/seeds.json`).
+
+**Stage 2 — visual preference refinement.**
+- 1200 pairwise comparisons in total (B = 100 per shot, M = 64 candidates, ρ_trans = 1 m, ρ_rot = 30°, GP kernel l_rot = 15°, l_trans = 0.5 m, σ_f = 1, jitter 1e-6, Laplace/Bradley–Terry posterior and dueling Thompson sampling from `pose_main.py`).
+- Challenger accepted 257 times, ties ({3}, no pair added — code behaviour) 1 times. Mean displacement from seed 0.68 m (max 1.17 m); mean |yaw change| 23.7°.
+- Every comparison is recorded: the exact sheet image I judged (`sheets/restaurant/round_*.jpg`), the answers I gave (`answers/restaurant/rNNN.json`), and per shot `runs/restaurant_customer_tour/stage2/wp_XX/state.json` (all poses, pairs, Thompson-sampling info, displayed left/right order, decision, incumbent after each step). Refined poses: `stage2/all_best_results.json` (degrees).
+
+**Stage 3 — physical trajectory generation** (bundle `run_paper_scenes.py --resume --skip-video --poses-json ... --pose-angle-unit degrees`, i.e. the unchanged A* → tunnel → TOGT → validation path).
+- A* path 149 points; TOGT duration 56.5 s, path length 33.9 m; bundle validation passed; no re-optimisation needed.
+- Camera orientation: the runner’s RotationSpline through the refined yaw-only orientations at the actual gate arrival times (for pure-yaw rotations this is a C² cubic interpolation of the unwrapped yaw, as in the paper).
+- Video: `tools/render_final.py` → `scene_patch/renderer/render_patched_flythrough.py` (unchanged) with `render_settings.json`, patched mesh, same unsharp mask and libx264 CRF 18 encode as `make_video.py`.
+
+## Deviations from ACDC’s design (and why)
+
+- **VLM**: every VLM call (environment description, waypoint generation, frame select/sort, 100 comparisons per shot) was made by me (Claude Opus 5.5) from the same inputs, instead of `gpt-6-astra`. Images were shown to me as labelled contact sheets (64 env frames at 480×270; candidates at 480×270; each comparison pair at 400×225 per image, six pairs per sheet) rather than one API request per call at 960 px; the decision format is the code’s (1/2/3). Left/right order of incumbent vs challenger was randomised per pair and mapped back to the code’s `compare_images(best, cand)` contract.
+- **Number of shots**: 12 descriptions → 12 shots, against 18 shots in the saved ACDC run. I wrote the descriptions after estimating the cost of 100 comparisons per shot, so I cannot rule out that this pushed me towards fewer shots than `gpt-6-astra` produced under the same “more waypoints is better” prompt.
+- **Refinement search space follows the paper, not `pose_main.py`’s sampler**: yaw-only perturbation (Δθ ~ U[−30°, 30°]) plus translation u ~ U(S²), r ~ U[0, 1 m], height clamped to [0.3, 2.5] m (my choice; the paper gives no z-range), roll = pitch = 0. The code’s `_sample_orientation_near` rotates about a random 3-D axis (introducing roll/pitch) and `refine_poses.py` uses 32 candidates; the paper specifies yaw-only, M = 64. The GP, Laplace update, Thompson draw and the tie rule are the code’s functions (kernel evaluated vectorised from iteration 99 of cottage onward, numerically identical to 1e-16).
+- **Refinement renderer**: a persistent Blender process with exactly the capture settings of `render_blender_flythrough.py` (960×540, 8 spp, 80° FOV, flat 0.05 grey world, original mesh), on GPU instead of CPU, so the mesh is loaded once instead of per image. Restaurant used the original mesh under my 1.5 GB cap; luxury ran through the shared heavy queue.
+- **Text encoder**: the RADIO SigLIP2 adaptor’s text tower (`google/siglip2-so400m-patch16-naflex` `text_model`, the 1152-d space of the saved frame embeddings) loaded on its own in fp16 (streamed per tensor; only the needed token-embedding rows on GPU) because the full RADIO checkpoint does not fit the 2 GB cap. Tokenisation copied verbatim from `siglip2_adaptor.py`. The weights were deleted afterwards for the disk limit (re-fetch with `tools/fetch_siglip2_text.py`).
+- **Candidates per description**: 8 (paper and the saved c8 runs) rather than the code default of 3.
+- **Disk limit (FEEDBACK 03:25)**: after each scene finished, the full-resolution per-candidate refinement renders were deleted except the seed and the final incumbent; every judged pair is still kept as the sheet image I actually saw, and all poses are in `state.json`, so any render can be regenerated. Exported candidate frames were re-encoded PNG→JPEG q92.
+- **Final video render** streamed in 300-frame chunks (PNG chunks deleted after encoding) instead of writing all frames first; same renderer and settings.
+
+## Checks (reported, not fixed)
+
+| trajectory | bundle `validate_trajectory` | daju limits (speed ≤ 1.0 m/s, tilt ≤ 30°, thrust 0.1–7.2 N/motor, ω_xy ≤ 10.23, ω_z ≤ 3.00 rad/s) | clearance ≥ 0.3 m to occupied voxels | roll = 0 | |pitch| ≤ 25° |
+|---|---|---|---|---|---|
+| **this final** | PASS (occupied samples 0, gate err 0.0087 m) | **FAIL**: speed max 1.008 m/s (0.4 s above 1.0); tilt max 3.6°; thrust/motor 2.00–2.19 N; ω_xy 0.06, ω_z 1.47 rad/s | **FAIL**: min 0.041 m; 27% of flight time < 0.3 m | PASS (max |roll| 0°) | PASS (max |pitch| 0.00°) |
+| saved ACDC | PASS (occupied samples 0, gate err 0.0083 m) | **FAIL**: speed max 1.077 m/s (1.2 s above 1.0); tilt max 3.9°; thrust/motor 2.05–2.13 N; ω_xy 0.06, ω_z 2.62 rad/s | **FAIL**: min 0.086 m; 14% of flight time < 0.3 m | **FAIL** (max |roll| 7.3°) | PASS (max |pitch| 17.98°) |
+
+Notes: clearance is the distance from the trajectory centreline (sampled every 5 ms) to the surface of the nearest occupied 0.2 m voxel of the same occupancy grid the planner used. ACDC’s tunnel margins are 0.01 m and its validator only checks that the centreline is not inside an occupied voxel, so ≥ 0.3 m is not something the design aims for. TOGT treats the 1 m/s limit as a soft penalty (the bundle itself records `velocity_limit_is_soft_penalty: true`). Camera roll/pitch are those of the exported CSV quaternions; body tilt/thrust/rates are derived from the TOGT polynomial with the drolib flatness convention.
+
+## Comparison with the saved ACDC output
+
+| | this final | saved ACDC (`results_xhigh_25k_c8_togt`) |
+|---|---|---|
+| shots | 12 (refined, B = 100) | 18 (recorded poses, no pose refinement — paper’s evidence audit) |
+| duration / path length | 56.5 s / 33.9 m | 51.4 s / 30.7 m |
+| video frames | 1358 | 1235 |
+| camera roll/pitch | 0 / 0 (yaw-only shots, paper) | recorded handheld roll/pitch kept by the RotationSpline |
+| renderer | patched mesh + improved renderer (256 spp, gradient background) | original mesh, 8 spp, flat grey background |
+
+## Main flaws I saw
+
+- Good coverage of the entrance, golf room, dining room and bar; the transitions are mostly clean.
+- The ending bar shots are dark (baked lighting of the scan); the golf-room approach passes close to a pillar.
+

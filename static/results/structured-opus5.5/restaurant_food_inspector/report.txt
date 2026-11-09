@@ -1,0 +1,98 @@
+# restaurant_food_inspector — final report
+
+- **Prompt** (`restaurant_kitchen.txt`): “Create a virtual drone tour for a food safety inspector, showing that our restaurant maintains a highly sanitary food processing environment.”
+- **Inputs**: mesh `cafeteria.glb` (refinement renders: original `artifacts/.../scene_meshes/cafeteria.glb`; final video: `scene_patch/scenes/cafeteria.glb`), bag `rosbag2_2025_09_07-22_18_36_0.mcap`
+- **Final trajectory CSV**: `final/restaurant_food_inspector_optimized_path.csv` (1348 rows, same columns `t,x,y,z,q_x,q_y,q_z,q_w`, frame and 24 fps sampling as the saved `*_optimized_path.csv`)
+- **Final video**: `final/restaurant_food_inspector_flythrough.mp4` — 960×540, 24/1 fps, 1348 frames, 80° FOV
+- **Seed vs refined views**: `final/seed_vs_refined.jpg`
+- **Saved ACDC video for comparison**: `artifacts/results_xhigh_25k_c8_togt/restaurant/food_inspector/restaurant_food_inspector_flythrough.mp4` (3493 frames)
+
+## Shot list (stage 1 output, in tour order) and stage-2 outcome
+
+| # | title | source frame | challenger wins / ties (of 100) | last accepted iter | moved from seed | yaw change |
+|---|---|---|---|---|---|---|
+| 1 | Kitchen entrance from dining room | `01_07_frame_002385.png` | 15 / 0 | 89 | 0.27 m | -7.0° |
+| 2 | Service and soda station | `02_10_frame_002400.png` | 20 / 1 | 98 | 0.24 m | -13.4° |
+| 3 | Prep counter | `03_20_frame_002765.png` | 22 / 0 | 100 | 0.31 m | -60.1° |
+| 4 | Reach-in refrigerators | `04_25_frame_002875.png` | 13 / 0 | 92 | 0.21 m | -11.3° |
+| 5 | Cooking line overview | `05_33_frame_003105.png` | 25 / 0 | 99 | 1.70 m | +30.3° |
+| 6 | Refrigerated prep table | `06_43_frame_003190.png` | 27 / 0 | 98 | 0.54 m | +10.8° |
+| 7 | Griddle and broiler | `07_36_frame_003125.png` | 23 / 0 | 97 | 1.04 m | -16.4° |
+| 8 | Dishwashing sinks | `08_47_frame_003395.png` | 20 / 0 | 99 | 0.21 m | +6.9° |
+| 9 | Slicer station | `09_56_frame_003520.png` | 19 / 0 | 98 | 0.84 m | -24.0° |
+| 10 | Dry storage shelving | `10_66_frame_003720.png` | 15 / 0 | 70 | 1.06 m | -6.7° |
+| 11 | Back of the kitchen | `11_75_frame_004090.png` | 24 / 0 | 97 | 1.08 m | +12.0° |
+| 12 | Kitchen wide view back to the line | `12_79_frame_004185.png` | 19 / 0 | 100 | 0.66 m | +23.0° |
+| 13 | Exit to the dining room | `13_83_frame_004410.png` | 6 / 0 | 98 | 1.07 m | +5.5° |
+
+<details><summary>Full shot descriptions (the text the VLM judged every comparison against)</summary>
+
+1. **Kitchen entrance from dining room** — A beautifully taken picture. Highly sanitary. Facing the swinging kitchen door with the wooden Route 66 shield sign at centermiddle, the clean orange tile floor of the kitchen visible beyond at centerbottom, the bar fridge at rightmiddle, and dining tables at leftbottom.
+2. **Service and soda station** — A beautifully taken picture. Highly sanitary. Inside the kitchen: the clean drink and soda station on the granite counter at centermiddle, neatly stacked cups and to-go containers on the shelves at righttop, the Alabama and Wake Forest flags on the white wall at lefttop, and the orange quarry tile floor at centerbottom.
+3. **Prep counter** — A beautifully taken picture. Highly sanitary. A clean stainless steel prep counter at centerbottom with organized containers on the shelf above at centertop, white walls, bright fluorescent ceiling lights and the orange tile floor at leftbottom.
+4. **Reach-in refrigerators** — A beautifully taken picture. Highly sanitary. Tall stainless steel reach-in refrigerators at leftmiddle, the stainless steam table with round wells at centerbottom, the water heater at centermiddle and white walls with bright ceiling lights at centertop.
+5. **Cooking line overview** — A beautifully taken picture. Highly sanitary. Looking down the cooking line: the long stainless exhaust hood across lefttop, the flat-top griddle and fryers at leftmiddle, the refrigerated prep table with fresh vegetable bins at rightmiddle, and the clean orange tile aisle leading to centermiddle.
+6. **Refrigerated prep table** — A beautifully taken picture. Highly sanitary. The refrigerated prep table with covered fresh ingredient bins at centerbottom, the steam table wells at rightmiddle, the cooking line under the hood at lefttop and the orange tile floor at leftbottom.
+7. **Griddle and broiler** — A beautifully taken picture. Highly sanitary. The stainless flat-top griddle and char-broiler at centermiddle under the clean exhaust hood at centertop, stainless shelves at rightmiddle and the orange tile floor at centerbottom.
+8. **Dishwashing sinks** — A beautifully taken picture. Highly sanitary. The stainless three-compartment sink and dish table at centerbottom, the wall rack of hanging pots and pans at centertop, the under-counter stainless refrigerator at rightmiddle, and white tiled walls.
+9. **Slicer station** — A beautifully taken picture. Highly sanitary. The meat slicer on a clean stainless table at centermiddle, wire shelving with boxed supplies on the wall above at centertop, the stainless refrigerator at rightmiddle and the orange tile floor at centerbottom.
+10. **Dry storage shelving** — A beautifully taken picture. Highly sanitary. Organized wire shelving with labelled dry goods, stockpots and containers at centermiddle, stacked boxes kept off the floor at leftbottom, and white walls under bright light at centertop.
+11. **Back of the kitchen** — A beautifully taken picture. Highly sanitary. Looking along the back kitchen aisle: the white chest freezer at centerbottom, stainless tables and shelving along the leftmiddle, the cooking line in the distance at centermiddle and fluorescent lights at centertop.
+12. **Kitchen wide view back to the line** — A beautifully taken picture. Highly sanitary. A wide view from the back of the kitchen toward the cooking line: the clean orange tile floor at centerbottom, stainless steel equipment on both sides, the long exhaust hood at righttop and bright ceiling lights at centertop.
+13. **Exit to the dining room** — A beautifully taken picture. Highly sanitary. From the kitchen looking out through the doorway at centermiddle to the dining room, the soda station and stacked clean cups at rightmiddle, the flags at righttop, and the orange tile floor at centerbottom.
+
+</details>
+
+## How each stage went
+
+**Stage 1 — semantic shot planning and seed retrieval.**
+- Environment description: `stage1/restaurant/environment_description.txt` (I wrote it from the 64 time-ordered frames that `OpenAIToolkit._video_frames` samples, viewed as 4 contact sheets; `stage1/restaurant/env_frames/`). Shared by both runs of the scene (same video, same prompt).
+- Waypoint descriptions: `runs/restaurant_food_inspector/stage1/waypoints.json` — 13 descriptions written to `Utils.WAYPOINT_SCHEMA` (9-grid placement, ‘A beautifully taken picture.’ prefix).
+- Retrieval: SigLIP2 text embeddings (`stage1/text_embeddings.npy`) vs the precomputed RADIO/SigLIP2 frame embeddings of the bag, frame stride 5, top-8 per description, de-duplicated → candidates exported from the MCAP with poses by the bundle's `export_selected_frames_from_mcap` (`stage1/retrieval.json`, `stage1/selected_frames/`).
+- Select & sort: I viewed all exported candidates (`stage1/selection_sheets/`) and answered in the `select_frames` JSON schema (`stage1/selection_response.json`); 13 shots kept, none omitted. Seeds = recorded position + yaw of each selected frame; recorded pitch/roll discarded (`stage1/seeds.json`).
+
+**Stage 2 — visual preference refinement.**
+- 1300 pairwise comparisons in total (B = 100 per shot, M = 64 candidates, ρ_trans = 1 m, ρ_rot = 30°, GP kernel l_rot = 15°, l_trans = 0.5 m, σ_f = 1, jitter 1e-6, Laplace/Bradley–Terry posterior and dueling Thompson sampling from `pose_main.py`).
+- Challenger accepted 248 times, ties ({3}, no pair added — code behaviour) 1 times. Mean displacement from seed 0.71 m (max 1.70 m); mean |yaw change| 17.5°.
+- Every comparison is recorded: the exact sheet image I judged (`sheets/restaurant/round_*.jpg`), the answers I gave (`answers/restaurant/rNNN.json`), and per shot `runs/restaurant_food_inspector/stage2/wp_XX/state.json` (all poses, pairs, Thompson-sampling info, displayed left/right order, decision, incumbent after each step). Refined poses: `stage2/all_best_results.json` (degrees).
+
+**Stage 3 — physical trajectory generation** (bundle `run_paper_scenes.py --resume --skip-video --poses-json ... --pose-angle-unit degrees`, i.e. the unchanged A* → tunnel → TOGT → validation path).
+- A* path 137 points; TOGT duration 56.1 s, path length 32.2 m; bundle validation passed; no re-optimisation needed.
+- Camera orientation: the runner’s RotationSpline through the refined yaw-only orientations at the actual gate arrival times (for pure-yaw rotations this is a C² cubic interpolation of the unwrapped yaw, as in the paper).
+- Video: `tools/render_final.py` → `scene_patch/renderer/render_patched_flythrough.py` (unchanged) with `render_settings.json`, patched mesh, same unsharp mask and libx264 CRF 18 encode as `make_video.py`.
+
+## Deviations from ACDC’s design (and why)
+
+- **VLM**: every VLM call (environment description, waypoint generation, frame select/sort, 100 comparisons per shot) was made by me (Claude Opus 5.5) from the same inputs, instead of `gpt-6-astra`. Images were shown to me as labelled contact sheets (64 env frames at 480×270; candidates at 480×270; each comparison pair at 400×225 per image, six pairs per sheet) rather than one API request per call at 960 px; the decision format is the code’s (1/2/3). Left/right order of incumbent vs challenger was randomised per pair and mapped back to the code’s `compare_images(best, cand)` contract.
+- **Number of shots**: 13 descriptions → 13 shots, against 44 shots in the saved ACDC run. I wrote the descriptions after estimating the cost of 100 comparisons per shot, so I cannot rule out that this pushed me towards fewer shots than `gpt-6-astra` produced under the same “more waypoints is better” prompt.
+- **Refinement search space follows the paper, not `pose_main.py`’s sampler**: yaw-only perturbation (Δθ ~ U[−30°, 30°]) plus translation u ~ U(S²), r ~ U[0, 1 m], height clamped to [0.3, 2.5] m (my choice; the paper gives no z-range), roll = pitch = 0. The code’s `_sample_orientation_near` rotates about a random 3-D axis (introducing roll/pitch) and `refine_poses.py` uses 32 candidates; the paper specifies yaw-only, M = 64. The GP, Laplace update, Thompson draw and the tie rule are the code’s functions (kernel evaluated vectorised from iteration 99 of cottage onward, numerically identical to 1e-16).
+- **Refinement renderer**: a persistent Blender process with exactly the capture settings of `render_blender_flythrough.py` (960×540, 8 spp, 80° FOV, flat 0.05 grey world, original mesh), on GPU instead of CPU, so the mesh is loaded once instead of per image. Restaurant used the original mesh under my 1.5 GB cap; luxury ran through the shared heavy queue.
+- **Text encoder**: the RADIO SigLIP2 adaptor’s text tower (`google/siglip2-so400m-patch16-naflex` `text_model`, the 1152-d space of the saved frame embeddings) loaded on its own in fp16 (streamed per tensor; only the needed token-embedding rows on GPU) because the full RADIO checkpoint does not fit the 2 GB cap. Tokenisation copied verbatim from `siglip2_adaptor.py`. The weights were deleted afterwards for the disk limit (re-fetch with `tools/fetch_siglip2_text.py`).
+- **Candidates per description**: 8 (paper and the saved c8 runs) rather than the code default of 3.
+- **Disk limit (FEEDBACK 03:25)**: after each scene finished, the full-resolution per-candidate refinement renders were deleted except the seed and the final incumbent; every judged pair is still kept as the sheet image I actually saw, and all poses are in `state.json`, so any render can be regenerated. Exported candidate frames were re-encoded PNG→JPEG q92.
+- **Final video render** streamed in 300-frame chunks (PNG chunks deleted after encoding) instead of writing all frames first; same renderer and settings.
+
+## Checks (reported, not fixed)
+
+| trajectory | bundle `validate_trajectory` | daju limits (speed ≤ 1.0 m/s, tilt ≤ 30°, thrust 0.1–7.2 N/motor, ω_xy ≤ 10.23, ω_z ≤ 3.00 rad/s) | clearance ≥ 0.3 m to occupied voxels | roll = 0 | |pitch| ≤ 25° |
+|---|---|---|---|---|---|
+| **this final** | PASS (occupied samples 0, gate err 0.0066 m) | **FAIL**: speed max 1.014 m/s (0.5 s above 1.0); tilt max 3.2°; thrust/motor 2.03–2.17 N; ω_xy 0.05, ω_z 1.52 rad/s | **FAIL**: min 0.099 m; 32% of flight time < 0.3 m | PASS (max |roll| 0°) | PASS (max |pitch| 0.00°) |
+| saved ACDC | PASS (occupied samples 0, gate err 0.0100 m) | **FAIL**: speed max 1.015 m/s (0.6 s above 1.0); tilt max 3.3°; thrust/motor 2.05–2.14 N; ω_xy 0.05, ω_z 8.34 rad/s | **FAIL**: min 0.023 m; 41% of flight time < 0.3 m | **FAIL** (max |roll| 22.5°) | **FAIL** (max |pitch| 51.04°) |
+
+Notes: clearance is the distance from the trajectory centreline (sampled every 5 ms) to the surface of the nearest occupied 0.2 m voxel of the same occupancy grid the planner used. ACDC’s tunnel margins are 0.01 m and its validator only checks that the centreline is not inside an occupied voxel, so ≥ 0.3 m is not something the design aims for. TOGT treats the 1 m/s limit as a soft penalty (the bundle itself records `velocity_limit_is_soft_penalty: true`). Camera roll/pitch are those of the exported CSV quaternions; body tilt/thrust/rates are derived from the TOGT polynomial with the drolib flatness convention.
+
+## Comparison with the saved ACDC output
+
+| | this final | saved ACDC (`results_xhigh_25k_c8_togt`) |
+|---|---|---|
+| shots | 13 (refined, B = 100) | 44 (recorded poses, no pose refinement — paper’s evidence audit) |
+| duration / path length | 56.1 s / 32.2 m | 145.5 s / 76.9 m |
+| video frames | 1348 | 3493 |
+| camera roll/pitch | 0 / 0 (yaw-only shots, paper) | recorded handheld roll/pitch kept by the RotationSpline |
+| renderer | patched mesh + improved renderer (256 spp, gradient background) | original mesh, 8 spp, flat grey background |
+
+## Main flaws I saw
+
+- Covers the service station, cooking line, dish area, slicer, dry storage and the back aisle. Some transit frames are close-ups of a white wall with notices or of a stainless fridge door.
+- The 'clean' framing is limited by the scan itself: the back storage area really is cluttered.
+

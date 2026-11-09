@@ -1,0 +1,52 @@
+# luxury_show_off — ACDC faithful run (Claude as the VLM)
+
+Final: `luxury_show_off_flythrough.mp4` (960x540 @24/1, 4913 frames), trajectory `luxury_show_off_optimized_path.csv` (same columns/frame as the saved `*_optimized_path.csv`: t,x,y,z,q_x,q_y,q_z,q_w; 24 Hz).
+Duration 204.7 s, path length 127.0 m. Saved ACDC output: 202.9 s, 105.2 m (`/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/luxury/show_off/luxury_show_off_flythrough.mp4`).
+
+## Shot list (stage 1, final order after my frame selection)
+1. **Deck and glass facade** (shot 1, seed frame 09_frame_000835.png) — deck and open glass facade with interior beyond
+2. **Lounge daybed on the deck** (shot 2, seed frame 05_frame_000440.png) — daybed on deck, lawn, sky
+3. **Great room through the glass doors** (shot 3, seed frame 19_frame_001025.png) — at open glass door looking into great room, stone floor, sofa, TV wall
+4. **Teal ottoman and lounge** (shot 4, seed frame 35_frame_001380.png) — teal ottoman with throw and vases, sectional behind, bar stools
+5. **Lounge armchairs and glass wall** (shot 5, seed frame 22_frame_001230.png) — armchair, lounge, sideboard, glass wall
+6. **Kitchen bar and stools** (shot 6, seed frame 65_frame_003175.png) — reddish bar with stools, teal sofa, corridor
+7. **Gold kitchen** (shot 7, seed frame 42_frame_001790.png) — galley kitchen yellow cabinets red counter
+8. **Onyx wall** (shot 8, seed frame 60_frame_002995.png) — onyx wall, artwork, vases, wood panel
+9. **Gallery hallway** (shot 9, seed frame 51_frame_002585.png) — gallery hallway photos, wood doors, door at end
+10. **Wardrobe corridor** (shot 10, seed frame 80_frame_003780.png) — wardrobe doors with pulls, open door
+11. **Guest bedroom** (shot 11, seed frame 74_frame_003675.png) — guest bedroom tufted headboard, desk, window
+12. **Marble guest bath** (shot 12, seed frame 83_frame_004045.png) — marble bath vanity, black basin, wet room
+13. **White-and-turquoise bedroom** (shot 13, seed frame 87_frame_004235.png) — white bed turquoise throw, bench, desk, curtains
+14. **Primary bath with tub** (shot 14, seed frame 103_frame_005000.png) — primary bath blinds, vanity lamp, stool
+15. **Primary suite toward the deck** (shot 15, seed frame 105_frame_005335.png) — primary bedroom bed, glass wall, deck
+
+Full text: `stage1/waypoints.json` (all 15 shot descriptions written), `stage1/environment_description.txt`, retrieval (8 candidates/shot): `stage1/retrieval.json`, selection record `stage1/selection_input.json`.
+
+## How each stage went
+- **Stage 1.** Environment description and shot descriptions written by me from 63/64 sampled frames (code's prompts). Seed retrieval: SigLIP2 text embeddings + saved image embeddings, top-8 per shot over every 5th frame. I then picked one frame per shot from contact sheets. 15/15 shots kept.
+- **Stage 2.** ACDC's GP preference optimizer (imported unchanged), M=64 candidates, ρ_trans=1 m, ρ_rot=30°, one comparison per shot per round, judged by me from side-by-side renders. **300 comparisons in total, 61 challengers accepted, 120 ties** (20 per shot, not B=100). Every comparison, its decision and reason: `refine/state.json` (history), `refine/decisions/rNNN.txt`, sheets `refine/sheets/`. Refined poses: `refine/all_best_results.json`.
+- **Stage 3.** ACDC code unchanged: A* + safe-corridor gates (`run_trajectory_generation.py`), TOGT (`run_togt_scenes.py`, including its own clearance re-optimization retries), RotationSpline camera orientation. Outputs in `stage3/`.
+
+## Deviations from the design (and why)
+1. **Refinement budget ~20 comparisons/shot instead of B=100.** I judge each pair by eye; 100 × ~15 shots × 6 runs was not possible. Refinement was also stopped when I ran out of time (a partly judged round was discarded).
+2. **Optimizer perturbs the full 3-D rotation (code behaviour)**, whereas the paper says position+yaw with roll/pitch fixed to 0. I kept the code. Consequently roll/pitch in the final are not 0 (see checks); the saved ACDC output has the same property.
+3. Pair judgments were made on a sheet showing incumbent (image 1) and challenger (image 2) side by side at 480×270 each, several shots per sheet; ties ("3") were allowed as in the code. Refinement renders used ACDC's own Blender script (8 spp CPU) on the patched mesh.
+4. Environment description / shots were written once per scene and shared by the scene's two prompts. The last exploration frame was not viewed.
+5. Text embedding: only the SigLIP2 text tower of the RADIO adaptor was run (fp16 weights, fp32 compute) to fit the memory cap; image embeddings and occupancy grids were the saved precomputed ones (grids built from the original meshes).
+6. Final video: patched mesh + patched renderer (as instructed), via `tools/make_video_mine.py` (frames piped to ffmpeg in chunks to save disk); same resolution/fps/FOV as saved video.
+7. A first retrieval attempt had a bug in my text-embedding wrapper (garbage embeddings); discarded and redone (`stage1/invalid_attempt1_meta_bug/`).
+
+## Checks
+| check | result |
+|---|---|
+| bundle `validate_trajectory` | PASS (occupied samples 0, max gate error 0.0082 m) |
+| speed ≤ 1.0 m/s | FAIL (max 1.094) |
+| tilt ≤ 30°, body rate ≤ 10.2 rad/s, thrust within [0.1,7.2] N/motor | PASS (tilt 4.3°, rate 0.06, thrust 2.00–2.20) |
+| clearance ≥ 0.3 m from occupied voxels | FAIL (min 0.052 m; 37% of samples below 0.3 m) |
+| roll = 0 | FAIL (max |roll| 25.4°) |
+| pitch within ±25° | FAIL (max |pitch| 40.8°) |
+
+Note: the clearance and roll/pitch figures are measured on the delivered centerline/CSV; the saved ACDC output measured the same way: min clearance 0.040 m, max |roll| 7.7°, max |pitch| 21.0°, max speed 1.082 m/s.
+
+## Comparison with saved ACDC
+The saved run used GPT (xhigh) shot lists and the recorded poses without pose refinement; this run used my shots and 20 refinement comparisons/shot. Video comparison is side by side by file; I did not watch the final videos frame by frame.

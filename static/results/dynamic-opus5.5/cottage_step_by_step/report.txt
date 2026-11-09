@@ -1,0 +1,45 @@
+# cottage_step_by_step — final report
+
+**Prompt:** "Start from the entrance do these sequentially. / 1 : go forward to shoot the dining table / 2 : go to living room, circle around / 3 : go to bedroom and its washroom / 4 : go to kitchen and tour breakfast nook / 5 : go to the second washroom."
+**Final:** `cottage_step_by_step_flythrough.mp4` from `iter05` (published 2026-10-30T18:27), trajectory `cottage_step_by_step_optimized_path.csv` (same columns and frame as the baseline's `*_optimized_path.csv`). Earlier finals are in `../final_history/`.
+**Baseline:** `artifacts/results_xhigh_25k_c8_togt/cottage/step_by_step/cottage_step_by_step_flythrough.mp4`
+**Video:** 960x540, 24/1 fps, 2821 frames (decoded and counted). 80° FOV, rendered with the patched mesh and the scene_patch render settings.
+
+## How I read the prompt
+The five instructions are followed strictly in order, starting from the entrance:
+1. **Dining table:** from just inside the front door, fly forward (west) to the dining area. The camera arcs along the table, which stays framed with the staircase and chandelier.
+2. **Living room, circle around:** a full counter-clockwise orbit around the ottoman. The camera faces the room centre throughout, so the sofa wall, patio doors and leather chairs, fireplace/TV, and reading corner each pass through frame.
+3. **Bedroom and its washroom:** the drone flies to the mouth of the bedroom passage and holds for 3 s, looking down the passage into the bedroom. **It cannot enter.** The ~0.8 m passage has a best clearance of 0.18 m to the occupied voxels, below the required 0.3 m. The bedroom's washroom cannot be seen from there.
+4. **Kitchen and breakfast nook:** the drone takes the only passage with 0.3 m clearance (a 1.1 m corridor beside the bar), sweeps the kitchen, and enters the breakfast nook. There it holds and pans from the round table in the shuttered corner to the workstation.
+5. **Second washroom:** the drone returns to the corridor junction and ends looking through the powder-room doorway at its vanity and toilet. The room itself is unreachable (0.05 m clearance).
+
+## Compared with the baseline
+The baseline enters the bedroom, its washroom and the powder room, but only by breaking the limits. It reaches up to 1.07 m/s and rolls up to 90°, with pitch from −47° to +48° and yaw rates up to 186°/s. It comes closer than 0.3 m in 32% of frames (min 0.06 m). The near-field critic flags 36% of its frames as mostly blocked within 0.8 m. Ours is within all limits, keeps a level horizon and readable framing, and makes the instruction order obvious. Steps 3 and 5 are shown only from the doorways.
+
+## Remaining flaws
+- Steps 3 and 5 are views from doorways, not visits, so the bedroom washroom is not shown at all.
+- The kitchen corridor and the powder-room doorway are narrow, so a few seconds show a close door jamb or wall.
+
+
+## Feasibility (measured)
+- Bundle `validate_trajectory`: **passed** (24667 samples, 0 occupied, 0 outside the grid, max continuity gap 2.8e-15).
+- Speed max 0.45 m/s (hard limit 1.0). Acceleration max 0.49 m/s², tilt max 2.9° (limit 30°).
+- Per-motor thrust 2.08–2.11 N (limits 0.1–7.2). ω_xy max 0.60 rad/s (limit 10.2). Yaw rate max 27.4°/s (limit 172°/s).
+- Camera roll 0 everywhere; pitch 3.3° to 22.0° (limit ±25°).
+- Clearance: min distance to occupied voxel cubes **0.377 m** (union of the bundle grid and the patched-mesh voxels). Against the bundle grid alone: 0.377 m. Required ≥ 0.3 m.
+- Overall: **FEASIBLE**.
+
+## Measured comparison with the baseline (same metric code for both)
+| | ours | baseline |
+|---|---|---|
+| duration / path length | 117.5 s / 31.1 m | 133.9 s / 62.6 m |
+| max speed | 0.45 m/s | 1.071 m/s |
+| max \|roll\| | 0.0° | 90.0° |
+| pitch range | 3.3° to 22.0° | -46.9° to 47.5° |
+| frames with \|pitch\| > 25° | 0% | 28% |
+| max yaw rate | 27.4°/s | 186.0°/s |
+| 95th-percentile camera rotation speed | 26.6°/s | 72.9°/s |
+| min clearance (voxel cubes) | 0.377 m | 0.064 m |
+| frames closer than 0.3 m | 0% | 32% |
+
+Near-field critic (fraction of frames where >25% of the view is blocked within 0.8 m): ours: mean near-frac 0.095, frames >25% near 13.2%; baseline: mean near-frac 0.210, frames >25% near 35.8%

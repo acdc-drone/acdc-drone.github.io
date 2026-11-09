@@ -1,0 +1,43 @@
+# cottage_cozy — final report
+
+**Prompt:** "Can you create a complete tour of this house, emphasizing a cozy and comfortable vibe."
+**Final:** `cottage_cozy_flythrough.mp4` from `iter07` (published 2026-10-30T18:27), trajectory `cottage_cozy_optimized_path.csv` (same columns and frame as the baseline's `*_optimized_path.csv`). Earlier finals are in `../final_history/`.
+**Baseline:** `artifacts/results_xhigh_25k_c8_togt/cottage/cozy/cottage_cozy_flythrough.mp4`
+**Video:** 960x540, 24/1 fps, 1846 frames (decoded and counted). 80° FOV, rendered with the patched mesh and the scene_patch render settings.
+
+## How I read the prompt
+It opens with a slow crane shot: from 2.9 m high in the double-height entry, the camera looks down into the vaulted living room and descends to eye level as it glides in. The rest is a slow, eye-level (≈1.35–1.4 m) glide with a level horizon and gentle, eased pans. It favours warm, lived-in views: the sofa and pillows under the landscape painting, the sunny patio doors with the black leather chairs, the fireplace, and the reading corner with recliner and lamp. Then the dining table under the chandelier, the kitchen, and finally the sunny shuttered breakfast nook, where the tour comes to rest.
+
+"Complete tour" is limited by the hard 0.3 m clearance rule. The ~0.8 m bedroom passage has a best clearance of 0.18 m, and the laundry/powder-room door 0.05 m. So the bedroom is shown by pausing at the mouth of its passage and looking down it into the bedroom. The bedroom bathroom and the laundry/powder room are not shown.
+
+## Compared with the baseline
+The baseline flies at up to 1.1 m/s, which is over the hard limit. Its camera rolls up to 60° and pitches up to 56° (beyond ±25° in 43% of frames), and its yaw whips at up to 238°/s. It comes closer than 0.3 m to the scan in 39% of frames (min 0.03 m), producing floor, bedspread and wall close-ups. Ours keeps the horizon level, frames whole rooms, never comes closer than 0.3 m, and is rendered on the patched mesh with the improved renderer.
+
+## Remaining flaws
+- The bedroom is only seen from the end of its passage (~5 m away). Its bathroom and the laundry/powder room are not shown.
+- The only kitchen route with 0.3 m clearance is a 1.1 m-wide passage, which gives a plain few-second view of a white door and an oven close-up.
+- Shorter than the baseline, because the reachable part of the house is smaller.
+
+
+## Feasibility (measured)
+- Bundle `validate_trajectory`: **passed** (16129 samples, 0 occupied, 0 outside the grid, max continuity gap 2.7e-15).
+- Speed max 0.38 m/s (hard limit 1.0). Acceleration max 0.85 m/s², tilt max 4.9° (limit 30°).
+- Per-motor thrust 2.08–2.13 N (limits 0.1–7.2). ω_xy max 0.59 rad/s (limit 10.2). Yaw rate max 27.9°/s (limit 172°/s).
+- Camera roll 0 everywhere; pitch 2.0° to 22.0° (limit ±25°).
+- Clearance: min distance to occupied voxel cubes **0.349 m** (union of the bundle grid and the patched-mesh voxels). Against the bundle grid alone: 0.349 m. Required ≥ 0.3 m.
+- Overall: **FEASIBLE**.
+
+## Measured comparison with the baseline (same metric code for both)
+| | ours | baseline |
+|---|---|---|
+| duration / path length | 76.8 s / 19.3 m | 119.3 s / 56.3 m |
+| max speed | 0.38 m/s | 1.1 m/s |
+| max \|roll\| | 0.0° | 60.5° |
+| pitch range | 2.0° to 22.0° | -19.0° to 56.0° |
+| frames with \|pitch\| > 25° | 0% | 43% |
+| max yaw rate | 27.9°/s | 238.1°/s |
+| 95th-percentile camera rotation speed | 27.4°/s | 86.4°/s |
+| min clearance (voxel cubes) | 0.349 m | 0.03 m |
+| frames closer than 0.3 m | 0% | 39% |
+
+Near-field critic (fraction of frames where >25% of the view is blocked within 0.8 m): ours: mean near-frac 0.046, frames >25% near 5.8%; baseline: mean near-frac 0.233, frames >25% near 38.3%

@@ -1,0 +1,15 @@
+# cottage_step_by_step
+
+Follow the requested order: entrance and dining, living-room circuit, bedroom and its bathroom, kitchen and breakfast nook, then second washroom.
+
+**Compared with the baseline:** Follows the requested room order and living-room circuit, with a level horizon, controlled pans and clearer dining, fireplace and vanity views. The final now fully enters the second washroom, improving the earlier doorway-only ending. Duration: 257.8 s versus 133.9 s.
+
+**Feasibility: PASS.** Both patched-grid and archived-grid bundle checks pass, as do conservative continuous Daju bounds. Speed ≤ 0.861 m/s; continuous voxel-box clearance ≥ 0.3024 m on the 5 cm grid with a conservative local 1 cm doorway refinement; camera roll 0°, pitch -2.2° to 16.6°. The clearance claim uses the new conservative model, not the archived 20 cm voxel volumes. Video and CSV match at 960×540, 24 fps and 80° horizontal FOV; decode and frame-count checks pass.
+
+**Remaining flaws:** Narrow transitions still contain close doorframe/wall views. Photogrammetry defects remain on appliances and mirrors, and the resource-safe render has softer fine texture than the native preset.
+
+**Rendering and review:** Resource adaptation of the patched renderer: EEVEE, 64 AA samples, 768 px texture cache; patched geometry, camera, emission materials and background treatment preserved. Native Cycles was not used. Inspected 26 one-second samples of the upgraded ending and 53 samples across the completed film (five-second spacing plus the final frame), as well as the earlier surveys. Full decode, frame count and conservative continuous dynamics bounds pass. This is sampled visual review, not real-time viewing of every frame.
+
+[Checks](feasibility.json) · [Continuous bounds](continuous_dynamics_bounds.json) · [Review sheet](review_contact_sheet.jpg) · [Method](../../../VALIDATION_METHOD.md) · [Baseline](/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/cottage/step_by_step/cottage_step_by_step_flythrough.mp4)
+
+Published 2026-10-30T09:39:14.900443-04:00; candidate `i03`. Earlier iterations and finals remain in the run directory.

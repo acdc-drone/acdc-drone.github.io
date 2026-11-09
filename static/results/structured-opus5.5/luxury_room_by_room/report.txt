@@ -1,0 +1,100 @@
+# luxury_room_by_room — final report
+
+- **Prompt** (`luxury_instuctfollow.txt`): “Begin in the grand foyer. Pan left into the Formal Dining Room, pan right into the Piano Room, then re-center and move forward past the staircase into the two-story Great Room. From the Great Room, turn left into the open Kitchen and Breakfast Nook. From the Great Room again, turn right into the Primary Bedroom Suite, continue through the bath into the walk-in closet, then return to the grand foyer.”
+- **Inputs**: mesh `210.glb` (refinement renders: original `artifacts/.../scene_meshes/210.glb`; final video: `scene_patch/scenes/210.glb`), bag `rosbag2_2025_09_07-15_03_41_0.mcap`
+- **Final trajectory CSV**: `final/luxury_room_by_room_optimized_path.csv` (3627 rows, same columns `t,x,y,z,q_x,q_y,q_z,q_w`, frame and 24 fps sampling as the saved `*_optimized_path.csv`)
+- **Final video**: `final/luxury_room_by_room_flythrough.mp4` — 960×540, 24/1 fps, 3627 frames, 80° FOV
+- **Seed vs refined views**: `final/seed_vs_refined.jpg`
+- **Saved ACDC video for comparison**: `artifacts/results_xhigh_25k_c8_togt/luxury/room_by_room/luxury_room_by_room_flythrough.mp4` (2172 frames)
+
+## Shot list (stage 1 output, in tour order) and stage-2 outcome
+
+| # | title | source frame | challenger wins / ties (of 100) | last accepted iter | moved from seed | yaw change |
+|---|---|---|---|---|---|---|
+| 1 | Foyer entry from the terrace | `01_03_frame_000845.jpg` | 22 / 0 | 96 | 1.15 m | +16.1° |
+| 2 | Pan left: dining and kitchen island | `02_26_frame_001385.jpg` | 25 / 0 | 99 | 0.53 m | +24.8° |
+| 3 | Pan right: lounge corner | `03_12_frame_001260.jpg` | 35 / 0 | 99 | 0.63 m | +18.0° |
+| 4 | Re-center and move forward | `04_14_frame_001270.jpg` | 22 / 0 | 97 | 1.37 m | +7.1° |
+| 5 | Great room | `05_22_frame_001345.jpg` | 21 / 0 | 100 | 1.27 m | -35.7° |
+| 6 | Turn left into the kitchen | `06_33_frame_001750.jpg` | 20 / 0 | 100 | 0.38 m | -0.1° |
+| 7 | Kitchen island nook | `07_40_frame_001850.jpg` | 18 / 0 | 98 | 1.02 m | -10.9° |
+| 8 | Back through the great room | `08_53_frame_003150.jpg` | 24 / 0 | 95 | 0.54 m | +33.2° |
+| 9 | Turn right toward the primary suite | `09_45_frame_002995.jpg` | 20 / 0 | 100 | 0.41 m | +6.6° |
+| 10 | Primary bedroom | `10_77_frame_005340.jpg` | 27 / 0 | 99 | 1.24 m | +25.2° |
+| 11 | Primary bath | `11_73_frame_004775.jpg` | 15 / 0 | 100 | 0.34 m | -2.7° |
+| 12 | Walk-in closet | `12_63_frame_003535.jpg` | 15 / 0 | 97 | 1.88 m | -18.4° |
+| 13 | Return to the grand foyer | `13_50_frame_003040.jpg` | 16 / 0 | 99 | 1.00 m | -7.2° |
+| 14 | Back at the foyer | `14_25_frame_001360.jpg` | 24 / 1 | 97 | 0.40 m | -2.9° |
+
+<details><summary>Full shot descriptions (the text the VLM judged every comparison against)</summary>
+
+1. **Foyer entry from the terrace** — A beautifully taken picture. Grand entrance. Standing at the wide open glass doors, looking into the bright open-plan living room: the long white sectional sofa with teal cushions at centermiddle, the TV over the white media console at leftmiddle, the ceiling light cove at centertop, and the pale stone floor at centerbottom.
+2. **Pan left: dining and kitchen island** — A beautifully taken picture. Turned to the left of the entry: the long wood-topped kitchen island with a row of tall wooden bar stools serving as the dining area at centermiddle, the pale gold cabinets behind at lefttop, and the teal chaise at rightbottom.
+3. **Pan right: lounge corner** — A beautifully taken picture. Turned to the right of the entry: brown leather lounge chairs and the striped wooden armchair at centermiddle, the low coffee table with vases at centerbottom, and the glass doors to the green garden at righttop.
+4. **Re-center and move forward** — A beautifully taken picture. Re-centered and moving forward through the great room: the white sectional sofa with teal and orange cushions at rightmiddle, the large white plaster artworks on the wall at righttop, the teal chaise at centerbottom, and the kitchen at the far end at centermiddle.
+5. **Great room** — A beautifully taken picture. The great room seen in full: the long white sofa, the teal chaise and the coffee table at centermiddle, the wall of glass doors with garden view at leftmiddle, the long light cove on the white ceiling at centertop and the pale stone floor at centerbottom.
+6. **Turn left into the kitchen** — A beautifully taken picture. Turning left into the open kitchen: long runs of pale gold lacquered cabinets at leftmiddle and rightmiddle, the red-brown wood countertop at rightbottom, built-in ovens at lefttop and the pale floor leading to centermiddle.
+7. **Kitchen island nook** — A beautifully taken picture. The kitchen island with tall wooden bar stools at centermiddle as a breakfast nook, the red-brown wood top at centerbottom, the backlit onyx wall at rightmiddle and the living room beyond at lefttop.
+8. **Back through the great room** — A beautifully taken picture. From the kitchen looking back over the great room: the teal chaise and white sofa at centermiddle, the TV wall at leftmiddle and the open glass doors to the garden at righttop.
+9. **Turn right toward the primary suite** — A beautifully taken picture. Turning right by the backlit onyx wall into the long hallway to the bedroom wing: the glowing onyx panel at rightmiddle, tall wood-veneer doors at leftmiddle, black-and-white framed photographs along the wall and the hallway end at centermiddle.
+10. **Primary bedroom** — A beautifully taken picture. Inside the primary bedroom suite: the large low white bed at centerbottom, the wooden headboard wall unit at centermiddle, white sheer curtains and the wall of glass doors to the garden deck at rightmiddle.
+11. **Primary bath** — A beautifully taken picture. Continuing through the primary bath: the glossy black stone walls, the bathtub at leftbottom, the long dark vanity with round mirror and lamp at centermiddle and striped window blinds at lefttop.
+12. **Walk-in closet** — A beautifully taken picture. Into the dressing area beyond the bath: tall wood-veneer wardrobe doors with long handles at centermiddle, the pale floor at centerbottom and a doorway to the bedroom at rightmiddle.
+13. **Return to the grand foyer** — A beautifully taken picture. Returning down the hallway to the foyer: the long pale hallway at centermiddle opening into the bright living room at the end, the backlit onyx wall at rightmiddle and spotlights at centertop.
+14. **Back at the foyer** — A beautifully taken picture. Back at the entry of the great room: the long white sectional sofa with teal cushions at centermiddle, the teal chaise at centerbottom, the open glass doors and terrace at righttop.
+
+</details>
+
+## How each stage went
+
+**Stage 1 — semantic shot planning and seed retrieval.**
+- Environment description: `stage1/luxury/environment_description.txt` (I wrote it from the 64 time-ordered frames that `OpenAIToolkit._video_frames` samples, viewed as 4 contact sheets; `stage1/luxury/env_frames/`). Shared by both runs of the scene (same video, same prompt).
+- Waypoint descriptions: `runs/luxury_room_by_room/stage1/waypoints.json` — 14 descriptions written to `Utils.WAYPOINT_SCHEMA` (9-grid placement, ‘A beautifully taken picture.’ prefix).
+- Retrieval: SigLIP2 text embeddings (`stage1/text_embeddings.npy`) vs the precomputed RADIO/SigLIP2 frame embeddings of the bag, frame stride 5, top-8 per description, de-duplicated → candidates exported from the MCAP with poses by the bundle's `export_selected_frames_from_mcap` (`stage1/retrieval.json`, `stage1/selected_frames/`).
+- Select & sort: I viewed all exported candidates (`stage1/selection_sheets/`) and answered in the `select_frames` JSON schema (`stage1/selection_response.json`); 14 shots kept, none omitted. Seeds = recorded position + yaw of each selected frame; recorded pitch/roll discarded (`stage1/seeds.json`).
+
+**Stage 2 — visual preference refinement.**
+- 1400 pairwise comparisons in total (B = 100 per shot, M = 64 candidates, ρ_trans = 1 m, ρ_rot = 30°, GP kernel l_rot = 15°, l_trans = 0.5 m, σ_f = 1, jitter 1e-6, Laplace/Bradley–Terry posterior and dueling Thompson sampling from `pose_main.py`).
+- Challenger accepted 304 times, ties ({3}, no pair added — code behaviour) 1 times. Mean displacement from seed 0.87 m (max 1.88 m); mean |yaw change| 14.9°.
+- Every comparison is recorded: the exact sheet image I judged (`sheets/luxury/round_*.jpg`), the answers I gave (`answers/luxury/rNNN.json`), and per shot `runs/luxury_room_by_room/stage2/wp_XX/state.json` (all poses, pairs, Thompson-sampling info, displayed left/right order, decision, incumbent after each step). Refined poses: `stage2/all_best_results.json` (degrees).
+
+**Stage 3 — physical trajectory generation** (bundle `run_paper_scenes.py --resume --skip-video --poses-json ... --pose-angle-unit degrees`, i.e. the unchanged A* → tunnel → TOGT → validation path).
+- A* path 395 points; TOGT duration 151.1 s, path length 92.3 m; bundle validation passed; no re-optimisation needed.
+- Camera orientation: the runner’s RotationSpline through the refined yaw-only orientations at the actual gate arrival times (for pure-yaw rotations this is a C² cubic interpolation of the unwrapped yaw, as in the paper).
+- Video: `tools/render_final.py` → `scene_patch/renderer/render_patched_flythrough.py` (unchanged) with `render_settings.json`, patched mesh, same unsharp mask and libx264 CRF 18 encode as `make_video.py`.
+
+## Deviations from ACDC’s design (and why)
+
+- **VLM**: every VLM call (environment description, waypoint generation, frame select/sort, 100 comparisons per shot) was made by me (Claude Opus 5.5) from the same inputs, instead of `gpt-6-astra`. Images were shown to me as labelled contact sheets (64 env frames at 480×270; candidates at 480×270; each comparison pair at 400×225 per image, six pairs per sheet) rather than one API request per call at 960 px; the decision format is the code’s (1/2/3). Left/right order of incumbent vs challenger was randomised per pair and mapped back to the code’s `compare_images(best, cand)` contract.
+- **Number of shots**: 14 descriptions → 14 shots, against 31 shots in the saved ACDC run. I wrote the descriptions after estimating the cost of 100 comparisons per shot, so I cannot rule out that this pushed me towards fewer shots than `gpt-6-astra` produced under the same “more waypoints is better” prompt.
+- **Refinement search space follows the paper, not `pose_main.py`’s sampler**: yaw-only perturbation (Δθ ~ U[−30°, 30°]) plus translation u ~ U(S²), r ~ U[0, 1 m], height clamped to [0.3, 2.5] m (my choice; the paper gives no z-range), roll = pitch = 0. The code’s `_sample_orientation_near` rotates about a random 3-D axis (introducing roll/pitch) and `refine_poses.py` uses 32 candidates; the paper specifies yaw-only, M = 64. The GP, Laplace update, Thompson draw and the tie rule are the code’s functions (kernel evaluated vectorised from iteration 99 of cottage onward, numerically identical to 1e-16).
+- **Refinement renderer**: a persistent Blender process with exactly the capture settings of `render_blender_flythrough.py` (960×540, 8 spp, 80° FOV, flat 0.05 grey world, original mesh), on GPU instead of CPU, so the mesh is loaded once instead of per image. Restaurant used the original mesh under my 1.5 GB cap; luxury ran through the shared heavy queue.
+- **Text encoder**: the RADIO SigLIP2 adaptor’s text tower (`google/siglip2-so400m-patch16-naflex` `text_model`, the 1152-d space of the saved frame embeddings) loaded on its own in fp16 (streamed per tensor; only the needed token-embedding rows on GPU) because the full RADIO checkpoint does not fit the 2 GB cap. Tokenisation copied verbatim from `siglip2_adaptor.py`. The weights were deleted afterwards for the disk limit (re-fetch with `tools/fetch_siglip2_text.py`).
+- **Candidates per description**: 8 (paper and the saved c8 runs) rather than the code default of 3.
+- **Disk limit (FEEDBACK 03:25)**: after each scene finished, the full-resolution per-candidate refinement renders were deleted except the seed and the final incumbent; every judged pair is still kept as the sheet image I actually saw, and all poses are in `state.json`, so any render can be regenerated. Exported candidate frames were re-encoded PNG→JPEG q92.
+- **Final video render** streamed in 300-frame chunks (PNG chunks deleted after encoding) instead of writing all frames first; same renderer and settings.
+
+## Checks (reported, not fixed)
+
+| trajectory | bundle `validate_trajectory` | daju limits (speed ≤ 1.0 m/s, tilt ≤ 30°, thrust 0.1–7.2 N/motor, ω_xy ≤ 10.23, ω_z ≤ 3.00 rad/s) | clearance ≥ 0.3 m to occupied voxels | roll = 0 | |pitch| ≤ 25° |
+|---|---|---|---|---|---|
+| **this final** | PASS (occupied samples 0, gate err 0.0060 m) | **FAIL**: speed max 1.103 m/s (7.2 s above 1.0); tilt max 4.1°; thrust/motor 2.05–2.16 N; ω_xy 0.06, ω_z 0.73 rad/s | **FAIL**: min 0.045 m; 45% of flight time < 0.3 m | PASS (max |roll| 0°) | PASS (max |pitch| 0.00°) |
+| saved ACDC | PASS (occupied samples 0, gate err 0.0099 m) | **FAIL**: speed max 1.057 m/s (1.9 s above 1.0); tilt max 3.1°; thrust/motor 2.04–2.16 N; ω_xy 0.05, ω_z 4.65 rad/s | **FAIL**: min 0.091 m; 32% of flight time < 0.3 m | **FAIL** (max |roll| 6.9°) | PASS (max |pitch| 19.30°) |
+
+Notes: clearance is the distance from the trajectory centreline (sampled every 5 ms) to the surface of the nearest occupied 0.2 m voxel of the same occupancy grid the planner used. ACDC’s tunnel margins are 0.01 m and its validator only checks that the centreline is not inside an occupied voxel, so ≥ 0.3 m is not something the design aims for. TOGT treats the 1 m/s limit as a soft penalty (the bundle itself records `velocity_limit_is_soft_penalty: true`). Camera roll/pitch are those of the exported CSV quaternions; body tilt/thrust/rates are derived from the TOGT polynomial with the drolib flatness convention.
+
+## Comparison with the saved ACDC output
+
+| | this final | saved ACDC (`results_xhigh_25k_c8_togt`) |
+|---|---|---|
+| shots | 14 (refined, B = 100) | 31 (recorded poses, no pose refinement — paper’s evidence audit) |
+| duration / path length | 151.1 s / 92.3 m | 90.4 s / 51.3 m |
+| video frames | 3627 | 2172 |
+| camera roll/pitch | 0 / 0 (yaw-only shots, paper) | recorded handheld roll/pitch kept by the RotationSpline |
+| renderer | patched mesh + improved renderer (256 spp, gradient background) | original mesh, 8 spp, flat grey background |
+
+## Main flaws I saw
+
+- The prompt names rooms the scan does not have (formal dining room, piano room, staircase, two-storey great room, walk-in closet); I mapped them to the nearest existing views (kitchen island, lounge corner, great room, a bedroom corner). The 'Walk-in closet' shot is really a guest-bedroom corner.
+- Between the kitchen and the primary suite the A* route leaves the house over the terrace, so the video shows broken exterior scan geometry for several seconds; there are also dark stone-wall and veneer close-ups in transit.
+

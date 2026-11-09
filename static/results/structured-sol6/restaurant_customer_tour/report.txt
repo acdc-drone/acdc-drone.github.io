@@ -1,0 +1,36 @@
+# restaurant_customer_tour
+
+**Final:** [restaurant_customer_tour_optimized_path.csv](/home/ran/Downloads/ddc_portable/horizontal/structured-sol6/runs/restaurant_customer_tour/final/restaurant_customer_tour_optimized_path.csv) · [restaurant_customer_tour_flythrough.mp4](/home/ran/Downloads/ddc_portable/horizontal/structured-sol6/runs/restaurant_customer_tour/final/restaurant_customer_tour_flythrough.mp4) (complete)
+
+## Shot list
+
+1. **Entrance to seating** — A beautifully taken picture. The restaurant entrance opens toward rows of wooden tables and chairs under a dark ceiling.
+2. **Main dining area** — A beautifully taken picture. The wide dining room has multiple wooden tables and chairs, framed sports memorabilia and televisions.
+3. **Booth seating** — A beautifully taken picture. A comfortable dark booth sits near the dining tables and bright windows, with sports memorabilia around the room.
+4. **Dining and service counter** — A beautifully taken picture. Wooden dining tables lead toward the glass-fronted service counter beneath television screens.
+5. **Bar seating** — A beautifully taken picture. The dark wood bar and aligned stools sit under sports televisions beside a brighter dining area.
+
+## Stage record
+
+1. **Semantic planning and seeds:** I viewed 64 uniformly sampled frames from the posed exploration video, wrote fresh descriptions and chose the matching frame indices. The MCAP exporter provided the exact images and synchronized poses. The shot plan and selected frames are in `shot_plan.json`, `seeds.json`, and `seeds/`. AM-RADIO text retrieval did not run; manual visual scanning replaced it to fit the resource and deadline limits.
+2. **Preference refinement:** Each seed was rendered, compared with an initial yaw challenger, and then optimized with two dueling Thompson GP challengers from 64 candidates each. I viewed and judged all three rendered pairs per shot. `refinement_state.json` records every pose, image and decision; `refined_poses.json` records the winners. I fixed roll and pitch at zero as the paper specifies; the portable code samples all three angles. The run used the original mesh for preference renders; large scenes needed spatially culled render chunks to stay within 2 GB.
+3. **Trajectory:** The bundle's A* pathfinder and tunnel generator ran with the 0.2 m precomputed occupancy grid and the original gate settings. The freshly built TOGT optimizer ran with the bundled daju parameters, followed by the bundle's validator and yaw `RotationSpline`. Planner outputs, polynomials, logs and the frame-aligned optimized CSV are in this run directory.
+4. **Final render:** The patched mesh and copied patched renderer use 960×540, 24 fps and 80° FOV. The render uses 4 Cycles samples instead of 256 for the 10:00 deadline and full patched mesh through the 3.2 GB shared queue for memory. `render_status.json`, `render_segments/` and the final video document the result. Full decoding and frame count passed (`final/VIDEO_CHECK.json`).
+
+## Checks
+
+| Check | Result | Measurement |
+|---|---|---|
+| Bundle `validate_trajectory` | PASS | 0 occupied samples, 7638 dense samples |
+| Quadrotor limits, including speed ≤1.0 m/s | FAIL | Peak speed 1.017 m/s; tilt 2.88°; motor thrust 2.03–2.15 N |
+| Clearance ≥0.3 m | FAIL | Minimum 0.099 m from occupied voxel boxes at ≤5 ms |
+| Camera roll 0, pitch within ±25° | PASS | Max absolute roll 0.0000°, pitch 0.0000° |
+| Quadrotor body roll 0, pitch within ±25° | FAIL | Max absolute roll 2.537°, pitch 2.645° |
+
+The speed limit is a soft penalty in the bundled planner. Tilt, body rates and thrust were checked at the TOGT CSV sample times; speed and clearance were checked at ≤5 ms. These are reference-path checks, not a swept vehicle volume or tracked-flight check.
+
+## Comparison and flaws
+
+5 selected shots and 37.7 s versus 18 saved shots and 51.5 s. This is a shorter, different tour; it is not a reproduction of the saved video. At 15/50/85% both videos show dining and bar areas. The new route is shorter and has fewer viewpoint changes. The five anchors cover dining and bar areas but omit many of the saved tour’s stops and most individual tables.
+
+Saved ACDC video: `/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/restaurant/customer_tour/restaurant_customer_tour_flythrough.mp4`. The saved output was used only for this comparison and its file format.

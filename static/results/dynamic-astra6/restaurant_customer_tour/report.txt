@@ -1,0 +1,15 @@
+# restaurant_customer_tour
+
+Show the golf room, main dining tables and booths, and bar seating as a welcoming customer tour.
+
+**Compared with the baseline:** Level horizon, slower pans, a raised camera in the dining areas, and a wide closing view back along the bar rather than a close corner view. Duration: 119.2 s versus 51.4 s.
+
+**Feasibility: PASS.** Both patched-grid and archived-grid bundle checks pass, as do conservative continuous Daju bounds. Speed ≤ 0.861 m/s; continuous voxel-box clearance ≥ 0.3044 m on the uniform 5 cm patched-mesh grid; camera roll 0°, pitch 2.2° to 16.2°. The clearance claim uses the new conservative model, not the archived 20 cm voxel volumes. Video and CSV match at 960×540, 24 fps and 80° horizontal FOV; decode and frame-count checks pass.
+
+**Remaining flaws:** Dense memorabilia and scanned chair/table edges remain imperfect. Deliberate stop-and-reveal pacing is slower than the baseline. Fine texture is resource-limited.
+
+**Rendering and review:** Resource adaptation of the patched renderer: EEVEE, 64 AA samples, 512 px texture cache; patched geometry, camera, emission materials and background treatment preserved. Native Cycles was not used. Inspected all 23 updated survey images at final resolution and 25 samples across the completed film (five-second spacing plus the final frame). The wide bar ending is present. Full video decoding, frame count, CSV integrity and conservative continuous dynamics bounds pass. This is sampled visual review, not a claim of watching every frame in real time.
+
+[Checks](feasibility.json) · [Continuous bounds](continuous_dynamics_bounds.json) · [Review sheet](review_contact_sheet.jpg) · [Method](../../../VALIDATION_METHOD.md) · [Baseline](/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/restaurant/customer_tour/restaurant_customer_tour_flythrough.mp4)
+
+Published 2026-10-30T09:39:14.953150-04:00; candidate `i02`. Earlier iterations and finals remain in the run directory.

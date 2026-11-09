@@ -1,0 +1,13 @@
+# cottage_step_by_step final report
+
+**Prompt interpretation.** Entrance, dining, living, bedroom/bath, kitchen/nook, and second bath in that order.
+
+**Comparison with baseline.** The final follows the baseline's visit order where the clearance rule permits. Duration is 131.5 s versus 133.9 s. The final's measured top speed is 0.798 m/s versus 1.071 m/s; minimum 0.01 s sampled distance to occupied voxel centers is 0.315 m versus 0.191 m. Camera roll is 0° (baseline peak 90.0°); pitch stays within ±24.0° (baseline peak 47.5°). Peak camera yaw rate is 1.52 versus 3.25 rad/s. The final uses the patched mesh and renderer background at the baseline 960×540, 24 fps, 80° FOV. Its 512 px texture copy fits the resource cap but loses some fine detail compared with the original 2048 px textures.
+
+**Checks.** The bundle's `validate_trajectory` passed with 43 explicit safe-route shot gates. Independent 0.01 s sampling found 0.315 m minimum voxel-center clearance; a speed-based bound between samples is 0.311 m. Maximum body tilt was 7.0°, the upper bound on body XY rate was 1.20 rad/s, peak camera yaw rate was 1.52 rad/s, and the estimated motor-thrust envelope was 1.09–3.10 N. The 3157-frame video was fully decoded after chunk concatenation. Visual review before full rendering used the [preview contact sheet](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/tmp/cottage_step_by_step_iter06_preview.jpg). Sim-to-real behavior was not tested.
+
+**Remaining flaws.** The baseline reaches the bedroom/bath area, while the safe final shows dining/living/kitchen but does not convincingly enter the bedroom or either washroom. The requested sequence is incomplete; original shots span three disconnected safe components at 0.1 m resolution. The largest displacement from a sampled baseline route anchor to this clearance-safe route was 4.53 m.
+
+Baseline video: /home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/cottage/step_by_step/cottage_step_by_step_flythrough.mp4
+
+I inspected a [12-frame contact sheet from the completed video](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/reports/final_contacts/cottage_step_by_step.jpg). It shows the dining, living, and kitchen areas; one view dwells on the ceiling and several views are close to walls. The bedroom/washroom sequence remains unmet.

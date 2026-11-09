@@ -1,0 +1,13 @@
+# restaurant_food_inspector final report
+
+**Prompt interpretation.** A route toward the prep kitchen and food-processing surfaces.
+
+**Comparison with baseline.** The final follows the baseline's visit order where the clearance rule permits. Duration is 73.3 s versus 145.5 s. The final's measured top speed is 0.798 m/s versus 1.015 m/s; minimum 0.01 s sampled distance to occupied voxel centers is 0.317 m versus 0.178 m. Camera roll is 0° (baseline peak 22.5°); pitch stays within ±24.0° (baseline peak 51.0°). Peak camera yaw rate is 2.39 versus 8.32 rad/s. The final uses the patched mesh and renderer background at the baseline 960×540, 24 fps, 80° FOV. Its 512 px texture copy fits the resource cap but loses some fine detail compared with the original 2048 px textures.
+
+**Checks.** The bundle's `validate_trajectory` passed with 19 explicit safe-route shot gates. Independent 0.01 s sampling found 0.317 m minimum voxel-center clearance; a speed-based bound between samples is 0.313 m. Maximum body tilt was 6.9°, the upper bound on body XY rate was 1.82 rad/s, peak camera yaw rate was 2.39 rad/s, and the estimated motor-thrust envelope was 1.14–3.06 N. The 1761-frame video was fully decoded after chunk concatenation. Visual review before full rendering used the [preview contact sheet](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/tmp/restaurant_food_inspector_iter10_preview.jpg). Sim-to-real behavior was not tested.
+
+**Remaining flaws.** The tour now stays mainly in prep areas, but visible clutter still prevents any sanitation claim. It omits the broader dining return from the baseline. The largest displacement from a sampled baseline route anchor to this clearance-safe route was 0.17 m.
+
+Baseline video: /home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/restaurant/food_inspector/restaurant_food_inspector_flythrough.mp4
+
+I inspected a [12-frame contact sheet from the completed focused video](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/reports/final_contacts/restaurant_food_inspector_eevee512.jpg). Most frames show the prep kitchen, equipment, storage, or sink. The [earlier complete cut](/home/ran/Downloads/ddc_portable/horizontal/dynamic-sol6/runs/restaurant_food_inspector/final_v1/restaurant_food_inspector_flythrough.mp4) remains available; it spends more time in dining areas.

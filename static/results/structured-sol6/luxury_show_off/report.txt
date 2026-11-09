@@ -1,0 +1,37 @@
+# luxury_show_off
+
+**Final:** [luxury_show_off_optimized_path.csv](/home/ran/Downloads/ddc_portable/horizontal/structured-sol6/runs/luxury_show_off/final/luxury_show_off_optimized_path.csv) · [luxury_show_off_flythrough.mp4](/home/ran/Downloads/ddc_portable/horizontal/structured-sol6/runs/luxury_show_off/final/luxury_show_off_flythrough.mp4) (complete)
+
+## Shot list
+
+1. **Spacious living area** — A beautifully taken picture. The bright open living room has long pale sofas with blue accents, a low table and broad windows.
+2. **Kitchen island** — A beautifully taken picture. A large timber-topped kitchen island and sleek pale cabinetry open toward the living space.
+3. **Dining and lounge** — A beautifully taken picture. A long timber dining table and chairs overlook the spacious living area and its broad glazing.
+4. **Primary bedroom** — A beautifully taken picture. The bedroom has a large pale bed, timber floor and wide window onto greenery.
+5. **Primary bath** — A beautifully taken picture. The dark stone bath with double sink vanity and glass shower conveys a polished interior.
+6. **Guest bedroom** — A beautifully taken picture. The guest bedroom has a white bed, turquoise cover, dark timber desk and wide window.
+
+## Stage record
+
+1. **Semantic planning and seeds:** I viewed 64 uniformly sampled frames from the posed exploration video, wrote fresh descriptions and chose the matching frame indices. The MCAP exporter provided the exact images and synchronized poses. The shot plan and selected frames are in `shot_plan.json`, `seeds.json`, and `seeds/`. AM-RADIO text retrieval did not run; manual visual scanning replaced it to fit the resource and deadline limits.
+2. **Preference refinement:** Each seed was rendered, compared with an initial yaw challenger, and then optimized with two dueling Thompson GP challengers from 64 candidates each. I viewed and judged all three rendered pairs per shot. `refinement_state.json` records every pose, image and decision; `refined_poses.json` records the winners. I fixed roll and pitch at zero as the paper specifies; the portable code samples all three angles. The run used the original mesh for preference renders; large scenes needed spatially culled render chunks to stay within 2 GB.
+3. **Trajectory:** The bundle's A* pathfinder and tunnel generator ran with the 0.2 m precomputed occupancy grid and the original gate settings. The freshly built TOGT optimizer ran with the bundled daju parameters, followed by the bundle's validator and yaw `RotationSpline`. Planner outputs, polynomials, logs and the frame-aligned optimized CSV are in this run directory.
+4. **Final render:** The patched mesh and copied patched renderer use 960×540, 24 fps and 80° FOV. The render uses 4 Cycles samples instead of 256 for the 10:00 deadline and conservative view-frustum culling of the patched mesh through the 3.2 GB shared queue for memory. `render_status.json`, `render_segments/` and the final video document the result. Full decoding and frame count passed (`final/VIDEO_CHECK.json`).
+
+## Checks
+
+| Check | Result | Measurement |
+|---|---|---|
+| Bundle `validate_trajectory` | PASS | 0 occupied samples, 12601 dense samples |
+| Quadrotor limits, including speed ≤1.0 m/s | FAIL | Peak speed 1.059 m/s; tilt 4.71°; motor thrust 2.07–2.13 N |
+| Clearance ≥0.3 m | FAIL | Minimum 0.050 m from occupied voxel boxes at ≤5 ms |
+| Camera roll 0, pitch within ±25° | PASS | Max absolute roll 0.0000°, pitch 0.0000° |
+| Quadrotor body roll 0, pitch within ±25° | FAIL | Max absolute roll 3.403°, pitch 3.354° |
+
+The speed limit is a soft penalty in the bundled planner. Tilt, body rates and thrust were checked at the TOGT CSV sample times; speed and clearance were checked at ≤5 ms. These are reference-path checks, not a swept vehicle volume or tracked-flight check.
+
+## Comparison and flaws
+
+6 selected shots and 62.2 s versus 41 saved shots and 202.9 s. This is a shorter, different tour; it is not a reproduction of the saved video. At 15/50/85% the new video shows an interior, corridor and bath; sampled saved frames include the terrace before the corridor and bath. The dining anchor shows a sofa rather than a distinct dining room; the video spends time in a hallway, omits the saved video’s exterior terrace, and shows scan gaps near windows.
+
+Saved ACDC video: `/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/luxury/show_off/luxury_show_off_flythrough.mp4`. The saved output was used only for this comparison and its file format.

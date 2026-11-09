@@ -1,0 +1,38 @@
+# cottage_step_by_step
+
+**Final:** [cottage_step_by_step_optimized_path.csv](/home/ran/Downloads/ddc_portable/horizontal/structured-sol6/runs/cottage_step_by_step/final/cottage_step_by_step_optimized_path.csv) · [cottage_step_by_step_flythrough.mp4](/home/ran/Downloads/ddc_portable/horizontal/structured-sol6/runs/cottage_step_by_step/final/cottage_step_by_step_flythrough.mp4) (complete)
+
+## Shot list
+
+1. **Entry and dining** — A beautifully taken picture. From the entrance, the dining table is ahead beneath the stairway and light fills the open plan home.
+2. **Living room** — A beautifully taken picture. The brown sofa and ottoman appear with the landscape artwork and window in the living room.
+3. **Bedroom** — A beautifully taken picture. The made bed with white linens, framed pictures and lamps shows the bedroom.
+4. **Bedroom washroom** — A beautifully taken picture. The tiled shower and double vanity with gold-toned countertop show the bedroom washroom.
+5. **Kitchen** — A beautifully taken picture. The kitchen has dark cabinets, granite worktops and a large stainless refrigerator.
+6. **Breakfast nook** — A beautifully taken picture. The round breakfast table beside the shutters is framed by the kitchen cabinets.
+7. **Second washroom** — A beautifully taken picture. A small vanity with a rectangular mirror and pale countertop shows the second washroom.
+
+## Stage record
+
+1. **Semantic planning and seeds:** I viewed 64 uniformly sampled frames from the posed exploration video, wrote fresh descriptions and chose the matching frame indices. The MCAP exporter provided the exact images and synchronized poses. The shot plan and selected frames are in `shot_plan.json`, `seeds.json`, and `seeds/`. AM-RADIO text retrieval did not run; manual visual scanning replaced it to fit the resource and deadline limits.
+2. **Preference refinement:** Each seed was rendered, compared with an initial yaw challenger, and then optimized with two dueling Thompson GP challengers from 64 candidates each. I viewed and judged all three rendered pairs per shot. `refinement_state.json` records every pose, image and decision; `refined_poses.json` records the winners. I fixed roll and pitch at zero as the paper specifies; the portable code samples all three angles. The run used the original mesh for preference renders; large scenes needed spatially culled render chunks to stay within 2 GB.
+3. **Trajectory:** The bundle's A* pathfinder and tunnel generator ran with the 0.2 m precomputed occupancy grid and the original gate settings. The freshly built TOGT optimizer ran with the bundled daju parameters, followed by the bundle's validator and yaw `RotationSpline`. Planner outputs, polynomials, logs and the frame-aligned optimized CSV are in this run directory.
+4. **Final render:** The patched mesh and copied patched renderer use 960×540, 24 fps and 80° FOV. The render uses 4 Cycles samples instead of 256 for the 10:00 deadline and nearby mesh culling for memory. `render_status.json`, `render_segments/` and the final video document the result. Full decoding and frame count passed (`final/VIDEO_CHECK.json`).
+
+## Checks
+
+| Check | Result | Measurement |
+|---|---|---|
+| Bundle `validate_trajectory` | PASS | 0 occupied samples, 13817 dense samples |
+| Quadrotor limits, including speed ≤1.0 m/s | FAIL | Peak speed 1.106 m/s; tilt 3.63°; motor thrust 2.06–2.15 N |
+| Clearance ≥0.3 m | FAIL | Minimum 0.007 m from occupied voxel boxes at ≤5 ms |
+| Camera roll 0, pitch within ±25° | PASS | Max absolute roll 0.0000°, pitch 0.0000° |
+| Quadrotor body roll 0, pitch within ±25° | FAIL | Max absolute roll 3.547°, pitch 3.237° |
+
+The speed limit is a soft penalty in the bundled planner. Tilt, body rates and thrust were checked at the TOGT CSV sample times; speed and clearance were checked at ≤5 ms. These are reference-path checks, not a swept vehicle volume or tracked-flight check.
+
+## Comparison and flaws
+
+7 selected shots and 68.2 s versus 42 saved shots and 134.0 s. This is a shorter, different tour; it is not a reproduction of the saved video. At 15/50/85% the new video shows living seating, then a cabinet and wall; sampled saved frames show living seating, bathroom fixtures and kitchen views, though with tilted framing. The selected second-washroom seed shows laundry equipment, and sampled video frames spend long periods facing a cabinet or wall. The path comes within 0.01 m of occupied voxels.
+
+Saved ACDC video: `/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/cottage/step_by_step/cottage_step_by_step_flythrough.mp4`. The saved output was used only for this comparison and its file format.

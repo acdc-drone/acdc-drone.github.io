@@ -1,0 +1,42 @@
+# restaurant_food_inspector — final report
+
+**Prompt:** "Create a virtual drone tour for a food safety inspector, showing that our restaurant maintains a highly sanitary food processing environment."
+**Final:** `restaurant_food_inspector_flythrough.mp4` from `iter03` (published 2026-10-30T18:27), trajectory `restaurant_food_inspector_optimized_path.csv` (same columns and frame as the baseline's `*_optimized_path.csv`). Earlier finals are in `../final_history/`.
+**Baseline:** `artifacts/results_xhigh_25k_c8_togt/restaurant/food_inspector/restaurant_food_inspector_flythrough.mp4`
+**Video:** 960x540, 24/1 fps, 1596 frames (decoded and counted). 80° FOV, rendered with the patched mesh and the scene_patch render settings.
+
+## How I read the prompt
+A calm, methodical inspection rather than a showcase: a steady pace (≤ 0.4 m/s), slightly raised camera positions with a gentle downward tilt (up to 22°) so that surfaces are visible, and long holds on the food- and drink-handling areas. The route goes from a dining-room overview to close views of table tops and booths. It then stops at the service alcove at the kitchen door, where the tiled kitchen floor, white walls and storage shelving are visible. Finally it flies along the bar at 1.9 m, looking down on the prep area: ice wells, taps, stainless counters and the back-bar. It ends holding on that prep area.
+
+**Important limitation:** the commercial kitchen itself is **not reachable**. Its doorways allow at most 0.21–0.25 m clearance (5 cm-resolution widest-path search), below the required 0.3 m. The kitchen is therefore only glimpsed through the service-alcove doorway. An inspector would want to see the kitchen, and this video cannot show it without breaking the clearance rule.
+
+## Compared with the baseline
+The baseline does enter the kitchen, but only by violating the constraints. It reaches 1.0 m/s, rolls up to 22° and pitches up to 51°, and its yaw whips at up to 473°/s. It comes closer than 0.3 m in 41% of frames (min 0.02 m). The near-field critic flags 39% of its frames as mostly blocked by geometry within 0.8 m. Ours is fully within the limits, steady, and readable, but it shows less of the back of house.
+
+## Remaining flaws
+- No kitchen interior (see above). The restrooms are not reachable either.
+- The bar flight is high (1.9 m), because that is where the clearance is. It looks down onto the bar rather than across it.
+
+
+## Feasibility (measured)
+- Bundle `validate_trajectory`: **passed** (13945 samples, 0 occupied, 0 outside the grid, max continuity gap 7.4e-15).
+- Speed max 0.40 m/s (hard limit 1.0). Acceleration max 0.18 m/s², tilt max 1.1° (limit 30°).
+- Per-motor thrust 2.08–2.11 N (limits 0.1–7.2). ω_xy max 0.07 rad/s (limit 10.2). Yaw rate max 20.5°/s (limit 172°/s).
+- Camera roll 0 everywhere; pitch 4.1° to 22.0° (limit ±25°).
+- Clearance: min distance to occupied voxel cubes **0.371 m** (union of the bundle grid and the patched-mesh voxels). Against the bundle grid alone: 0.371 m. Required ≥ 0.3 m.
+- Overall: **FEASIBLE**.
+
+## Measured comparison with the baseline (same metric code for both)
+| | ours | baseline |
+|---|---|---|
+| duration / path length | 66.4 s / 17.6 m | 145.5 s / 76.9 m |
+| max speed | 0.4 m/s | 1.015 m/s |
+| max \|roll\| | 0.0° | 22.5° |
+| pitch range | 4.1° to 22.0° | 1.5° to 51.0° |
+| frames with \|pitch\| > 25° | 0% | 16% |
+| max yaw rate | 20.4°/s | 473.2°/s |
+| 95th-percentile camera rotation speed | 17.0°/s | 91.5°/s |
+| min clearance (voxel cubes) | 0.371 m | 0.023 m |
+| frames closer than 0.3 m | 0% | 41% |
+
+Near-field critic (fraction of frames where >25% of the view is blocked within 0.8 m): ours: mean near-frac 0.010, frames >25% near 0.0%; baseline: mean near-frac 0.247, frames >25% near 39.3%

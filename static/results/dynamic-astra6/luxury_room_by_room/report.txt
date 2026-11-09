@@ -1,0 +1,15 @@
+# luxury_room_by_room
+
+A loop through the actual terrace arrival, living area, kitchen/breakfast bar, larger bedroom, bath and return corridor, ending at the arrival point.
+
+**Compared with the baseline:** Visits the bedroom before the bath and completes the return to arrival that the baseline omitted. Corrected return headings prevent prolonged backward/wall-facing corridor views; roll is zero and pans are bounded. Duration: 295.3 s versus 90.4 s.
+
+**Feasibility: PASS.** Both patched-grid and archived-grid bundle checks pass, as do conservative continuous Daju bounds. Speed ≤ 0.862 m/s; continuous voxel-box clearance ≥ 0.3034 m on the uniform 5 cm patched-mesh grid; camera roll 0°, pitch 3.4° to 16.2°. The clearance claim uses the new conservative model, not the archived 20 cm voxel volumes. Video and CSV match at 960×540, 24 fps and 80° horizontal FOV; decode and frame-count checks pass.
+
+**Remaining flaws:** Prompt/mesh mismatch: the supplied 210.glb and bundled evidence do not establish the named grand foyer, formal dining room, piano room, staircase/two-story Great Room, separate breakfast nook or walk-in closet. Actual living, kitchen/bar and corridor storage views are used without claiming those missing rooms exist. Glass/garden scan artifacts and resource-limited fine texture remain.
+
+**Rendering and review:** Resource adaptation of the patched renderer: EEVEE, 64 AA samples, 576 px texture cache; patched geometry, camera, emission materials and background treatment preserved. Native Cycles was not used. Inspected all 59 revised survey images at final resolution and 61 samples across the completed film (five-second spacing plus its final frame). Bedroom-before-bath order, forward-facing corridor return and return to the starting view are present. Full decode, frame count, CSV integrity and conservative continuous dynamics bounds pass. This is sampled visual review, not real-time viewing of every frame.
+
+[Checks](feasibility.json) · [Continuous bounds](continuous_dynamics_bounds.json) · [Review sheet](review_contact_sheet.jpg) · [Method](../../../VALIDATION_METHOD.md) · [Baseline](/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/luxury/room_by_room/luxury_room_by_room_flythrough.mp4)
+
+Published 2026-10-30T09:39:15.107679-04:00; candidate `i02`. Earlier iterations and finals remain in the run directory.

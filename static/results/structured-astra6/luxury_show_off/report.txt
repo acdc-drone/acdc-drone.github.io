@@ -1,0 +1,46 @@
+# luxury_show_off
+
+Video completed and fully decoded for verification.
+
+[Trajectory CSV](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/luxury_show_off/final/luxury_show_off_optimized_path.csv) · [Video](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/luxury_show_off/final/luxury_show_off_flythrough.mp4) · [Saved ACDC video](/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/luxury/show_off/luxury_show_off_flythrough.mp4)
+
+Stage 1: the assistant inspected 64 time-uniform exploration frames, wrote a fresh environment description and 9 shots, and selected matching source frames. Missing pretrained text-encoder weights prevented cosine-similarity retrieval; visual selection among those 64 frames is a substantial deviation. The bundle common.py exported exact recorded poses from the MCAP. No saved ACDC shots or seeds were reused.
+
+Stage 2: all 9 viewpoints received 20 comparisons, rather than the paper’s 100, to meet the morning deadline. The copied GP kernel, Laplace fit and dueling Thompson implementation used 64 candidates, a 1 m translation radius and 30° yaw radius. Yaw-only sampling and zero roll/pitch follow the paper where portable defaults differ. The assistant inspected every pair and recorded the code’s [[1]], [[2]] or [[3]] response. A wrapper fixes the original missing history key and supports restart. Refinement comparisons 1–19 used a 1024-pixel texture cap after memory failures; comparison 20 was rendered again at full texture resolution on both sides. Those earlier decisions were retained.
+
+Stage 3: fresh A*, safe-corridor gates and a freshly built TOGT used the original daju parameters and cached occupancy inputs. Yaw is a natural cubic spline of unwrapped headings at optimized gate times. No trajectory was edited or replanned in response to failed checks.
+
+Final rendering uses the patched scene and renderer, full textures, 960×540 at 24 fps, 80° horizontal FOV, H.264 CRF18 and the supplied mild sharpening. CPU rendering used 6 samples per pixel, versus the patched default of 256, because measured full-sample throughput could not meet 10:00. Jobs use the shared 3.2 GB queue and two CPU threads. 
+
+## Checks
+
+| Check | Result | Measurement |
+|---|---|---|
+| Bundle validate_trajectory | FAIL | 13 occupied samples; 0 outside-grid samples |
+| Quadrotor limits, including speed ≤1 m/s | FAIL | Maximum speed 1.082060 m/s; position bounds PASS; angular limits PASS; rotor thrust PASS |
+| Clearance ≥0.3 m | FAIL | Minimum distance to occupied voxel cubes 0.000000 m |
+| Camera roll 0, pitch within ±25° | PASS | Both identically zero by construction |
+
+[checks.json](checks.json) records individual limits. Position, speed and clearance were sampled from the polynomial at 5 ms; body limits use native TOGT full-state CSV samples. Passing sampled checks is not continuous-time certification. The bundle validator’s static RotationSpline label does not describe the actual yaw-spline export.
+
+## Shots
+
+1. **Garden terrace** — A beautifully taken picture. The wood terrace leads through the lower center past cushioned outdoor seating toward a green lawn, with broad house glazing along the right.
+2. **Open living arrival** — A beautifully taken picture. The bright living space opens centrally beyond broad sliding glass doors, showing white seating and a wood media wall with pale floor in front.
+3. **Designer lounge** — A beautifully taken picture. White and turquoise seating surrounds the middle of the room, with the stone fireplace at left and broad garden glazing at right.
+4. **Kitchen and counter** — A beautifully taken picture. The long wood counter and stools occupy the left foreground while turquoise seating and the bright open living room remain visible at right.
+5. **Yellow kitchen** — A beautifully taken picture. Yellow lower cabinets and wood countertops frame a central kitchen aisle, with stainless built-in ovens and pale walls visible.
+6. **Gallery passage** — A beautifully taken picture. A pale hallway leads centrally toward a wood door, with a row of black-and-white photographs along the left wall.
+7. **Guest bedroom** — A beautifully taken picture. A white bed sits at center with a wood desk at right and large garden-facing glass doors behind it.
+8. **Stone bathroom** — A beautifully taken picture. A dark stone bathroom vanity and basin fill the lower center under a large mirror, with shower surfaces visible beside them.
+9. **Garden bedroom** — A beautifully taken picture. A white bed occupies the center foreground with broad garden windows at left and striped blinds in the background.
+
+## Comparison and flaws
+
+13 occupied-voxel samples; speed reaches 1.082 m/s; zero minimum clearance. Fragmented terrace/glass-door geometry and close wall/artwork views interrupt the presentation.
+
+Fresh trajectory duration 127.88 s versus saved 202.85 s. Fresh camera roll/pitch are identically zero; saved CSV maximum absolute roll/pitch are 7.7°/21.0°. I inspected 12 uniformly spaced frames from each video at normalized tour progress (not a full motion review). Both tours show the terrace, open living/kitchen area and bedroom/bath spaces. Both have major missing or fragmented geometry around the terrace and glass doors. Fresh samples include a clear living-room overview, bedroom and vanity, but middle samples dwell close to walls/artwork or a pillar. The fresh ending presents a bright bedroom; the saved ending is inside a bathroom. The fresh camera remains level, though the saved luxury tour is less visibly tilted than the saved cottage tours. Contact sheets and timestamps are retained; the patched rendering and different paths prevent a controlled image-quality comparison.
+
+## Trace
+
+[Stage 1](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/luxury_show_off/stage1/) contains descriptions and seeds. [Stage 2](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/luxury_show_off/stage2/) retains every paired image, decision and checkpoint. [Planner outputs](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/planning/luxury/show_off/) contain A*, corridor, TOGT and validator outputs. [DEVIATIONS.md](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/DEVIATIONS.md) records adaptations, failures and resource incidents. No VLM/LLM API calls were made.

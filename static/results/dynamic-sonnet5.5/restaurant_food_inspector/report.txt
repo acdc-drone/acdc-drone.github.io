@@ -1,0 +1,29 @@
+# restaurant_food_inspector
+
+## How the prompt was interpreted
+'Virtual drone tour for a food safety inspector showing a highly sanitary food-processing environment.' Kitchen only, in an inspection-like order: entry/beverage station, prep station, cook line and grill, three-compartment sink, dry storage, back door/ice machine, cooler doors, hand-wash sink with towel dispenser, exit. Camera pitched down slightly to show floor tile and surfaces.
+
+## Final trajectory (measured)
+- Duration 89.4 s, 2146 frames (24 fps, 960x540, 80 deg FOV), path length 23.7 m.
+- Bundle `validate_trajectory`: passed = True (0 occupied voxels, 0 outside grid; gate error ~0).
+- Max speed 0.50 m/s (limit 1.0), max accel 0.29 m/s2, max tilt 1.7 deg, thrust/mass 9.8-9.8 m/s2 (daju limits: tilt 30 deg).
+- Camera: roll 2.5e-14 deg (exactly 0), max |pitch| 14.6 deg, max yaw rate 25 deg/s (limit 3.0 rad/s).
+- Clearance: min surface distance 0.39 m; min distance to occupied voxel centre 0.27 m; to voxel box 0.15 m.
+  **The 0.3 m voxel clearance requirement is NOT fully met:** 5.7% of samples are below 0.3 m voxel-centre distance, only in passages that are physically ~0.6-1.0 m wide in the scan.
+
+## Versus baseline ACDC
+| metric | final | baseline |
+|---|---|---|
+| duration (s) | 89.4 | 145.5 |
+| max speed (m/s) | 0.50 | 1.02 |
+| max |roll| (deg) | 2.5e-14 | 22.5 |
+| max |pitch| (deg) | 14.6 | 51.0 |
+| min voxel-centre clearance (m) | 0.27 | 0.11 |
+| path length (m) | 23.7 | 76.9 |
+
+## Rendering
+scene_patch meshes and renderer script (copied with one speed-up: Cycles on CPU, 12 samples/pixel instead of 256, because GPU rendering does not fit the 1.5 GB VRAM limit; 12 spp measured ~49 dB PSNR vs 256 spp on test frames), same camera/FOV/resolution/fps, mild unsharp mask as in the patched pipeline, libx264 CRF 18.
+
+## Remaining flaws
+The scan itself is not spotless-looking (clutter, floor mats, scan holes on stainless surfaces), so the video shows the real condition rather than an idealised one. Kitchen aisles are 0.7-1.0 m wide, so clearance dips below 0.3 m voxel-centre in places. Back door nook not entered (too tight).
+Visual review was done on contact sheets (frames every 1.5-5 s), not frame-by-frame.

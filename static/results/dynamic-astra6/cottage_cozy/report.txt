@@ -1,0 +1,15 @@
+# cottage_cozy
+
+A calm tour of the modeled living spaces on both floors: living/dining, upstairs bedroom and bathroom, gallery overlook, ground-floor bedroom and bathroom, powder/laundry room, kitchen and breakfast nook.
+
+**Compared with the baseline:** Adds the upstairs bedroom, bathroom and gallery absent from the baseline route, fully enters the powder room, and uses a level horizon, bounded pans and clearer fireplace/bedroom compositions. Duration: 314.9 s versus 119.3 s.
+
+**Feasibility: PASS.** Both patched-grid and archived-grid bundle checks pass, as do conservative continuous Daju bounds. Speed ≤ 0.861 m/s; continuous voxel-box clearance ≥ 0.3020 m on the 5 cm grid with a conservative local 1 cm doorway refinement; camera roll 0°, pitch 0.4° to 23.0°. The clearance claim uses the new conservative model, not the archived 20 cm voxel volumes. Video and CSV match at 960×540, 24 fps and 80° horizontal FOV; decode and frame-count checks pass.
+
+**Remaining flaws:** Railing, mirror and appliance scan defects remain visible. Some tight transitions face nearby surfaces, and the deliberate pacing is longer than the baseline. Fine texture is softer in the resource-safe renderer.
+
+**Rendering and review:** Resource adaptation of the patched renderer: EEVEE, 64 AA samples, 768 px texture cache; patched geometry, camera, emission materials and background treatment preserved. Native Cycles was not used. Reviewed 64 samples across the full film, the 73-view upper-floor survey and 42 revised-transition views. This is sampled visual review, not a claim of watching every frame in real time.
+
+[Checks](feasibility.json) · [Continuous bounds](continuous_dynamics_bounds.json) · [Review sheet](review_contact_sheet.jpg) · [Method](../../../VALIDATION_METHOD.md) · [Baseline](/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/cottage/cozy/cottage_cozy_flythrough.mp4)
+
+Published 2026-10-30T09:39:14.844303-04:00; candidate `i05`. Earlier iterations and finals remain in the run directory.

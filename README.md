@@ -1,80 +1,63 @@
-# Academic Project Page Template
+# ACDC project website
 
-> **Update (September 2025)**: This template has been modernized with better design, SEO, and mobile support. For the original version, see the [original-version branch](https://github.com/eliahuhorwitz/Academic-project-page-template/tree/original-version).
+Research website for **Agentic Aerial Cinematography: From Dialogue Cues to Cinematic Trajectories**, University of Toronto. A buildless, dependency-free GitHub Pages site.
 
-A clean, responsive template for academic project pages.
+## Preview
 
+Open `index.html` directly in a browser. Data is a local JavaScript asset, so the comparison works without a server. For HTTP playback and development:
 
-Example project pages built using this template are:
-- https://horwitz.ai/probex
-- https://vision.huji.ac.il/probegen
-- https://horwitz.ai/mother
-- https://horwitz.ai/spectral_detuning
-- https://vision.huji.ac.il/ladeda
-- https://vision.huji.ac.il/dsire
-- https://horwitz.ai/podd
-- https://dreamix-video-editing.github.io
-- https://horwitz.ai/conffusion
-- https://horwitz.ai/3d_ads/
-- https://vision.huji.ac.il/ssrl_ad
-- https://vision.huji.ac.il/deepsim
+```sh
+node scripts/preview.mjs
+```
 
+Visit http://127.0.0.1:8000. The server supports byte-range requests for seeking; set `PORT` to change the port. Desktop, mobile, and full-page screenshots are in `.preview/` (not published).
 
+## Presentation and interactions
 
-## Start using the template
-To start using the template click on `Use this Template`.
+- **Defined = structured; agent-directed = dynamic.**
+- Selection order is Scene → Model → Prompt, with thumbnail scene buttons, four model buttons, and two prompt cards per scene. Scene changes remember the last prompt; the model stays fixed.
+- Four models and six tasks select 24 matched pairs, covering all 48 current final runs.
+- Native video controls, play/pause both, restart, a shared percentage scrubber, and actual CSV speed/path plots. A paired statistics table reports duration, peak sampled speed, and speed-limit episodes. Download links are omitted; run limitations remain in a disclosure.
+- Playback uses original timing. Scrubbing aligns percentage progress, not locations or absolute time; different routes are not frame-aligned.
+- The paper's refinement experiment is separate from the workflow follow-up. Author information and research-code release status are retained.
+- Keyboard controls, a skip link, reduced-motion support, responsive layouts, and no-JavaScript default playback.
 
-The template uses html for controlling the content and css for controlling the style. 
-To edit the websites contents edit the `index.html` file. It contains different HTML "building blocks", use whichever ones you need and comment out the rest.  
+## Sources and claims
 
-**IMPORTANT!** Make sure to replace the `favicon.ico` under `static/images/` with one of your own, otherwise your favicon is going to be a dreambooth image of me.
+The manuscript was copied from `../corl_v2/main.pdf` during this revision; that folder subsequently became `../corl26_v2/`. The rebuild script supports both names. The poster drafts informed the narrative. The method was cross-checked against `../deep_drone_cinematography` and the two instructions in `../results-full/_harness`.
 
-## What's New
+Every comparison uses `../results-full/{structured,dynamic}-{model}/runs/{task}/final`. Older archived baselines and original example tours are not substituted. Figure 1 and the refinement figure are retained. The `../corl26_v2/figure_tools` folder contains editable sources, and its manuscript PDF is hash-identical to the copy linked by the site.
 
-- Modern, clean design with better mobile support
-- Improved SEO with proper meta tags and structured data
-- Performance improvements (lazy loading, optimized assets)
-- More Works dropdown
-- Copy button for BibTeX citations
-- Better accessibility
+`static/data/provenance.json` records source paths, CSV SHA-256 hashes, thumbnail timestamps, and encoding settings. CSVs are unchanged. Videos are web encodes of actual renders (H.264 CRF 24, same 960×540, 24 fps, framing, and timing), with faststart for playback. No illustrative synthetic footage is used.
 
-## Components
+Speed is recomputed using the nonuniform three-point position derivative, matching NumPy's default gradient, with one-sided endpoints. Contiguous samples strictly above 1 m/s count as episodes. All 48 hashes and counts match `poster/merged-70-30-42x36/reference/four-model-speed-audit.json`: 59 episodes / 24 defined runs, 0 / 24 agent-directed runs. Display downsampling preserves bucket extrema. This is a sampled diagnostic, not a continuous-time safety certificate.
 
-- Teaser video
-- Image carousel
-- YouTube video embedding
-- Video carousel
-- PDF poster viewer
-- BibTeX citation
+The site discloses unequal refinement budgets, renderer changes, inconsistent clearance definitions, and task coverage limitations. It does not claim a controlled equal-budget ablation or universal workflow superiority. Poster defect-rate aggregates without their underlying evaluation files are omitted.
 
-## Customization
+## Rebuild results
 
-The HTML file has TODO comments showing what to replace:
+With the original sibling source folders available:
 
-- Paper title, authors, institution, conference
-- Links (arXiv, GitHub, etc.)
-- Abstract and descriptions  
-- Videos, images, and PDFs
-- Related works in the dropdown
-- Meta tags for SEO and social sharing
+```sh
+node scripts/build-results.mjs
+node scripts/optimize-videos.mjs
+```
 
-### Meta Tags
-The template includes meta tags for better search engine visibility and social media sharing. These appear in the `<head>` section and help with:
-- Google Scholar indexing
-- Social media previews (Twitter, Facebook, LinkedIn)
-- Search engine optimization
+The first script copies originals, creates thumbnails/data, and verifies hashes. The second creates smaller web encodes. Both use the installed Jellyfin FFmpeg path; update it for another machine. Source research files are never modified.
 
-Create a 1200x630px social preview image at `static/images/social_preview.png`.
+## Validation
 
-## Tips
+With HTTP preview running:
 
-- Compress images with [TinyPNG](https://tinypng.com)
-- Use YouTube for large videos (>10MB)  
-- Replace the favicon in `static/images/`
-- Works with GitHub Pages
+```sh
+node scripts/validate.mjs
+node scripts/render-preview.mjs
+```
 
-## Acknowledgments
-Parts of this project page were adopted from the [Nerfies](https://nerfies.github.io/) page.
+Validation checks local references, 48 CSV hashes, media formats, timing, plot values, and HTTP range responses. The render helper uses installed Chrome headlessly, writes screenshots, and runs `.preview/qa.html` across all model/task choices and five viewport widths. These Windows-specific helpers need executable paths adjusted on another OS. The website itself needs no dependencies.
 
-## Website License
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+No publication, Git push, or hosting changes were made. The supplied website folder has no `.git` metadata. Original HTML/CSS/JS backups are in `.preview/before/`.
+
+## Attribution
+
+Originally based on [Academic Project Page Template](https://github.com/eliahuhorwitz/Academic-project-page-template), adapted from [Nerfies](https://nerfies.github.io/). Licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).

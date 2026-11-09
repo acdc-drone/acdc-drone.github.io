@@ -1,0 +1,109 @@
+# cottage_step_by_step — final report
+
+- **Prompt** (`classic_instruct.txt`): “Start from the entrance do these sequentially.
+1 : go forward to shoot the dining table
+2 : go to living room, circle around
+3 : go to bedroom and its washroom
+4 : go to kitchen and tour breakfast nook
+5 : go to the second washroom.”
+- **Inputs**: mesh `classic.glb` (refinement renders: original `artifacts/.../scene_meshes/classic.glb`; final video: `scene_patch/scenes/classic.glb`), bag `rosbag2_2025_09_06-22_21_17_0.mcap`
+- **Final trajectory CSV**: `final/cottage_step_by_step_optimized_path.csv` (2210 rows, same columns `t,x,y,z,q_x,q_y,q_z,q_w`, frame and 24 fps sampling as the saved `*_optimized_path.csv`)
+- **Final video**: `final/cottage_step_by_step_flythrough.mp4` — 960×540, 24/1 fps, 2210 frames, 80° FOV
+- **Seed vs refined views**: `final/seed_vs_refined.jpg`
+- **Saved ACDC video for comparison**: `artifacts/results_xhigh_25k_c8_togt/cottage/step_by_step/cottage_step_by_step_flythrough.mp4` (3216 frames)
+
+## Shot list (stage 1 output, in tour order) and stage-2 outcome
+
+| # | title | source frame | challenger wins / ties (of 100) | last accepted iter | moved from seed | yaw change |
+|---|---|---|---|---|---|---|
+| 1 | Start at the entrance | `01_01_frame_000340.png` | 11 / 5 | 99 | 1.17 m | +24.6° |
+| 2 | Forward to the dining table | `02_39_frame_001790.png` | 16 / 9 | 93 | 0.36 m | -6.4° |
+| 3 | Dining table close | `03_42_frame_001895.png` | 12 / 6 | 88 | 0.68 m | -22.1° |
+| 4 | Enter the living room | `04_04_frame_000525.png` | 15 / 4 | 100 | 0.48 m | +45.0° |
+| 5 | Circle: sofa side | `05_10_frame_000780.png` | 15 / 5 | 92 | 1.30 m | -26.1° |
+| 6 | Circle: patio doors and black chairs | `06_19_frame_000945.png` | 8 / 4 | 76 | 1.09 m | -34.9° |
+| 7 | Circle: fireplace and TV | `07_29_frame_001415.png` | 13 / 14 | 92 | 0.35 m | +6.3° |
+| 8 | Circle: back toward the loft | `08_07_frame_000630.png` | 16 / 3 | 99 | 0.82 m | -8.7° |
+| 9 | Hallway to the bedroom | `09_47_frame_002205.png` | 14 / 2 | 96 | 1.49 m | +30.1° |
+| 10 | Bedroom | `10_56_frame_002615.png` | 16 / 4 | 90 | 0.15 m | +1.3° |
+| 11 | Bedroom toward the washroom | `11_67_frame_003395.png` | 12 / 5 | 93 | 1.11 m | -74.2° |
+| 12 | Bedroom washroom | `12_70_frame_003515.png` | 12 / 7 | 95 | 0.66 m | +19.6° |
+| 13 | Kitchen | `13_94_frame_005460.png` | 12 / 8 | 96 | 0.42 m | +0.9° |
+| 14 | Breakfast nook | `14_96_frame_005925.png` | 21 / 13 | 100 | 0.78 m | +40.8° |
+| 15 | Nook desk corner | `15_101_frame_005985.png` | 10 / 8 | 98 | 0.41 m | +66.5° |
+| 16 | Second washroom | `16_84_frame_005200.png` | 18 / 2 | 84 | 0.99 m | -13.3° |
+
+<details><summary>Full shot descriptions (the text the VLM judged every comparison against)</summary>
+
+1. **Start at the entrance** — A beautifully taken picture. From just inside the front door, camera level, looking forward into the great room. The light wood floor leads from centerbottom toward the dining area at centermiddle; the column of three colourful framed prints hangs at leftmiddle; the carpeted staircase with metal railing rises at rightmiddle toward the white loft railing at righttop; the vaulted ceiling with fan at centertop.
+2. **Forward to the dining table** — A beautifully taken picture. Moving forward, the glass-top dining table with grey upholstered chairs fills the centermiddle on the blue-grey patterned rug at centerbottom, the staircase with railing at leftmiddle, framed prints on the white wall at centertop, and white interior doors at rightmiddle.
+3. **Dining table close** — A beautifully taken picture. A closer level view of the dining set: the glass tabletop and grey chairs at centermiddle, the patterned rug at centerbottom, the rustic dark wood console under the stairs at leftmiddle, and the kitchen pass-through with bar stools at righttop in the background.
+4. **Enter the living room** — A beautifully taken picture. Entering the living room: the long brown sofa with blue-and-white pillows at centermiddle, the landscape painting of yellow-green hills above it at centertop, the brown leather ottoman and grey pouf at centerbottom, the red patterned armchair at leftbottom, and shuttered windows at righttop.
+5. **Circle: sofa side** — A beautifully taken picture. Circling the living room, facing the brown sofa and the big landscape painting at centermiddle, the floor lamp and plantation shutters at rightmiddle, the leather ottoman at centerbottom, and the grey recliner at leftmiddle.
+6. **Circle: patio doors and black chairs** — A beautifully taken picture. Continuing around the living room: the two black leather swivel chairs at centerbottom in front of the white sliding patio doors at centermiddle, framed black-and-white prints at righttop, the end of the sofa at leftbottom and the triangular gable window at lefttop.
+7. **Circle: fireplace and TV** — A beautifully taken picture. Continuing around: the stacked-stone fireplace at centerbottom with the flat TV above it at centermiddle, the dark wood cabinet at leftmiddle, a black leather chair at leftbottom and the grey shag pouf on the pale rug at centerbottom.
+8. **Circle: back toward the loft** — A beautifully taken picture. Completing the circle, looking back toward the entry: the white loft balcony railing across centertop, the staircase climbing at leftmiddle, the kitchen pass-through with black bar stools at rightmiddle, and the patterned armchair at leftbottom.
+9. **Hallway to the bedroom** — A beautifully taken picture. Looking straight down the narrow hallway toward the bedroom at centermiddle, the bed and ceiling fan visible through the doorway, white doors along the right wall at rightmiddle, and light wood floor leading the eye at centerbottom.
+10. **Bedroom** — A beautifully taken picture. From the bedroom doorway, the dark metal-frame bed with grey-white bedding at centerbottom, two framed abstract prints above the headboard at centermiddle, cream lamps on black nightstands at leftmiddle and rightmiddle, white plantation shutters beside them and the ceiling fan at centertop.
+11. **Bedroom toward the washroom** — A beautifully taken picture. From beside the bed looking toward the en-suite: the foot of the bed at leftbottom, the open doorway at centermiddle showing the white vanity with golden granite top and mosaic-framed mirror, the beige rug at centerbottom and a framed print at lefttop.
+12. **Bedroom washroom** — A beautifully taken picture. Inside the en-suite washroom: the white double vanity with golden-brown granite countertop and two oval sinks across centerbottom, the mosaic-tile framed mirrors at centermiddle, blue jars at leftmiddle and the tiled walk-in shower with arched niche at lefttop.
+13. **Kitchen** — A beautifully taken picture. Looking down the kitchen: dark espresso cabinets on both sides, light speckled granite countertops from leftbottom to centermiddle, the stainless steel range hood at centertop, the glass tile backsplash at rightmiddle and the stainless refrigerator at leftmiddle.
+14. **Breakfast nook** — A beautifully taken picture. The small round dark breakfast table with two tall stools at centermiddle, white plantation shutters on the rightmiddle and centertop walls, dark cabinets and granite counter at leftmiddle and light wood floor at centerbottom.
+15. **Nook desk corner** — A beautifully taken picture. Touring the breakfast nook: the white desk with computer monitor and keyboard at centermiddle, dark kitchen cabinets with glass tile backsplash at righttop, the round table and stools at leftmiddle near the shutters.
+16. **Second washroom** — A beautifully taken picture. The second washroom: the dark-wood-framed rectangular mirror at centermiddle above the vanity with light granite top at centerbottom, the wall light bar at centertop, a small framed print at leftmiddle and the white toilet at leftbottom.
+
+</details>
+
+## How each stage went
+
+**Stage 1 — semantic shot planning and seed retrieval.**
+- Environment description: `stage1/cottage/environment_description.txt` (I wrote it from the 64 time-ordered frames that `OpenAIToolkit._video_frames` samples, viewed as 4 contact sheets; `stage1/cottage/env_frames/`). Shared by both runs of the scene (same video, same prompt).
+- Waypoint descriptions: `runs/cottage_step_by_step/stage1/waypoints.json` — 16 descriptions written to `Utils.WAYPOINT_SCHEMA` (9-grid placement, ‘A beautifully taken picture.’ prefix).
+- Retrieval: SigLIP2 text embeddings (`stage1/text_embeddings.npy`) vs the precomputed RADIO/SigLIP2 frame embeddings of the bag, frame stride 5, top-8 per description, de-duplicated → candidates exported from the MCAP with poses by the bundle's `export_selected_frames_from_mcap` (`stage1/retrieval.json`, `stage1/selected_frames/`).
+- Select & sort: I viewed all exported candidates (`stage1/selection_sheets/`) and answered in the `select_frames` JSON schema (`stage1/selection_response.json`); 16 shots kept, none omitted. Seeds = recorded position + yaw of each selected frame; recorded pitch/roll discarded (`stage1/seeds.json`).
+
+**Stage 2 — visual preference refinement.**
+- 1600 pairwise comparisons in total (B = 100 per shot, M = 64 candidates, ρ_trans = 1 m, ρ_rot = 30°, GP kernel l_rot = 15°, l_trans = 0.5 m, σ_f = 1, jitter 1e-6, Laplace/Bradley–Terry posterior and dueling Thompson sampling from `pose_main.py`).
+- Challenger accepted 221 times, ties ({3}, no pair added — code behaviour) 99 times. Mean displacement from seed 0.77 m (max 1.49 m); mean |yaw change| 26.3°.
+- Every comparison is recorded: the exact sheet image I judged (`sheets/cottage/round_*.jpg`), the answers I gave (`answers/cottage/rNNN.json`), and per shot `runs/cottage_step_by_step/stage2/wp_XX/state.json` (all poses, pairs, Thompson-sampling info, displayed left/right order, decision, incumbent after each step). Refined poses: `stage2/all_best_results.json` (degrees).
+
+**Stage 3 — physical trajectory generation** (bundle `run_paper_scenes.py --resume --skip-video --poses-json ... --pose-angle-unit degrees`, i.e. the unchanged A* → tunnel → TOGT → validation path).
+- A* path 209 points; TOGT duration 92.0 s, path length 48.0 m; bundle validation passed; no re-optimisation needed.
+- Camera orientation: the runner’s RotationSpline through the refined yaw-only orientations at the actual gate arrival times (for pure-yaw rotations this is a C² cubic interpolation of the unwrapped yaw, as in the paper).
+- Video: `tools/render_final.py` → `scene_patch/renderer/render_patched_flythrough.py` (unchanged) with `render_settings.json`, patched mesh, same unsharp mask and libx264 CRF 18 encode as `make_video.py`.
+
+## Deviations from ACDC’s design (and why)
+
+- **VLM**: every VLM call (environment description, waypoint generation, frame select/sort, 100 comparisons per shot) was made by me (Claude Opus 5.5) from the same inputs, instead of `gpt-6-astra`. Images were shown to me as labelled contact sheets (64 env frames at 480×270; candidates at 480×270; each comparison pair at 400×225 per image, six pairs per sheet) rather than one API request per call at 960 px; the decision format is the code’s (1/2/3). Left/right order of incumbent vs challenger was randomised per pair and mapped back to the code’s `compare_images(best, cand)` contract.
+- **Number of shots**: 16 descriptions → 16 shots, against 42 shots in the saved ACDC run. I wrote the descriptions after estimating the cost of 100 comparisons per shot, so I cannot rule out that this pushed me towards fewer shots than `gpt-6-astra` produced under the same “more waypoints is better” prompt.
+- **Refinement search space follows the paper, not `pose_main.py`’s sampler**: yaw-only perturbation (Δθ ~ U[−30°, 30°]) plus translation u ~ U(S²), r ~ U[0, 1 m], height clamped to [0.3, 2.5] m (my choice; the paper gives no z-range), roll = pitch = 0. The code’s `_sample_orientation_near` rotates about a random 3-D axis (introducing roll/pitch) and `refine_poses.py` uses 32 candidates; the paper specifies yaw-only, M = 64. The GP, Laplace update, Thompson draw and the tie rule are the code’s functions (kernel evaluated vectorised from iteration 99 of cottage onward, numerically identical to 1e-16).
+- **Refinement renderer**: a persistent Blender process with exactly the capture settings of `render_blender_flythrough.py` (960×540, 8 spp, 80° FOV, flat 0.05 grey world, original mesh), on GPU instead of CPU, so the mesh is loaded once instead of per image. Restaurant used the original mesh under my 1.5 GB cap; luxury ran through the shared heavy queue.
+- **Text encoder**: the RADIO SigLIP2 adaptor’s text tower (`google/siglip2-so400m-patch16-naflex` `text_model`, the 1152-d space of the saved frame embeddings) loaded on its own in fp16 (streamed per tensor; only the needed token-embedding rows on GPU) because the full RADIO checkpoint does not fit the 2 GB cap. Tokenisation copied verbatim from `siglip2_adaptor.py`. The weights were deleted afterwards for the disk limit (re-fetch with `tools/fetch_siglip2_text.py`).
+- **Candidates per description**: 8 (paper and the saved c8 runs) rather than the code default of 3.
+- **Disk limit (FEEDBACK 03:25)**: after each scene finished, the full-resolution per-candidate refinement renders were deleted except the seed and the final incumbent; every judged pair is still kept as the sheet image I actually saw, and all poses are in `state.json`, so any render can be regenerated. Exported candidate frames were re-encoded PNG→JPEG q92.
+- **Final video render** streamed in 300-frame chunks (PNG chunks deleted after encoding) instead of writing all frames first; same renderer and settings.
+
+## Checks (reported, not fixed)
+
+| trajectory | bundle `validate_trajectory` | daju limits (speed ≤ 1.0 m/s, tilt ≤ 30°, thrust 0.1–7.2 N/motor, ω_xy ≤ 10.23, ω_z ≤ 3.00 rad/s) | clearance ≥ 0.3 m to occupied voxels | roll = 0 | |pitch| ≤ 25° |
+|---|---|---|---|---|---|
+| **this final** | PASS (occupied samples 0, gate err 0.0074 m) | **FAIL**: speed max 1.063 m/s (2.0 s above 1.0); tilt max 3.4°; thrust/motor 2.05–2.16 N; ω_xy 0.05, ω_z 0.99 rad/s | **FAIL**: min 0.003 m; 52% of flight time < 0.3 m | PASS (max |roll| 0°) | PASS (max |pitch| 0.00°) |
+| saved ACDC | PASS (occupied samples 0, gate err 0.0100 m) | **FAIL**: speed max 1.071 m/s (1.1 s above 1.0); tilt max 3.7°; thrust/motor 2.03–2.18 N; ω_xy 0.06, ω_z 3.25 rad/s | **FAIL**: min 0.063 m; 32% of flight time < 0.3 m | **FAIL** (max |roll| 90°) | **FAIL** (max |pitch| 47.49°) |
+
+Notes: clearance is the distance from the trajectory centreline (sampled every 5 ms) to the surface of the nearest occupied 0.2 m voxel of the same occupancy grid the planner used. ACDC’s tunnel margins are 0.01 m and its validator only checks that the centreline is not inside an occupied voxel, so ≥ 0.3 m is not something the design aims for. TOGT treats the 1 m/s limit as a soft penalty (the bundle itself records `velocity_limit_is_soft_penalty: true`). Camera roll/pitch are those of the exported CSV quaternions; body tilt/thrust/rates are derived from the TOGT polynomial with the drolib flatness convention.
+
+## Comparison with the saved ACDC output
+
+| | this final | saved ACDC (`results_xhigh_25k_c8_togt`) |
+|---|---|---|
+| shots | 16 (refined, B = 100) | 42 (recorded poses, no pose refinement — paper’s evidence audit) |
+| duration / path length | 92.0 s / 48.0 m | 133.9 s / 62.6 m |
+| video frames | 2210 | 3216 |
+| camera roll/pitch | 0 / 0 (yaw-only shots, paper) | recorded handheld roll/pitch kept by the RotationSpline |
+| renderer | patched mesh + improved renderer (256 spp, gradient background) | original mesh, 8 spp, flat grey background |
+
+## Main flaws I saw
+
+- Instruction order is followed (entrance → dining → living-room circle → bedroom + washroom → kitchen/nook → second washroom), but the path back from the bedroom wing crosses the living room, and there are several near-blank frames of wall/cabinet close-ups in transit.
+- Minimum clearance 0.003 m: the centreline grazes surfaces in narrow passages. That is allowed by the bundle validator, but some frames clip into geometry.
+

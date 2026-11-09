@@ -1,0 +1,51 @@
+# restaurant_food_inspector — ACDC faithful run (Claude as the VLM)
+
+Final: `restaurant_food_inspector_flythrough.mp4` (960x540 @24/1, 1448 frames), trajectory `restaurant_food_inspector_optimized_path.csv` (same columns/frame as the saved `*_optimized_path.csv`: t,x,y,z,q_x,q_y,q_z,q_w; 24 Hz).
+Duration 60.3 s, path length 33.4 m. Saved ACDC output: 145.5 s, 76.9 m (`/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/restaurant/food_inspector/restaurant_food_inspector_flythrough.mp4`).
+
+## Shot list (stage 1, final order after my frame selection)
+1. **Beverage and pass-through corner** (shot 1, seed frame 02_frame_002415.png) — beverage station corner with flags, cups, tile, open kitchen
+2. **Sanitation at the beverage station** (shot 2, seed frame 06_frame_002485.png) — cup racks, dispensers, hand sink, notices
+3. **Kitchen aisle and tile floor** (shot 3, seed frame 42_frame_003250.png) — aisle with hood, stainless tables, ceiling panels
+4. **Stainless refrigerators and prep line** (shot 4, seed frame 17_frame_002860.png) — stainless two-door fridge, prep wells, aisle
+5. **Prep tables and shelves** (shot 5, seed frame 21_frame_002880.png) — shelving, fridge, black cart, notices
+6. **Cooking line and range hood** (shot 6, seed frame 33_frame_003060.png) — flat-top grill with sausages, hood
+7. **Grill and prep station** (shot 7, seed frame 35_frame_003095.png) — grill bottom-left, prep counter, hood, tile aisle
+8. **Dish sink and hanging pans** (shot 8, seed frame 45_frame_003385.png) — dish sink, hanging pans, cooler, trash bin
+9. **Stainless counter and shelves** (shot 9, seed frame 53_frame_003540.png) — stainless counter with plates, shelves, scale, freezer
+10. **Prep cooler** (shot 10, seed frame 57_frame_003610.png) — prep cooler against white wall, shelving, fan
+11. **Dry storage shelving** (shot 11, seed frame 63_frame_003730.png) — dry-storage wire shelving, boxes, white tile
+12. **Long stainless table toward the pass** (shot 12, seed frame 71_frame_004090.png) — long stainless table, freezer, column, ceiling panels
+13. **Equipment and tile floor toward the dining room** (shot 13, seed frame 77_frame_004170.png) — stainless shelving and counter toward back wall
+14. **Refrigerator, hand sink and water heater** (shot 14, seed frame 85_frame_004290.png) — fridge, hand sink, monitor, notices, exit sign
+
+Full text: `stage1/waypoints.json` (all 14 shot descriptions written), `stage1/environment_description.txt`, retrieval (8 candidates/shot): `stage1/retrieval.json`, selection record `stage1/selection_input.json`.
+
+## How each stage went
+- **Stage 1.** Environment description and shot descriptions written by me from 63/64 sampled frames (code's prompts). Seed retrieval: SigLIP2 text embeddings + saved image embeddings, top-8 per shot over every 5th frame. I then picked one frame per shot from contact sheets. 14/14 shots kept.
+- **Stage 2.** ACDC's GP preference optimizer (imported unchanged), M=64 candidates, ρ_trans=1 m, ρ_rot=30°, one comparison per shot per round, judged by me from side-by-side renders. **280 comparisons in total, 59 challengers accepted, 117 ties** (20 per shot, not B=100). Every comparison, its decision and reason: `refine/state.json` (history), `refine/decisions/rNNN.txt`, sheets `refine/sheets/`. Refined poses: `refine/all_best_results.json`.
+- **Stage 3.** ACDC code unchanged: A* + safe-corridor gates (`run_trajectory_generation.py`), TOGT (`run_togt_scenes.py`, including its own clearance re-optimization retries), RotationSpline camera orientation. Outputs in `stage3/`.
+
+## Deviations from the design (and why)
+1. **Refinement budget ~20 comparisons/shot instead of B=100.** I judge each pair by eye; 100 × ~14 shots × 6 runs was not possible. Refinement was also stopped when I ran out of time (a partly judged round was discarded).
+2. **Optimizer perturbs the full 3-D rotation (code behaviour)**, whereas the paper says position+yaw with roll/pitch fixed to 0. I kept the code. Consequently roll/pitch in the final are not 0 (see checks); the saved ACDC output has the same property.
+3. Pair judgments were made on a sheet showing incumbent (image 1) and challenger (image 2) side by side at 480×270 each, several shots per sheet; ties ("3") were allowed as in the code. Refinement renders used ACDC's own Blender script (8 spp CPU) on the patched mesh.
+4. Environment description / shots were written once per scene and shared by the scene's two prompts. The last exploration frame was not viewed.
+5. Text embedding: only the SigLIP2 text tower of the RADIO adaptor was run (fp16 weights, fp32 compute) to fit the memory cap; image embeddings and occupancy grids were the saved precomputed ones (grids built from the original meshes).
+6. Final video: patched mesh + patched renderer (as instructed), via `tools/make_video_mine.py` (frames piped to ffmpeg in chunks to save disk); same resolution/fps/FOV as saved video.
+7. A first retrieval attempt had a bug in my text-embedding wrapper (garbage embeddings); discarded and redone (`stage1/invalid_attempt1_meta_bug/`).
+
+## Checks
+| check | result |
+|---|---|
+| bundle `validate_trajectory` | PASS (occupied samples 0, max gate error 0.0084 m) |
+| speed ≤ 1.0 m/s | FAIL (max 1.044) |
+| tilt ≤ 30°, body rate ≤ 10.2 rad/s, thrust within [0.1,7.2] N/motor | PASS (tilt 3.3°, rate 0.05, thrust 2.05–2.17) |
+| clearance ≥ 0.3 m from occupied voxels | FAIL (min 0.090 m; 44% of samples below 0.3 m) |
+| roll = 0 | FAIL (max |roll| 34.7°) |
+| pitch within ±25° | FAIL (max |pitch| 57.8°) |
+
+Note: the clearance and roll/pitch figures are measured on the delivered centerline/CSV; the saved ACDC output measured the same way: min clearance 0.023 m, max |roll| 22.5°, max |pitch| 51.0°, max speed 1.015 m/s.
+
+## Comparison with saved ACDC
+The saved run used GPT (xhigh) shot lists and the recorded poses without pose refinement; this run used my shots and 20 refinement comparisons/shot. Video comparison is side by side by file; I did not watch the final videos frame by frame.

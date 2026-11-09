@@ -1,0 +1,47 @@
+# cottage_step_by_step
+
+Video completed and fully decoded for verification.
+
+[Trajectory CSV](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/cottage_step_by_step/final/cottage_step_by_step_optimized_path.csv) · [Video](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/cottage_step_by_step/final/cottage_step_by_step_flythrough.mp4) · [Saved ACDC video](/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/cottage/step_by_step/cottage_step_by_step_flythrough.mp4)
+
+Stage 1: the assistant inspected 64 time-uniform exploration frames, wrote a fresh environment description and 10 shots, and selected matching source frames. Missing pretrained text-encoder weights prevented cosine-similarity retrieval; visual selection among those 64 frames is a substantial deviation. The bundle common.py exported exact recorded poses from the MCAP. No saved ACDC shots or seeds were reused.
+
+Stage 2: all 10 viewpoints received 20 comparisons, rather than the paper’s 100, to meet the morning deadline. The copied GP kernel, Laplace fit and dueling Thompson implementation used 64 candidates, a 1 m translation radius and 30° yaw radius. Yaw-only sampling and zero roll/pitch follow the paper where portable defaults differ. The assistant inspected every pair and recorded the code’s [[1]], [[2]] or [[3]] response. A wrapper fixes the original missing history key and supports restart. Refinement used full textures throughout.
+
+Stage 3: fresh A*, safe-corridor gates and a freshly built TOGT used the original daju parameters and cached occupancy inputs. Yaw is a natural cubic spline of unwrapped headings at optimized gate times. No trajectory was edited or replanned in response to failed checks.
+
+Final rendering uses the patched scene and renderer, full textures, 960×540 at 24 fps, 80° horizontal FOV, H.264 CRF18 and the supplied mild sharpening. CPU rendering used 6 samples per pixel, versus the patched default of 256, because measured full-sample throughput could not meet 10:00. Jobs use the shared 3.2 GB queue and two CPU threads. 
+
+## Checks
+
+| Check | Result | Measurement |
+|---|---|---|
+| Bundle validate_trajectory | FAIL | 23 occupied samples; 0 outside-grid samples |
+| Quadrotor limits, including speed ≤1 m/s | FAIL | Maximum speed 1.052786 m/s; position bounds PASS; angular limits PASS; rotor thrust PASS |
+| Clearance ≥0.3 m | FAIL | Minimum distance to occupied voxel cubes 0.000000 m |
+| Camera roll 0, pitch within ±25° | PASS | Both identically zero by construction |
+
+[checks.json](checks.json) records individual limits. Position, speed and clearance were sampled from the polynomial at 5 ms; body limits use native TOGT full-state CSV samples. Passing sampled checks is not continuous-time certification. The bundle validator’s static RotationSpline label does not describe the actual yaw-spline export.
+
+## Shots
+
+1. **Entrance toward dining** — A beautifully taken picture. The glass dining table and tan chairs are centered beyond the pale open foreground, with the striped rug below and open staircase at right.
+2. **Living room entry** — A beautifully taken picture. The brown sectional and ottoman are centered beneath the landscape painting, with shuttered windows at left and space around the sofa.
+3. **Living room around seating** — A beautifully taken picture. Black lounge chairs and framed pictures are centered beside the windows, with the brown sofa at left and the fireplace edge at right.
+4. **Living room fireplace** — A beautifully taken picture. The stone fireplace and television are centered, black chairs sit at left and the red patterned chair at right, showing the opposite side of the lounge.
+5. **Bedroom approach** — A beautifully taken picture. A narrow pale hallway runs through the center toward the bedroom doorway, with the white bed visible beyond it.
+6. **Bedroom** — A beautifully taken picture. The white bed fills the middle beneath framed botanical pictures, flanked by lamps and bright shuttered windows, with open flooring across the bottom.
+7. **Bedroom washroom** — A beautifully taken picture. The double sinks and gold countertop sit across the lower center beneath large mirrors, while stone shower walls appear at left.
+8. **Kitchen** — A beautifully taken picture. The kitchen aisle lies centered between dark cabinetry and pale counters, with stainless oven and refrigerator and blue backsplash visible.
+9. **Breakfast nook** — A beautifully taken picture. The round breakfast table sits at center against shuttered windows, with refrigerator at left and the desk at right.
+10. **Second washroom** — A beautifully taken picture. The dark vanity and pale stone counter are centered under the rectangular dark-framed mirror, showing the small second washroom.
+
+## Comparison and flaws
+
+23 occupied-voxel samples; speed reaches 1.053 m/s; zero minimum clearance. Starts close to the dining table, has tight television/bed framing and wall/door-dominated transition samples.
+
+Fresh trajectory duration 80.08 s versus saved 133.92 s. Fresh camera roll/pitch are identically zero; saved CSV maximum absolute roll/pitch are 90.0°/47.5°. I inspected 12 uniformly spaced frames from each video at normalized tour progress (not a full motion review). The fresh samples follow dining, living, bedroom/bath, kitchen/breakfast and second-washroom order, with a level horizon. They start close to the dining table rather than clearly establishing an entrance approach; the sampled views do not establish a full living-room circle. A close television view, partially cropped bed and wall/door-dominated frames 6 and 10 weaken the tour. The saved samples show stronger tilt and several floor/ceiling-directed views; its final sample looks from the washroom into the corridor, while the fresh final sample centers the vanity. Reconstruction defects remain. Contact sheets and timestamps are retained; different paths and renderers limit direct image-quality comparison.
+
+## Trace
+
+[Stage 1](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/cottage_step_by_step/stage1/) contains descriptions and seeds. [Stage 2](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/runs/cottage_step_by_step/stage2/) retains every paired image, decision and checkpoint. [Planner outputs](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/planning/cottage/step_by_step/) contain A*, corridor, TOGT and validator outputs. [DEVIATIONS.md](/home/ran/Downloads/ddc_portable/horizontal/structured-astra6/DEVIATIONS.md) records adaptations, failures and resource incidents. No VLM/LLM API calls were made.

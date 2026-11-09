@@ -1,0 +1,15 @@
+# restaurant_food_inspector
+
+An inspection-oriented tour of visible food preparation, cooking, washing, dry storage, ice-making, slicing, refrigeration and handwashing facilities.
+
+**Compared with the baseline:** Concentrates on the kitchen and storage loop; removes the baseline's long restroom/bar detours and the first candidate's wall-facing beverage introduction. Level horizon and controlled pans. Duration: 123.8 s versus 145.5 s.
+
+**Feasibility: PASS.** Both patched-grid and archived-grid bundle checks pass, as do conservative continuous Daju bounds. Speed ≤ 0.860 m/s; continuous voxel-box clearance ≥ 0.3063 m on the uniform 5 cm patched-mesh grid; camera roll 0°, pitch 3.4° to 16.4°. The clearance claim uses the new conservative model, not the archived 20 cm voxel volumes. Video and CSV match at 960×540, 24 fps and 80° horizontal FOV; decode and frame-count checks pass.
+
+**Remaining flaws:** The static scan does not establish sanitary compliance. Visible clutter and scan damage remain; some equipment and doorways are close to the camera. Fine texture is resource-limited.
+
+**Rendering and review:** Resource adaptation of the patched renderer: EEVEE, 64 AA samples, 512 px texture cache; patched geometry, camera, emission materials and background treatment preserved. Native Cycles was not used. Inspected all 23 updated survey images at final resolution and 26 samples across the completed film (every five seconds plus its final frame). The kitchen/storage loop and kitchen closing view are present. Full decode, frame count, CSV integrity and conservative continuous dynamics bounds pass. This is sampled visual review, not a claim of real-time viewing of every frame.
+
+[Checks](feasibility.json) · [Continuous bounds](continuous_dynamics_bounds.json) · [Review sheet](review_contact_sheet.jpg) · [Method](../../../VALIDATION_METHOD.md) · [Baseline](/home/ran/Downloads/ddc_portable/artifacts/results_xhigh_25k_c8_togt/restaurant/food_inspector/restaurant_food_inspector_flythrough.mp4)
+
+Published 2026-10-30T09:39:14.999054-04:00; candidate `i02`. Earlier iterations and finals remain in the run directory.
