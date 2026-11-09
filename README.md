@@ -45,6 +45,14 @@ node scripts/optimize-videos.mjs
 
 The first script copies originals, creates thumbnails/data, and verifies hashes. The second creates smaller web encodes. Both use the installed Jellyfin FFmpeg path; update it for another machine. Source research files are never modified.
 
+## Interactive refinement figure
+
+Section 04 is a static SVG chart with client-side playback, pause/reset, a keyboard-accessible 0–100 comparison slider, and selection among seven initializations. Reduced-motion preferences disable continuous animation. The complete SVG and image links remain available without JavaScript; no server or build step is required.
+
+`static/data/refinement.js` contains 101 points per curve, recovered directly from the seven vector paths in the original manuscript figure using its printed linear axes. These are figure-derived values, not raw experiment CSVs. The original figure is retained at `static/pdfs/preference-refinement-source.pdf`; its SHA-256 and extraction notes are in the data asset.
+
+The four PNGs in `static/images/refinement/` are extracted from the source PDF at their native 720×405 pixels without resampling. Each before/after pair is displayed separately and supports full-size viewing. The source does not identify a correspondence between the two example pairs and the seven traces, so image selection is independent of graph selection.
+
 ## Validation
 
 With HTTP preview running:
