@@ -11,7 +11,7 @@ if(new Set(ids).size!==ids.length)issues.push('Duplicate HTML IDs');
 for(const [,url] of html.matchAll(/(?:href|src|poster)="([^"]+)"/g)){
  if(/^(https?:|mailto:)/.test(url))continue;
  if(url.startsWith('#')){if(!ids.includes(url.slice(1)))issues.push('Missing anchor '+url);}
- else if(!fs.existsSync(path.join(root,url)))issues.push('Missing asset '+url);
+ else if(!fs.existsSync(path.join(root,url.split(/[?#]/,1)[0])))issues.push('Missing asset '+url);
 }
 if(data.runs.length!==48)issues.push('Expected 48 runs');
 let videoBytes=0;
