@@ -47,7 +47,7 @@ The first script copies originals, creates thumbnails/data, and verifies hashes.
 
 ## Interactive refinement figure
 
-Section 04 is a static SVG chart with client-side playback, pause/reset, a keyboard-accessible 0–100 comparison slider, and selection among seven initializations. Reduced-motion preferences disable continuous animation. The complete SVG and image links remain available without JavaScript; no server or build step is required.
+Section 04 is a static SVG chart that automatically plays once from 0 to 100 when it scrolls into view, then holds at 100 until interaction. It also supports client-side replay, pause/reset, a keyboard-accessible 0–100 comparison slider, and selection among seven initializations. Reduced-motion preferences disable continuous animation. The complete SVG and image links remain available without JavaScript; no server or build step is required.
 
 `static/data/refinement.js` contains 101 points per curve, recovered directly from the seven vector paths in the original manuscript figure using its printed linear axes. These are figure-derived values, not raw experiment CSVs. The original figure is retained at `static/pdfs/preference-refinement-source.pdf`; its SHA-256 and extraction notes are in the data asset.
 
