@@ -10,7 +10,7 @@
 <meta property="og:image" content="https://acdc-drone.github.io/static/results/dynamic-astra6/restaurant_food_inspector/poster.jpg">
 <meta name="citation_title" content="Agentic Aerial Cinematography: From Dialogue Cues to Cinematic Trajectories">
 <meta name="citation_pdf_url" content="https://acdc-drone.github.io/static/pdfs/acdc-paper.pdf">
-<link rel="stylesheet" href="static/css/index.css?v=394ac2420e5b"><script defer src="static/data/results.js?v=d2d21e5117fe"></script><script defer src="static/js/index.js?v=983fdd4d660f"></script>
+<link rel="stylesheet" href="static/css/index.css?v=e74582cdaa7c"><script defer src="static/data/results.js?v=d2d21e5117fe"></script><script defer src="static/js/index.js?v=983fdd4d660f"></script>
 <link rel="stylesheet" href="static/css/refinement.css?v=4a4221b36831"><script defer src="static/data/refinement.js?v=6a592d1ca69d"></script><script defer src="static/js/refinement.js?v=f9cb34cda7d4"></script>
 </head><body>
 <a class="skip" href="#main">Skip to content</a>
@@ -31,9 +31,8 @@
 <div class="section-head"><p class="eyebrow">01 / The idea</p><h2>Give intent a path<br>into the physical world.</h2><p class="intro">A language model can decide what matters in a scene. ACDC gives that decision an execution harness: posed exploration frames, rendered feedback, and motion planning grounded in geometry.</p></div>
 <figure class="task-figure" id="paper-figure-1">
 <a href="static/images/paper/01-intent-to-tour.webp" target="_blank" rel="noopener" aria-label="Open Figure 1 from the paper at full resolution"><img src="static/images/paper/01-intent-to-tour.webp" width="2400" height="928" loading="lazy" alt="Figure 1: a request for a welcoming restaurant tour becomes an ordered set of camera viewpoints and a red flight path through the mapped restaurant. Twelve of the 18 selected views are numbered around the scene."></a>
-<figcaption><a href="static/pdfs/figure-1-intent-to-tour.pdf" target="_blank" rel="noopener">View figure PDF ↗</a></figcaption>
 </figure>
-<div class="input-line"><span>Natural-language request</span><b>+</b><span>Posed exploration video</span><b>+</b><span>Mapped 3D scene</span></div>
+<div class="acdc-inputs" role="region" aria-labelledby="acdc-inputs-title"><h3 id="acdc-inputs-title">Inputs to ACDC</h3><p>The tours on this website are generated from these three inputs.</p><div class="input-line" role="list"><span role="listitem">Natural-language request</span><b aria-hidden="true">+</b><span role="listitem">Posed exploration video</span><b aria-hidden="true">+</b><span role="listitem">Mapped 3D scene</span></div></div>
 <div class="workflow-grid">
 <article class="workflow"><div class="workflow-title"><i class="dot defined"></i><p class="small-label">Defined workflow</p></div><h3>The sequence is prescribed.</h3><p>The model works through three fixed stages.</p><ol><li><b>01</b><div><strong>Select & order shots</strong><span>Turn intent into descriptions; retrieve posed frames.</span></div></li><li><b>02</b><div><strong>Refine each viewpoint</strong><span>Compare rendered alternatives with preference-based Bayesian optimization.</span></div></li><li><b>03</b><div><strong>Plan the flight</strong><span>A*, corridors, and TOGT connect the views; interpolate camera yaw.</span></div></li></ol></article>
 <article class="workflow"><div class="workflow-title"><i class="dot agent"></i><p class="small-label">Agent-directed workflow</p></div><h3>The agent chooses the next step.</h3><p>After inspecting the result, the agent can revise the route, camera direction, timing, and tools.</p><div class="loop"><span>Plan & choose tools</span><span class="loop-arrow">↓</span><span>Render & check</span><span class="loop-arrow">↓</span><span>Accept or revise <b>↻</b></span></div></article>
@@ -90,7 +89,7 @@
 
 <dialog class="refinement-dialog" id="refinement-dialog" aria-labelledby="refinement-dialog-title"><div class="refinement-dialog-top"><h3 id="refinement-dialog-title">Refinement view</h3><button type="button" id="refinement-close" autofocus>Close ✕</button></div><img id="refinement-dialog-image" width="720" height="405" alt=""><p>Original source image · 720 × 405 pixels</p></dialog>
 </section>
-<section class="section publication pale" id="resources"><div class="wrap"><p class="eyebrow">CoRL 2026 Workshop on Agentic Robotics</p><h2>Agentic Aerial Cinematography</h2><p class="subtitle">From Dialogue Cues to Cinematic Trajectories</p><p class="authors">Yifan Lin<sup>†*</sup> &nbsp; Sophie Z. Liu<sup>*</sup> &nbsp; Ran Qi<sup>*</sup> &nbsp; George Z. Xue<sup>*</sup><br>Xinping Song &nbsp; Chao Qin &nbsp; Hugh H.-T. Liu</p><p>University of Toronto</p><p class="quiet">† Project lead · * Equal contribution (alphabetical order)</p><div class="actions"><a class="button dark" href="static/pdfs/acdc-paper.pdf">Read the paper ↗</a></div><p class="quiet">Research code forthcoming.</p><details class="citation"><summary>Cite this work <span>+</span></summary><button id="copy-citation" class="button light" type="button">Copy BibTeX</button><pre><code id="bibtex-code">@misc{lin2026acdc,
+<section class="section publication pale" id="resources"><div class="wrap publication-grid"><div class="publication-info"><p class="eyebrow">CoRL 2026 Workshop on Agentic Robotics</p><h2>Agentic Aerial Cinematography</h2><p class="subtitle">From Dialogue Cues to Cinematic Trajectories</p><p class="authors">Yifan Lin<sup>†*</sup> &nbsp; Sophie Z. Liu<sup>*</sup> &nbsp; Ran Qi<sup>*</sup> &nbsp; George Z. Xue<sup>*</sup><br>Xinping Song &nbsp; Chao Qin &nbsp; Hugh H.-T. Liu</p><p>University of Toronto</p><p class="quiet">† Project lead · * Equal contribution (alphabetical order)</p><div class="actions"><a class="button dark" href="static/pdfs/acdc-paper.pdf">Read the paper ↗</a></div><p class="quiet">Research code forthcoming.</p></div><aside class="citation publication-citation" aria-labelledby="citation-title"><div class="citation-heading"><h3 id="citation-title">Cite this work</h3><button id="copy-citation" class="button light" type="button">Copy BibTeX</button></div><pre><code id="bibtex-code">@misc{lin2026acdc,
   title = {Agentic Aerial Cinematography:
     From Dialogue Cues to Cinematic Trajectories},
   author = {Lin, Yifan and Liu, Sophie Z. and Qi, Ran and
@@ -99,6 +98,6 @@
   year = {2026},
   note = {CoRL 2026 Workshop on Agentic Robotics},
   url = {https://acdc-drone.github.io/}
-}</code></pre><p id="copy-status" role="status" aria-live="polite"></p></details></div></section>
+}</code></pre><p id="copy-status" class="quiet" role="status" aria-live="polite"></p></aside></div></section>
 </main><footer class="wrap"><a class="brand" href="#top">ACDC ↑</a><p>University of Toronto<br>Adapted from <a href="https://github.com/eliahuhorwitz/Academic-project-page-template">Academic Project Page Template</a> and <a href="https://nerfies.github.io/">Nerfies</a> · <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a></p></footer>
 </body></html>
