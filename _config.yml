@@ -1,0 +1,6 @@
+# GitHub Pages serves the HTML, CSS, JavaScript, and images as static files.
+# Keep unreferenced legacy videos and development tools in Git, outside the site.
+exclude:
+  - README.md
+  - scripts
+  - static/videos
