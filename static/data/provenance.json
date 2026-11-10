@@ -1,6 +1,6 @@
 {
   "method": "Speed = norm of the nonuniform three-point finite difference of CSV world position at saved timestamps (one-sided endpoints). Episodes are contiguous samples strictly above 1 m/s. No smoothing or minimum duration. Sampled diagnostics, not continuous-time or collision certification.",
-  "videoPolicy": "Web encodes of the current final renders: H.264 CRF 24, preset veryfast, yuv420p, faststart; original resolution, frame rate, framing and timeline preserved. No synthetic or illustrative footage. JPEG thumbnails extracted from originals at recorded posterTime.",
+  "videoPolicy": "Web encodes of the current final renders: H.264 CRF 27, preset medium, yuv420p, faststart; original resolution, frame rate, framing and timeline preserved. Re-encoded from the previously published CRF 24 web renditions to reduce the Pages deployment size. No synthetic or illustrative footage. JPEG thumbnails extracted from originals at recorded posterTime.",
   "runs": [
     {
       "model": "astra6",
@@ -725,10 +725,12 @@
   ],
   "webEncode": {
     "codec": "libx264",
-    "crf": 24,
-    "preset": "veryfast",
+    "crf": 27,
+    "preset": "medium",
     "pixelFormat": "yuv420p",
     "faststart": true,
-    "totalBytes": 718249044
+    "totalBytes": 497165447,
+    "input": "Published CRF 24 / veryfast web renditions at commit f052390",
+    "validated": "All 48 retain exact width, height, frame rate, frame count, and duration."
   }
 }

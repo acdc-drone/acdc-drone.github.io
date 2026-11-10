@@ -28,7 +28,7 @@ The manuscript was copied from `../corl_v2/main.pdf` during this revision; that 
 
 Every comparison uses `../results-full/{structured,dynamic}-{model}/runs/{task}/final`. Older archived baselines and original example tours are not substituted. Figure 1 and the refinement figure are retained. The `../corl26_v2/figure_tools` folder contains editable sources, and its manuscript PDF is hash-identical to the copy linked by the site.
 
-`static/data/provenance.json` records source paths, CSV SHA-256 hashes, thumbnail timestamps, and encoding settings. CSVs are unchanged. Videos are web encodes of actual renders (H.264 CRF 24, same 960×540, 24 fps, framing, and timing), with faststart for playback. No illustrative synthetic footage is used.
+`static/data/provenance.json` records source paths, CSV SHA-256 hashes, thumbnail timestamps, and encoding settings. CSVs are unchanged. Videos are web encodes of actual renders (H.264 CRF 27, same 960×540, 24 fps, framing, and timing), with faststart for playback. No illustrative synthetic footage is used.
 
 Speed is recomputed using the nonuniform three-point position derivative, matching NumPy's default gradient, with one-sided endpoints. Contiguous samples strictly above 1 m/s count as episodes. All 48 hashes and counts match `poster/merged-70-30-42x36/reference/four-model-speed-audit.json`: 59 episodes / 24 defined runs, 0 / 24 agent-directed runs. Display downsampling preserves bucket extrema. This is a sampled diagnostic, not a continuous-time safety certificate.
 
